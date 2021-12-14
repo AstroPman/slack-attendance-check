@@ -76,6 +76,6 @@ app.get('/', (request, response) => {
 });
 
 app.post('/endpoint', (request, response) => {
-    console.log(request.payload)
+    console.log(request.body.payload)
     response.send(''); 
 });
