@@ -28,16 +28,13 @@ app.listen(port, () => {
     console.log(`Express Server Listen START at port=${port}`);
 });
 
-app.get('/', (request, response) => {
-     response.send('Hello, World'); 
-});
+
 
 
 // Edit messages
 const messages = JSON.parse(fs.readFileSync('./message_template.json', 'utf8'));
 messages.channel = CHANNEL_ID
 messages.blocks[0].text.text = "*" + today + "の出社状況*<!channel>"
-
 
 async function postAttendanceCheckPoll(){ 
     const headers = {
@@ -52,8 +49,10 @@ async function postAttendanceCheckPoll(){
     } 
 }
 
-postAttendanceCheckPoll()
+
+app.get('/', (request, response) => {
+    response.send('Hello, World'); 
+    postAttendanceCheckPoll()
 
 
-
-
+});
