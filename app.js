@@ -55,6 +55,7 @@ app.get('/', (request, response) => {
     postAttendanceCheckPoll()
 });
 
-app.get('/endopoint', (request, response) => {
+app.post('/endpoint', (request, response) => {
     console.log(request)
+    response.send(''); 
 });
