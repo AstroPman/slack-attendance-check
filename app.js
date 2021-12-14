@@ -77,9 +77,11 @@ app.get('/', (request, response) => {
 app.post('/endpoint', (request, response) => {
     const value = request.body.payload.actions[0].value
     const userName = "<@" + request.body.payload.user.name + ">"
+    console.log(value, userName)
     if (value == "osaki") {
         osaki.on('value', snapshot => {
             let attendants = snapshot.val().split(',')
+            console.log(attendants)
             // 追加処理
             if (!attendants.includes(userName)) {
                 attendants.push(userName)
