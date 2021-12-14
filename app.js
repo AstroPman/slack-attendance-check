@@ -87,6 +87,7 @@ app.post('/endpoint', (request, response) => {
             if (!attendants.includes(userName)) {
                 attendants.push(userName)
                 const newAttendants = attendants.join(',')
+                osaki.set(newAttendants)
             }
             //削除処理
             else {
@@ -94,8 +95,8 @@ app.post('/endpoint', (request, response) => {
                     return !user == userName
                 })
                 const newAttendants = filteredAttendants.join(',')
+                osaki.set(newAttendants)
             }
-        osaki.set(newAttendants)
         })
     }
     response.send(''); 
