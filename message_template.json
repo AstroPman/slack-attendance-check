@@ -21,21 +21,21 @@
                     "name": "game",
                     "text": "在宅",
                     "type": "button",
-                    "value": "在宅",
+                    "value": "home",
                     "style": "primary"
                 },
                 {
                     "name": "game",
                     "text": "大崎",
                     "type": "button",
-                    "value": "大崎",
+                    "value": "osaki",
                     "style": "primary"
                 },
                 {
                     "name": "game",
                     "text": "その他",
                     "type": "button",
-                    "value": "その他",
+                    "value": "others",
                     "style": "primary"
                 }
             ]
