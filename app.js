@@ -20,6 +20,8 @@ const today = (year + '年' + month + '月' + day + '日');
 
 // Express 
 const app = express();
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 const port = process.env.PORT || 8080;
 
 app.listen(port, () => {
