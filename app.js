@@ -1,6 +1,33 @@
 const express　=　require('express');
 const fs = require('fs');
 const axios = require('axios');
+const admin = require("firebase-admin");
+
+// Fetch the service account key JSON file contents
+const serviceAccount = require(process.env.SERVICE_ACCOUNT_KEY_PATH);
+
+// Initialize the app with a service account, granting admin privileges
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://slack-attendance-check-default-rtdb.asia-southeast1.firebasedatabase.app"
+});
+var db = admin.database();
+
+// Date
+const date  = new Date();
+const year  = date.getFullYear();
+const month = date.getMonth() + 1;
+const day   = date.getDate();
+const today = (year + '年' + month + '月' + day + '日');
+const todayString = year.toString() + month.toString() + day.toString()
+
+// As an admin, the app has access to read and write all data, regardless of Security Rules
+
+var attendance = db.ref("/attendance/" + todayString);
+attendance.set({
+  osaki: "test1,test2"
+});
+
 require('dotenv').config();
 console.log(process.env.CHANNEL_ID_PROD)
 
@@ -9,13 +36,6 @@ console.log(process.env.CHANNEL_ID_PROD)
 const CHANNEL_ID = process.env.CHANNEL_ID_TEST; // baymax-sandbox
 const API_KEY = process.env.API_KEY
 const API_ENDPOINT = "https://slack.com/api"
-
-// Date
-const date  = new Date();
-const year  = date.getFullYear();
-const month = date.getMonth() + 1;
-const day   = date.getDate();
-const today = (year + '年' + month + '月' + day + '日');
 
 
 // Express 
@@ -56,6 +76,6 @@ app.get('/', (request, response) => {
 });
 
 app.post('/endpoint', (request, response) => {
-    console.log(request)
+    console.log(request.payload)
     response.send(''); 
 });
