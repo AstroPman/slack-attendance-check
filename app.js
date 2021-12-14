@@ -75,7 +75,7 @@ app.get('/', (request, response) => {
 });
 
 app.post('/endpoint', (request, response) => {
-    console.log(request.body.payload)
+    console.log(request.body.payload.actions)
     const value = request.body.payload.actions[0].value
     const userName = "<@" + request.body.payload.user.name + ">"
     console.log(value, userName)
