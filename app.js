@@ -53,6 +53,8 @@ async function postAttendanceCheckPoll(){
 app.get('/', (request, response) => {
     response.send('Hello, World'); 
     postAttendanceCheckPoll()
+});
 
-
+app.get('/endopoint', (request, response) => {
+    console.log(request)
 });
