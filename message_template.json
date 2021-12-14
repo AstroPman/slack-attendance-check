@@ -1,0 +1,61 @@
+{
+    "channel": "channel_id",
+    "blocks": [
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "title_text"
+			}
+		}
+	],
+    "attachments": [
+        {
+            "text": "勤務状況をお答えください",
+            "fallback": "You are unable to choose a game",
+            "callback_id": "wopr_game",
+            "color": "#3AA3E3",
+            "attachment_type": "default",
+            "actions": [
+                {
+                    "name": "game",
+                    "text": "在宅",
+                    "type": "button",
+                    "value": "在宅",
+                    "style": "primary"
+                },
+                {
+                    "name": "game",
+                    "text": "大崎",
+                    "type": "button",
+                    "value": "大崎",
+                    "style": "primary"
+                },
+                {
+                    "name": "game",
+                    "text": "その他",
+                    "type": "button",
+                    "value": "その他",
+                    "style": "primary"
+                }
+            ]
+        },
+         {
+            "text": "*在宅*",
+            "color": "#3A60E3",
+            "attachment_type": "default",
+            "footer": "合計0人"
+        },
+        {
+            "text": "*大崎*",
+            "color": "#3AE34E",
+            "attachment_type": "default",
+            "footer": "合計0人"
+        },{
+            "text": "*その他*",
+            "color": "#E3DC3A",
+            "attachment_type": "default",
+            "footer": "合計0人"
+        }
+    ]
+}
