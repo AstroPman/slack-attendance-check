@@ -167,7 +167,7 @@ app.post('/endpoint', (request, response) => {
 });
 
 
-cron.schedule('13 * * * *', () => {
+cron.schedule('0 10 * * *', () => {
     const dayOfWeek = getToday()[2]
     if (dayOfWeek != "土" || dayOfWeek != "日" ) {
         //土日以外実行されない
