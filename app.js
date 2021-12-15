@@ -150,7 +150,7 @@ app.post('/endpoint', (request, response) => {
     
     const today = getToday()[1]
     
-    const attendance = firebaseDb.ref('/').child('attendance/' + today)
+    const attendance = firebaseDb.ref('/').child('attendance/' + timestamp)
     attendance.once('value', snapshot => {
         const attendants = snapshot.val()
         if(attendants === null){
