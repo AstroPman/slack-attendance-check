@@ -14,7 +14,7 @@
 				},
                 {
 					"type": "image",
-					"image_url": "https://picsum.photos/300/50",
+					"image_url": "https://picsum.photos/300/50?random",
 					"alt_text": "inspiration"
 				},
                 {
