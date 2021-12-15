@@ -139,12 +139,12 @@ app.get('/', (request, response) => {
 });
 
 app.post('/endpoint', (request, response) => {
-    // const requestJson = JSON.parse(request.body.payload) 
-    // const value = requestJson.actions[0].value
-    // const respondent = "<@" + requestJson.user.name + ">"
-    // const timestamp = requestJson.message_ts
-    const value = request.body.value
-    const respondent = "<@" + request.body.user.name + ">"
+    const requestJson = JSON.parse(request.body.payload) 
+    const value = requestJson.actions[0].value
+    const respondent = "<@" + requestJson.user.name + ">"
+    const timestamp = requestJson.message_ts
+    // const value = request.body.value
+    // const respondent = "<@" + request.body.user.name + ">"
     
     const today = getToday()[1]
     
