@@ -104,18 +104,19 @@ async function updateAttendanceCheckPoll(timestamp, attendants){
     messages.ts = timestamp
     for (item in attendants) {
         const text = attendants[item].join(',')
-        const cnt = attendants[item].length()
+        console.log(attendants[item].length)
+        const cnt = attendants[item].length
         if (item == "home") {
-            messages.attachments[1][0].text = "*在宅*\n" + text
-            messages.attachments[1][0].footer = "合計" + cnt + "人"
+            messages.attachments[1].text = "*在宅*\n" + text
+            messages.attachments[1].footer = "合計" + cnt + "人"
         }
         else if (item == "osaki") {
-            messages.attachments[1][1].text = "*大崎*\n" + text
-            messages.attachments[1][1].footer = "合計" + cnt + "人"
+            messages.attachments[2].text = "*大崎*\n" + text
+            messages.attachments[2].footer = "合計" + cnt + "人"
         }
         else {
-            messages.attachments[1][2].text = "*その他*\n" + text
-            messages.attachments[1][2].footer = "合計" + cnt + "人"
+            messages.attachments[3].text = "*その他*\n" + text
+            messages.attachments[3].footer = "合計" + cnt + "人"
         }
     }
     // Headers
@@ -145,6 +146,7 @@ app.post('/endpoint', (request, response) => {
     const timestamp = requestJson.message_ts
     // const value = request.body.value
     // const respondent = "<@" + request.body.user.name + ">"
+    // const timestamp = 123123124
     
     const today = getToday()[1]
     
