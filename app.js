@@ -4,53 +4,7 @@ const axios = require('axios');
 require('dotenv').config();
 
 const firebaseDb =  require('./firebase.js');
-
-// const attendance = firebaseDb.ref('/').child('attendance/' + "20211216")
-// attendance.on('value', snapshot => {
-//     console.log(snapshot.val())
-// })
-// attendance.update({
-//     home: "xxx",
-// })
-
-// const respondent = "test1"
-// const value = "osaki"
-
-// attendance.on('value', snapshot => {
-//     const attendants = snapshot.val()
-//     console.log(attendants)
-//     // if (!attendants){
-//     //     db.ref('/').set({
-//     //         attendance: {
-//     //             [todayString]: {
-//     //                 osaki: "",
-//     //                 home: "",
-//     //                 othres: ""
-//     //             }
-//     //         }
-//     //     })
-//     // }
-
-//     for (const item in attendants) {
-//         // attendants[item] = attendants[item].split(',')
-//         if (item == value) {
-//             if (!attendants[item].includes(respondent)) {
-//                 attendants[item].push(respondent)
-//             }
-//             else {
-//                 attendants[item] = attendants[item].filter( function (user) {
-//                     return user != respondent
-//                 })
-//             }
-//         }
-//         else {
-//             attendants[item] = attendants[item].filter( function (user) {
-//                 return user != respondent
-//             })
-//         }
-//     } 
-//     attendance.set(attendants);
-// })
+const cron = require('node-cron')
 
 
 // Slack Configureation
@@ -72,7 +26,7 @@ app.listen(port, () => {
 // Edit messages
 const messages = JSON.parse(fs.readFileSync('./message_template.json', 'utf8'));
 messages.channel = CHANNEL_ID
-messages.blocks[0].text.text = "*" + getToday()[0] + "の出社状況*<!channel>"
+messages.attachments[0].blocks[0].text.text = getToday()[0] + "の出社状況"
 
 function getToday () {
     // Date
@@ -107,16 +61,16 @@ async function updateAttendanceCheckPoll(timestamp, attendants){
         console.log(attendants[item].length)
         const cnt = attendants[item].length
         if (item == "home") {
-            messages.attachments[1].text = "*在宅*\n" + text
-            messages.attachments[1].footer = "合計" + cnt + "人"
+            messages.attachments[1].blocks[0].text = "*在宅*\n" + text
+            messages.attachments[1].blocks[1].elements[0].text = "合計" + cnt + "人"
         }
         else if (item == "osaki") {
-            messages.attachments[2].text = "*大崎*\n" + text
-            messages.attachments[2].footer = "合計" + cnt + "人"
+            messages.attachments[2].blocks[0].text = "*大崎*\n" + text
+            messages.attachments[2].blocks[1].elements[0].text = "合計" + cnt + "人"
         }
         else {
-            messages.attachments[3].text = "*その他*\n" + text
-            messages.attachments[3].footer = "合計" + cnt + "人"
+            messages.attachments[3].blocks[0].text = "*その他*\n" + text
+            messages.attachments[3].blocks[1].elements[0].text = "合計" + cnt + "人"
         }
     }
     // Headers
@@ -201,4 +155,10 @@ app.post('/endpoint', (request, response) => {
     
     response.send(''); 
 
+});
+
+
+cron.schedule('40 * * * *', () => {
+    postAttendanceCheckPoll()
+    console.log('cron excuted')
 });

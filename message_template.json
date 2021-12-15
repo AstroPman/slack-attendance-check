@@ -1,61 +1,130 @@
 {
     "channel": "channel_id",
-    "blocks": [
-		{
-			"type": "section",
-			"text": {
-				"type": "mrkdwn",
-				"text": "title_text"
-			}
-		}
-	],
     "attachments": [
         {
-            "text": "勤務状況をお答えください",
-            "fallback": "You are unable to choose a game",
-            "callback_id": "wopr_game",
-            "color": "#3AA3E3",
-            "attachment_type": "default",
-            "actions": [
+			"color": "#ff7f50",
+            "blocks": [
                 {
-                    "name": "game",
-                    "text": "在宅",
-                    "type": "button",
-                    "value": "home",
-                    "style": "primary"
-                },
+					"type": "header",
+					"text": {
+						"type": "plain_text",
+						"text": "This is a header block",
+						"emoji": true
+					}
+				},
                 {
-                    "name": "game",
-                    "text": "大崎",
-                    "type": "button",
-                    "value": "osaki",
-                    "style": "primary"
-                },
+					"type": "image",
+					"image_url": "https://picsum.photos/300/50",
+					"alt_text": "inspiration"
+				},
                 {
-                    "name": "game",
-                    "text": "その他",
-                    "type": "button",
-                    "value": "others",
-                    "style": "primary"
-                }
+					"type": "section",
+					"text": {
+						"type": "mrkdwn",
+						"text": "本日の出社状況を教えてください。<!channel>"
+					}
+				},
+				{
+					"type": "actions",
+					"elements": [
+						{
+							"type": "button",
+							"text": {
+								"type": "plain_text",
+								"text": "在宅",
+								"emoji": true
+							},
+                            "style": "primary",
+							"value": "home",
+							"action_id": "actionId-0"
+						},
+						{
+							"type": "button",
+							"text": {
+								"type": "plain_text",
+								"text": "大崎",
+								"emoji": true
+							},
+                            "style": "primary",
+							"value": "osaki",
+							"action_id": "actionId-1"
+						},
+						{
+							"type": "button",
+							"text": {
+								"type": "plain_text",
+								"text": "その他",
+								"emoji": true
+							},
+							"value": "others",
+							"action_id": "actionId-2"
+						}
+					]
+				}
             ]
         },
-         {
-            "text": "*在宅*",
-            "color": "#3A60E3",
-            "attachment_type": "default",
-            "footer": "合計0人"
+        {
+			"blocks": [
+				{
+					"type": "section",
+					"text": {
+						"type": "mrkdwn",
+						"text": ":house:  *在宅*"
+					}
+				},
+                {
+					"type": "context",
+					"elements": [
+						{
+							"type": "plain_text",
+							"text": "合計0人",
+							"emoji": true
+						}
+					]
+				}
+            ]
         },
         {
-            "text": "*大崎*",
-            "color": "#3AE34E",
-            "attachment_type": "default",
-            "footer": "合計0人"
-        },{
-            "text": "*その他*",
-            "color": "#E3DC3A",
-            "attachment_type": "default",
-            "footer": "合計0人"
+            "blocks": [
+                {
+					"type": "section",
+					"text": {
+						"type": "mrkdwn",
+						"text": ":office:  *大崎*"
+					}
+				},
+                {
+					"type": "context",
+					"elements": [
+						{
+							"type": "plain_text",
+							"text": "合計0人",
+							"emoji": true
+						}
+					]
+				}
+            ]
+        },
+        {
+			"blocks": [
+				{
+					"type": "section",
+					"text": {
+						"type": "mrkdwn",
+						"text": ":grey_question:  *その他*"
+					}
+				},
+                {
+					"type": "context",
+					"elements": [
+						{
+							"type": "plain_text",
+							"text": "合計0人",
+							"emoji": true
+						}
+					]
+				}
+            ]
         }
     ]
 }
