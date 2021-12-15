@@ -3,34 +3,54 @@ const fs = require('fs');
 const axios = require('axios');
 require('dotenv').config();
 
+const firebaseDb =  require('./firebase.js');
 
-// Date
-const date  = new Date();
-const year  = date.getFullYear();
-const month = date.getMonth() + 1;
-const day   = date.getDate();
-const today = (year + '年' + month + '月' + day + '日');
-const todayString = year.toString() + month.toString() + day.toString()
+// const attendance = firebaseDb.ref('/').child('attendance/' + "20211216")
+// attendance.on('value', snapshot => {
+//     console.log(snapshot.val())
+// })
+// attendance.update({
+//     home: "xxx",
+// })
 
-// Firebase Realtime Database
-const admin = require("firebase-admin");
-const serviceAccount = require(process.env.SERVICE_ACCOUNT_KEY_PATH);
-// Initialize the app with a service account, granting admin privileges
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://slack-attendance-check-default-rtdb.asia-southeast1.firebasedatabase.app"
-});
-const db = admin.database();
-const osaki = db.ref("/attendance/" + todayString + "/osaki");
-const home = db.ref("/attendance/" + todayString + "/home");
-const others = db.ref("/attendance/" + todayString + "/others");
+// const respondent = "test1"
+// const value = "osaki"
 
-osaki.on('value', snapshot => {
-    console.log(snapshot.val())
-})
-// attendance.set({
-//   osaki: "test1,test2"
-// });
+// attendance.on('value', snapshot => {
+//     const attendants = snapshot.val()
+//     console.log(attendants)
+//     // if (!attendants){
+//     //     db.ref('/').set({
+//     //         attendance: {
+//     //             [todayString]: {
+//     //                 osaki: "",
+//     //                 home: "",
+//     //                 othres: ""
+//     //             }
+//     //         }
+//     //     })
+//     // }
+
+//     for (const item in attendants) {
+//         // attendants[item] = attendants[item].split(',')
+//         if (item == value) {
+//             if (!attendants[item].includes(respondent)) {
+//                 attendants[item].push(respondent)
+//             }
+//             else {
+//                 attendants[item] = attendants[item].filter( function (user) {
+//                     return user != respondent
+//                 })
+//             }
+//         }
+//         else {
+//             attendants[item] = attendants[item].filter( function (user) {
+//                 return user != respondent
+//             })
+//         }
+//     } 
+//     attendance.set(attendants);
+// })
 
 
 // Slack Configureation
@@ -49,19 +69,63 @@ app.listen(port, () => {
     console.log(`Express Server Listen START at port=${port}`);
 });
 
-
 // Edit messages
 const messages = JSON.parse(fs.readFileSync('./message_template.json', 'utf8'));
 messages.channel = CHANNEL_ID
-messages.blocks[0].text.text = "*" + today + "の出社状況*<!channel>"
+messages.blocks[0].text.text = "*" + getToday()[0] + "の出社状況*<!channel>"
 
-async function postAttendanceCheckPoll(){ 
+function getToday () {
+    // Date
+    const date  = new Date();
+    const year  = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day   = date.getDate();
+    const today = (year + '年' + month + '月' + day + '日');
+    const todayString = year.toString() + month.toString() + day.toString()
+    return [today, todayString]
+}
+
+async function postAttendanceCheckPoll(){
+    // Headers
     const headers = {
         "content-type": "application/json",
         "Authorization": 'Bearer ' + API_KEY
     }
+    // API CALL
     try { 
         const response = await axios.post(API_ENDPOINT + "/chat.postMessage", messages, { headers: headers })
+        console.log(response.data); 
+    } catch (error) { 
+        console.log(error.response.body); 
+    } 
+}
+
+async function updateAttendanceCheckPoll(timestamp, attendants){
+    messages.ts = timestamp
+    for (item in attendants) {
+        const text = attendants[item].join(',')
+        const cnt = attendants[item].length()
+        if (item == "home") {
+            messages.attachments[1][0].text = "*在宅*\n" + text
+            messages.attachments[1][0].footer = "合計" + cnt + "人"
+        }
+        else if (item == "osaki") {
+            messages.attachments[1][1].text = "*大崎*\n" + text
+            messages.attachments[1][1].footer = "合計" + cnt + "人"
+        }
+        else {
+            messages.attachments[1][2].text = "*その他*\n" + text
+            messages.attachments[1][2].footer = "合計" + cnt + "人"
+        }
+    }
+    // Headers
+    const headers = {
+        "content-type": "application/json",
+        "Authorization": 'Bearer ' + API_KEY
+    }
+    // API CALL
+    try { 
+        const response = await axios.post(API_ENDPOINT + "/chat.update", messages, { headers: headers })
         console.log(response.data); 
     } catch (error) { 
         console.log(error.response.body); 
@@ -75,29 +139,66 @@ app.get('/', (request, response) => {
 });
 
 app.post('/endpoint', (request, response) => {
-    requestJson = JSON.parse(request.body.payload)
-    const value = requestJson.actions[0].value
-    const userName = "<@" + requestJson.user.name + ">"
-    console.log(value, userName)
-    if (value == "osaki") {
-        osaki.on('value', snapshot => {
-            let attendants = snapshot.val().split(',')
-            console.log(attendants)
-            // 追加処理
-            if (!attendants.includes(userName)) {
-                attendants.push(userName)
-                const newAttendants = attendants.join(',')
-                osaki.set(newAttendants)
+    // const requestJson = JSON.parse(request.body.payload) 
+    // const value = requestJson.actions[0].value
+    // const respondent = "<@" + requestJson.user.name + ">"
+    // const timestamp = requestJson.message_ts
+    const value = request.body.value
+    const respondent = "<@" + request.body.user.name + ">"
+    
+    const today = getToday()[1]
+    
+    const attendance = firebaseDb.ref('/').child('attendance/' + today)
+    attendance.once('value', snapshot => {
+        const attendants = snapshot.val()
+        if(attendants === null){
+            attendance.update({
+                [value]: [respondent]
+            })
+            const attendants = {
+                [value]: [respondent]
             }
-            //削除処理
-            else {
-                const filteredAttendants =  attendants.filter( user => {
-                    return !user == userName
+            console.log("attendants: ", attendants)
+            updateAttendanceCheckPoll(timestamp, attendants)
+        }
+        else if (typeof attendants[value] === "undefined") {
+            attendance.update({
+                [value]: [respondent]
+            })
+
+            for (const item in attendants) {         
+                attendants[item] = attendants[item].filter( function (user) {
+                    return user != respondent
                 })
-                const newAttendants = filteredAttendants.join(',')
-                osaki.set(newAttendants)
             }
-        })
-    }
+            attendance.update(attendants)
+            attendants[value] = [respondent]
+            updateAttendanceCheckPoll(timestamp, attendants)
+        }
+        else {
+            for (const item in attendants) {
+                // attendants[item] = attendants[item].split(',')
+                if (item == value) {
+                    if (!attendants[item].includes(respondent)) {
+                        attendants[item].push(respondent)
+                    }
+                    else {
+                        attendants[item] = attendants[item].filter( function (user) {
+                            return user != respondent
+                        })
+                    }
+                }
+                else {
+                    attendants[item] = attendants[item].filter( function (user) {
+                        return user != respondent
+                    })
+                }
+            } 
+            attendance.update(attendants);
+            updateAttendanceCheckPoll(timestamp, attendants)
+        }
+    })
+    
     response.send(''); 
+
 });
