@@ -78,6 +78,7 @@ async function updateAttendanceCheckPoll(timestamp, attendants){
         "content-type": "application/json",
         "Authorization": 'Bearer ' + API_KEY
     }
+    console.log(messages)
     // API CALL
     try { 
         const response = await axios.post(API_ENDPOINT + "/chat.update", messages, { headers: headers })
@@ -99,7 +100,7 @@ app.post('/endpoint', (request, response) => {
     console.log(requestJson)
     const value = requestJson.actions[0].value
     const respondent = "<@" + requestJson.user.name + ">"
-    const timestamp = requestJson.ts
+    const timestamp = requestJson.message_ts
     // const value = request.body.value
     // const respondent = "<@" + request.body.user.name + ">"
     // const timestamp = 123123124
