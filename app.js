@@ -62,15 +62,15 @@ async function updateAttendanceCheckPoll(timestamp, attendants){
         console.log(attendants[item].length)
         const cnt = attendants[item].length
         if (item == "home") {
-            messages.attachments[1].blocks[0].text = "*在宅*\n" + text
+            messages.attachments[1].blocks[0].text.text = "*在宅*\n" + text
             messages.attachments[1].blocks[1].elements[0].text = "合計" + cnt + "人"
         }
         else if (item == "osaki") {
-            messages.attachments[2].blocks[0].text = "*大崎*\n" + text
+            messages.attachments[2].blocks[0].text.text = "*大崎*\n" + text
             messages.attachments[2].blocks[1].elements[0].text = "合計" + cnt + "人"
         }
         else {
-            messages.attachments[3].blocks[0].text = "*その他*\n" + text
+            messages.attachments[3].blocks[0].text.text = "*その他*\n" + text
             messages.attachments[3].blocks[1].elements[0].text = "合計" + cnt + "人"
         }
     }
