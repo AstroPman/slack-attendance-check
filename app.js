@@ -98,16 +98,15 @@ app.get('/', (request, response) => {
 app.post('/endpoint', (request, response) => {
     
     const requestJson = JSON.parse(request.body.payload) 
-    console.log(requestJson)
     const value = requestJson.actions[0].value
     const respondent = "<@" + requestJson.user.name + ">"
     const timestamp = requestJson.message.ts
-    console.log('timestamp: ', timestamp)
+    
     // const value = request.body.value
     // const respondent = "<@" + request.body.user.name + ">"
     // const timestamp = 123123124
     
-    const attendance = firebaseDb.ref('/').child('attendance/' + ( Number(timestamp) * 10^6).toString())
+    const attendance = firebaseDb.ref('/').child('attendance/' + ( Number(timestamp) * 10 ** 6).toString())
     attendance.once('value', snapshot => {
         const attendants = snapshot.val()
         if(attendants === null){
