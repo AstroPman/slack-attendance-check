@@ -35,10 +35,15 @@ function getToday () {
     const year  = date.getFullYear();
     const month = date.getMonth() + 1;
     const day   = date.getDate();
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    const dayOfWeek = date.getDay()
+    const dayOfWeekStr = [ "日", "月", "火", "水", "木", "金", "土" ][dayOfWeek]
     const today = (year + '年' + month + '月' + day + '日');
     const todayString = year.toString() + month.toString() + day.toString()
-    return [today, todayString]
+    return [today, todayString, dayOfWeekStr]
 }
+getToday()
 
 async function postAttendanceCheckPoll(){
     // Headers
@@ -162,7 +167,10 @@ app.post('/endpoint', (request, response) => {
 });
 
 
-cron.schedule('40 * * * *', () => {
-    postAttendanceCheckPoll()
-    console.log('cron excuted')
+cron.schedule('* * * * *', () => {
+    const dayOfWeek = getToday()[2]
+    if (dayOfWeek != "土" || dayOfWeek != "日" ) {
+        //土日以外実行されない
+        postAttendanceCheckPoll()
+    }
 });
