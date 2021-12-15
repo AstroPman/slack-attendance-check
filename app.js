@@ -94,7 +94,9 @@ app.get('/', (request, response) => {
 });
 
 app.post('/endpoint', (request, response) => {
+    
     const requestJson = JSON.parse(request.body.payload) 
+    console.log(requestJson)
     const value = requestJson.actions[0].value
     const respondent = "<@" + requestJson.user.name + ">"
     const timestamp = requestJson.ts
