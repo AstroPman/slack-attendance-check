@@ -101,7 +101,7 @@ app.post('/endpoint', (request, response) => {
     console.log(requestJson)
     const value = requestJson.actions[0].value
     const respondent = "<@" + requestJson.user.name + ">"
-    const timestamp = requestJson.message_ts
+    const timestamp = requestJson.message.ts
     console.log('timestamp: ', timestamp)
     // const value = request.body.value
     // const respondent = "<@" + request.body.user.name + ">"
