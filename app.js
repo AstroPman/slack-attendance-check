@@ -148,9 +148,7 @@ app.post('/endpoint', (request, response) => {
     // const respondent = "<@" + request.body.user.name + ">"
     // const timestamp = 123123124
     
-    const today = getToday()[1]
-    
-    const attendance = firebaseDb.ref('/').child('attendance/' + timestamp)
+    const attendance = firebaseDb.ref('/').child('attendance/' + (timestamp * 10^6).toString())
     attendance.once('value', snapshot => {
         const attendants = snapshot.val()
         if(attendants === null){
