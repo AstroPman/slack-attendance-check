@@ -21,7 +21,7 @@
 					"type": "section",
 					"text": {
 						"type": "mrkdwn",
-						"text": "本日の出社状況を教えてください。<!channel>"
+						"text": "*本日の出社状況を教えてください。*<!channel>"
 					}
 				},
 				{
