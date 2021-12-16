@@ -3,9 +3,11 @@ const fs = require('fs');
 const axios = require('axios');
 require('dotenv').config();
 
+
 const firebaseDb =  require('./firebase.js');
+const weatherData = require('./weather.js')
 const cron = require('node-cron');
-const { time } = require('console');
+
 
 
 // Slack Configureation
@@ -13,6 +15,7 @@ const CHANNEL_ID = process.env.CHANNEL_ID_PROD; // kmp_kk_出社状況確認
 // const CHANNEL_ID = process.env.CHANNEL_ID_TEST; // baymax-sandbox
 const API_KEY = process.env.API_KEY
 const API_ENDPOINT = "https://slack.com/api"
+
 
 // Express 
 const app = express();
@@ -24,10 +27,7 @@ app.listen(port, () => {
     console.log(`Express Server Listen START at port=${port}`);
 });
 
-// Edit messages
-const messages = JSON.parse(fs.readFileSync('./message_template.json', 'utf8'));
-messages.channel = CHANNEL_ID
-messages.attachments[0].blocks[0].text.text = getToday()[0] + "の出社状況"
+
 
 function getToday () {
     // Date
@@ -39,18 +39,28 @@ function getToday () {
     const minute = date.getMinutes();
     const dayOfWeek = date.getDay()
     const dayOfWeekStr = [ "日", "月", "火", "水", "木", "金", "土" ][dayOfWeek]
-    const today = (year + '年' + month + '月' + day + '日');
+    const today = year + '年' + month + '月' + day + '日' + '(' + dayOfWeekStr + ')';
     const todayString = year.toString() + month.toString() + day.toString()
     return [today, todayString, dayOfWeekStr]
 }
-getToday()
 
 async function postAttendanceCheckPoll(){
+    // Weather
+    const weather = await weatherData()
+
+    // Edit messages
+    const messages = JSON.parse(fs.readFileSync('./message_template.json', 'utf8'));
+    messages.channel = CHANNEL_ID
+    messages.attachments[0].blocks[0].text.text = getToday()[0] + "の出社状況"
+    messages.attachments[0].blocks[2].text.text =`*出社状況を教えてください。*<!channel>\n今日の大崎の天気: ${weather.description}\n:small_orange_diamond: 最高気温: *${weather.maxTemp}℃*\n:small_blue_diamond: 最低気温: *${weather.minTemp}℃*`
+    messages.attachments[0].blocks[2].accessory.image_url = weather.iconUrl
     // Headers
     const headers = {
         "content-type": "application/json",
         "Authorization": 'Bearer ' + API_KEY
     }
+
+    
     // API CALL
     try { 
         const response = await axios.post(API_ENDPOINT + "/chat.postMessage", messages, { headers: headers })
@@ -94,17 +104,41 @@ async function updateAttendanceCheckPoll(timestamp, attendants){
     } 
 }
 
+async function postAttendanceCheckRemind(){
+    // Edit messages
+    const messages = JSON.parse(fs.readFileSync('./message_template.json', 'utf8'));
+    messages.channel = CHANNEL_ID
+    messages.attachments[0].blocks[0].text.text = getToday()[0] + "の出社状況（リマインド）"
+    messages.attachments[0].blocks[2].text.text = ":bangbang:*未回答の方はご回答お願いいたします。*:bangbang:"
+    delete messages.attachments[0].blocks[2].accessory
+    messages.attachments.splice(1,messages.attachments.length - 1)
+    messages.attachments[0].blocks.splice(3, 1)
 
-app.get('/', (request, response) => {
+    const headers = {
+        "content-type": "application/json",
+        "Authorization": 'Bearer ' + API_KEY
+    }
+
+    // API CALL
+    try { 
+        const response = await axios.post(API_ENDPOINT + "/chat.postMessage", messages, { headers: headers })
+        console.log(response.data); 
+    } catch (error) { 
+        console.log(error.response.body); 
+    } 
+}
+
+
+app.get('/api/v1/', (request, response) => {
     response.send('Hello, World'); 
     postAttendanceCheckPoll()
 });
 
-app.get('/livenessProbe', (request, response) => {
+app.get('/api/v1/livenessProbe', (request, response) => {
     response.send("I'm awake!!");
 });
 
-app.post('/endpoint', (request, response) => {
+app.post('/api/v1/endpoint', (request, response) => {
     
     const requestJson = JSON.parse(request.body.payload) 
     const value = requestJson.actions[0].value
@@ -178,3 +212,13 @@ cron.schedule('0 10 * * *', () => {
         postAttendanceCheckPoll()
     }
 });
+
+cron.schedule('0 13 * * *', () => {
+    const dayOfWeek = getToday()[2]
+    if (dayOfWeek != "土" || dayOfWeek != "日" ) {
+        //土日以外実行されない
+        postAttendanceCheckRemind()
+    }
+});
+
+
