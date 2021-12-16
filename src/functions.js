@@ -68,12 +68,12 @@ exports.updateAttendanceCheckPoll = async function updateAttendanceCheckPoll(tim
             messages.attachments[1].blocks[1].elements[0].text = "合計" + cnt + "人"
         }
         else if (item == "osaki") {
-            messages.attachments[3].blocks[0].text.text = "*大崎*\n" + text
-            messages.attachments[3].blocks[1].elements[0].text = "合計" + cnt + "人"
+            messages.attachments[2].blocks[0].text.text = "*大崎*\n" + text
+            messages.attachments[2].blocks[1].elements[0].text = "合計" + cnt + "人"
         }
         else {
-            messages.attachments[5].blocks[0].text.text = "*その他*\n" + text
-            messages.attachments[5].blocks[1].elements[0].text = "合計" + cnt + "人"
+            messages.attachments[3].blocks[0].text.text = "*その他*\n" + text
+            messages.attachments[3].blocks[1].elements[0].text = "合計" + cnt + "人"
         }
     }
     // Headers
