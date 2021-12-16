@@ -21,6 +21,7 @@ app.listen(port, () => {
 // API
 app.get('/api/v1/', (request, response) => {
     response.send('Hello, World'); 
+    functions.postAttendanceCheckPoll()
 });
 
 app.get('/api/v1/livenessProbe', (request, response) => {
