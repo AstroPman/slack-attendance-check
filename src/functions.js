@@ -56,7 +56,8 @@ exports.updateAttendanceCheckPoll = async function updateAttendanceCheckPoll(tim
     messages.attachments[0].blocks[2].text.text =`*出社状況を教えてください。*<!channel>\n今日の大崎の天気: ${weather.description}\n:small_orange_diamond: 最高気温: *${weather.maxTemp}℃*\n:small_blue_diamond: 最低気温: *${weather.minTemp}℃*`
     messages.attachments[0].blocks[2].accessory.image_url = weather.iconUrl
     messages.ts = timestamp
-    
+    const weather = await weatherData()
+
     for (item in attendants) {
         const text = attendants[item].join(',')
         console.log(attendants[item].length)
