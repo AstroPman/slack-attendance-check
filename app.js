@@ -11,8 +11,8 @@ const cron = require('node-cron');
 
 
 // Slack Configureation
-// const CHANNEL_ID = process.env.CHANNEL_ID_PROD; // kmp_kk_出社状況確認
-const CHANNEL_ID = process.env.CHANNEL_ID_TEST; // baymax-sandbox
+const CHANNEL_ID = process.env.CHANNEL_ID_PROD; // kmp_kk_出社状況確認
+// const CHANNEL_ID = process.env.CHANNEL_ID_TEST; // baymax-sandbox
 const API_KEY = process.env.API_KEY
 const API_ENDPOINT = "https://slack.com/api"
 
@@ -29,6 +29,9 @@ app.listen(port, () => {
 
 
 
+
+
+// Functions
 function getToday () {
     // Date
     const date  = new Date();
@@ -150,6 +153,7 @@ async function postCloudMeeting(){
     } 
 }
 
+// API
 app.get('/api/v1/', (request, response) => {
     response.send('Hello, World'); 
 });
@@ -225,6 +229,7 @@ app.post('/api/v1/endpoint', (request, response) => {
 });
 
 
+// Cron Jobs
 cron.schedule('0 10 * * *', () => {
     const dayOfWeek = getToday()[2]
     if (dayOfWeek != "土" || dayOfWeek != "日" ) {
