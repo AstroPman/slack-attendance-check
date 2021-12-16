@@ -54,10 +54,10 @@ exports.updateAttendanceCheckPoll = async function updateAttendanceCheckPoll(tim
     const weather = await weatherData()
     const messages = JSON.parse(fs.readFileSync('./src/message_template.json', 'utf8'));
     messages.channel = CHANNEL_ID
+    messages.ts = timestamp
     messages.attachments[0].blocks[0].text.text = exports.getToday()[0] + "の出社状況"
     messages.attachments[0].blocks[2].text.text =`*出社状況を教えてください。*<!channel>\n今日の大崎の天気: ${weather.description}\n:small_orange_diamond: 最高気温: *${weather.maxTemp}℃*\n:small_blue_diamond: 最低気温: *${weather.minTemp}℃*`
     messages.attachments[0].blocks[2].accessory.image_url = weather.iconUrl
-    messages.ts = timestamp
 
     for (item in attendants) {
         const text = attendants[item].join(',')
@@ -68,12 +68,12 @@ exports.updateAttendanceCheckPoll = async function updateAttendanceCheckPoll(tim
             messages.attachments[1].blocks[1].elements[0].text = "合計" + cnt + "人"
         }
         else if (item == "osaki") {
-            messages.attachments[2].blocks[0].text.text = "*大崎*\n" + text
-            messages.attachments[2].blocks[1].elements[0].text = "合計" + cnt + "人"
+            messages.attachments[3].blocks[0].text.text = "*大崎*\n" + text
+            messages.attachments[3].blocks[1].elements[0].text = "合計" + cnt + "人"
         }
         else {
-            messages.attachments[3].blocks[0].text.text = "*その他*\n" + text
-            messages.attachments[3].blocks[1].elements[0].text = "合計" + cnt + "人"
+            messages.attachments[5].blocks[0].text.text = "*その他*\n" + text
+            messages.attachments[5].blocks[1].elements[0].text = "合計" + cnt + "人"
         }
     }
     // Headers
