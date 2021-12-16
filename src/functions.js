@@ -3,8 +3,8 @@ const axios = require('axios');
 
 const weatherData = require('./weather.js')
 // Slack Configureation
-// const CHANNEL_ID = process.env.CHANNEL_ID_PROD; // kmp_kk_出社状況確認
-const CHANNEL_ID = process.env.CHANNEL_ID_TEST; // baymax-sandbox
+const CHANNEL_ID = process.env.CHANNEL_ID_PROD; // kmp_kk_出社状況確認
+// const CHANNEL_ID = process.env.CHANNEL_ID_TEST; // baymax-sandbox
 const API_KEY = process.env.API_KEY
 const API_ENDPOINT = "https://slack.com/api"
 
@@ -64,15 +64,15 @@ exports.updateAttendanceCheckPoll = async function updateAttendanceCheckPoll(tim
         console.log(attendants[item].length)
         const cnt = attendants[item].length
         if (item == "home") {
-            messages.attachments[1].blocks[0].text.text = "*在宅*\n" + text
+            messages.attachments[1].blocks[0].text.text = ":house:  *在宅*\n" + text
             messages.attachments[1].blocks[1].elements[0].text = "合計" + cnt + "人"
         }
         else if (item == "osaki") {
-            messages.attachments[2].blocks[0].text.text = "*大崎*\n" + text
+            messages.attachments[2].blocks[0].text.text = ":office:  *大崎*\n" + text
             messages.attachments[2].blocks[1].elements[0].text = "合計" + cnt + "人"
         }
         else {
-            messages.attachments[3].blocks[0].text.text = "*その他*\n" + text
+            messages.attachments[3].blocks[0].text.text = ":grey_question:  *その他*\n" + text
             messages.attachments[3].blocks[1].elements[0].text = "合計" + cnt + "人"
         }
     }
