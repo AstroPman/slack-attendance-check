@@ -11,8 +11,8 @@ const cron = require('node-cron');
 
 
 // Slack Configureation
-const CHANNEL_ID = process.env.CHANNEL_ID_PROD; // kmp_kk_出社状況確認
-// const CHANNEL_ID = process.env.CHANNEL_ID_TEST; // baymax-sandbox
+// const CHANNEL_ID = process.env.CHANNEL_ID_PROD; // kmp_kk_出社状況確認
+const CHANNEL_ID = process.env.CHANNEL_ID_TEST; // baymax-sandbox
 const API_KEY = process.env.API_KEY
 const API_ENDPOINT = "https://slack.com/api"
 
@@ -41,7 +41,7 @@ function getToday () {
     const dayOfWeekStr = [ "日", "月", "火", "水", "木", "金", "土" ][dayOfWeek]
     const today = year + '年' + month + '月' + day + '日' + '(' + dayOfWeekStr + ')';
     const todayString = year.toString() + month.toString() + day.toString()
-    return [today, todayString, dayOfWeekStr]
+    return [today, todayString, dayOfWeekStr, day]
 }
 
 async function postAttendanceCheckPoll(){
@@ -128,10 +128,30 @@ async function postAttendanceCheckRemind(){
     } 
 }
 
+async function postCloudMeeting(){
+    // Edit messages
+    const messages = JSON.parse(fs.readFileSync('./message_template_cloud_meeting.json', 'utf8'));
+    messages.channel = "C02JLJFPJ5S"
+    const today = getToday()
+    const countdown = 31 - today[3]
+    messages.blocks[4].elements[0].text = today[0] + "（2022年まであと" + countdown + "日）"
+
+    const headers = {
+        "content-type": "application/json",
+        "Authorization": 'Bearer ' + API_KEY
+    }
+
+    // API CALL
+    try { 
+        const response = await axios.post(API_ENDPOINT + "/chat.postMessage", messages, { headers: headers })
+        console.log(response.data); 
+    } catch (error) { 
+        console.log(error.response.body); 
+    } 
+}
 
 app.get('/api/v1/', (request, response) => {
     response.send('Hello, World'); 
-    postAttendanceCheckPoll()
 });
 
 app.get('/api/v1/livenessProbe', (request, response) => {
@@ -221,4 +241,10 @@ cron.schedule('0 13 * * *', () => {
     }
 });
 
-
+cron.schedule('15 9 * * *', () => {
+    const dayOfWeek = getToday()[2]
+    if (dayOfWeek != "土" || dayOfWeek != "日" ) {
+        //土日以外実行されない
+        postCloudMeeting()
+    }
+});

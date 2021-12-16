@@ -1,0 +1,49 @@
+{
+    "channel": "channel_id",
+	"blocks": [
+		{
+			"type": "header",
+			"text": {
+				"type": "plain_text",
+				"text": ":sunny:デジタル共通基盤朝会スレッド:sunny:",
+				"emoji": true
+			}
+		},
+		{
+			"type": "actions",
+			"elements": [
+				{
+					"type": "button",
+					"text": {
+						"type": "plain_text",
+						"text": ":webex: 会議を開く",
+						"emoji": true
+					},
+					"value": "click_me_123",
+					"url": "https://kyndryl.webex.com/kyndryl/j.php?MTID=mb08de1a552041ba2c02923106a1e48d1",
+					"action_id": "actionId-0"
+				}
+			]
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*関連資料リンク*\n:white_small_square:<https://ibm.box.com/s/ylxdqlza0aycir5f3qep98ju5trrkm0l|勤務予定表>\n :white_small_square:<https://digitalserviceproject.slack.com/archives/C02KVPYM2BA|Webex更新情報（to #基盤-アプリ連絡用）>\n :white_small_square:<https://developer.webex.com/docs/api/changelog|Webex API Change Log>\n :white_small_square:<https://kyndryl.slack.com/archives/C02KRRQJE4R|GitLabコミット確認>\n :white_small_square:<https://digitalserviceproject.slack.com/archives/C02K12XU6TV|IBMCloudメンテナンス通知>\n :white_small_square:<https://digitalserviceproject.slack.com/archives/G012RTBH9KR|WatsonStudio通知（音声アップロード）>"
+			}
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "context",
+			"elements": [
+				{
+					"type": "plain_text",
+					"text": "2021年12月16日（2022年まであと15日）",
+					"emoji": true
+				}
+			]
+		}
+	]
+}
