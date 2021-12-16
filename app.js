@@ -100,6 +100,10 @@ app.get('/', (request, response) => {
     postAttendanceCheckPoll()
 });
 
+app.get('/livenessProbe', (request, response) => {
+    response.send("I'm awake!!");
+});
+
 app.post('/endpoint', (request, response) => {
     
     const requestJson = JSON.parse(request.body.payload) 
