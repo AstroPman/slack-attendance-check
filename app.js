@@ -94,8 +94,8 @@ app.post('/api/v1/endpoint', (request, response) => {
 
 app.get('/api/v1/postCloudMeeting', (request, response) => {
     response.send('');
-    console.log(request) 
-    // functions.postCloudMeeting()
+    // console.log(request) 
+    functions.postCloudMeeting()
 });
 
 app.get('/api/v1/postAttendanceCheckPoll', (request, response) => {
@@ -134,5 +134,8 @@ cron.schedule('15 9 * * *', () => {
 });
 
 cron.schedule('* * * * *', () => {
-    console.log('excuted every minute')
+    const dayOfWeek = getToday()[2]
+    if (dayOfWeek != "土" || dayOfWeek != "日" ) {
+        console.log('excuted every minute')
+    }
 });
