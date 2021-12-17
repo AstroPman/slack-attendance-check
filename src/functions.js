@@ -98,7 +98,7 @@ exports.postAttendanceCheckRemind = async function postAttendanceCheckRemind(){
     const messages = JSON.parse(fs.readFileSync('./src/message_template.json', 'utf8'));
     messages.channel = CHANNEL_ID
     messages.attachments[0].blocks[0].text.text = exports.getToday()[0] + "の出社状況（リマインド）"
-    messages.attachments[0].blocks[2].text.text = ":bangbang:*未回答の方はご回答お願いいたします。*:bangbang:"
+    messages.attachments[0].blocks[2].text.text = ":bangbang:* 未回答の方はご回答お願いいたします。<!channel> *:bangbang:"
     delete messages.attachments[0].blocks[2].accessory
     messages.attachments.splice(1,messages.attachments.length - 1)
     messages.attachments[0].blocks.splice(3, 1)
