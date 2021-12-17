@@ -110,7 +110,7 @@ app.get('/api/v1/postAttendanceCheckRemind', (request, response) => {
 
 // Cron Jobs
 cron.schedule('0 10 * * *', () => {
-    const dayOfWeek = getToday()[2]
+    const dayOfWeek = functions.getToday()[2]
     if (dayOfWeek != "土" || dayOfWeek != "日" ) {
         //土日以外実行されない
         functions.postAttendanceCheckPoll()
@@ -118,7 +118,7 @@ cron.schedule('0 10 * * *', () => {
 });
 
 cron.schedule('0 13 * * *', () => {
-    const dayOfWeek = getToday()[2]
+    const dayOfWeek = functions.getToday()[2]
     if (dayOfWeek != "土" || dayOfWeek != "日" ) {
         //土日以外実行されない
         functions.postAttendanceCheckRemind()
@@ -126,7 +126,7 @@ cron.schedule('0 13 * * *', () => {
 });
 
 cron.schedule('15 9 * * *', () => {
-    const dayOfWeek = getToday()[2]
+    const dayOfWeek = functions.getToday()[2]
     if (dayOfWeek != "土" || dayOfWeek != "日" ) {
         //土日以外実行されない
         functions.postCloudMeeting()
@@ -134,7 +134,7 @@ cron.schedule('15 9 * * *', () => {
 });
 
 cron.schedule('* * * * *', () => {
-    const dayOfWeek = getToday()[2]
+    const dayOfWeek = functions.getToday()[2]
     if (dayOfWeek != "土" || dayOfWeek != "日" ) {
         console.log('excuted every minute')
     }
