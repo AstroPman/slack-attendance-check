@@ -132,10 +132,3 @@ cron.schedule('15 9 * * *', () => {
         functions.postCloudMeeting()
     }
 });
-
-cron.schedule('* * * * *', () => {
-    const dayOfWeek = functions.getToday()[2]
-    if (dayOfWeek != "土" || dayOfWeek != "日" ) {
-        console.log('excuted every minute')
-    }
-});
