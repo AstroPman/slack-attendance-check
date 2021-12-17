@@ -22,7 +22,8 @@ app.listen(port, () => {
 app.get('/api/v1/', (request, response) => {
     response.send('Hello, World'); 
     // functions.postCloudMeeting()
-    functions.postAttendanceCheckPoll()
+    // functions.postAttendanceCheckPoll()
+    functions.postAttendanceCheckRemind()
 });
 
 app.get('/api/v1/livenessProbe', (request, response) => {
