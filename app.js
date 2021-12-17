@@ -17,13 +17,9 @@ app.listen(port, () => {
 });
 
 
-
 // API
 app.get('/api/v1/', (request, response) => {
     response.send('Hello, World'); 
-    // functions.postCloudMeeting()
-    // functions.postAttendanceCheckPoll()
-    functions.postAttendanceCheckRemind()
 });
 
 app.get('/api/v1/livenessProbe', (request, response) => {
@@ -96,6 +92,21 @@ app.post('/api/v1/endpoint', (request, response) => {
 
 });
 
+app.get('/api/v1/postCloudMeeting', (request, response) => {
+    response.send('');
+    console.log(request) 
+    // functions.postCloudMeeting()
+});
+
+app.get('/api/v1/postAttendanceCheckPoll', (request, response) => {
+    response.send(''); 
+    functions.postAttendanceCheckPoll()
+});
+app.get('/api/v1/postAttendanceCheckRemind', (request, response) => {
+    response.send(''); 
+    functions.postAttendanceCheckRemind()
+});
+
 
 // Cron Jobs
 cron.schedule('0 10 * * *', () => {
@@ -120,4 +131,8 @@ cron.schedule('15 9 * * *', () => {
         //土日以外実行されない
         functions.postCloudMeeting()
     }
+});
+
+cron.schedule('* * * * *', () => {
+    console.log('excuted every minute')
 });
