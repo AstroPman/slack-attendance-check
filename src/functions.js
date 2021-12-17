@@ -2,9 +2,10 @@ const fs = require('fs');
 const axios = require('axios');
 
 const weatherData = require('./weather.js')
+
 // Slack Configureation
-const CHANNEL_ID = process.env.CHANNEL_ID_PROD; // kmp_kk_出社状況確認
-// const CHANNEL_ID = process.env.CHANNEL_ID_TEST; // baymax-sandbox
+// const CHANNEL_ID = process.env.CHANNEL_ID_PROD; // kmp_kk_出社状況確認
+const CHANNEL_ID = process.env.CHANNEL_ID_TEST; // baymax-sandbox
 const API_KEY = process.env.API_KEY
 const API_ENDPOINT = "https://slack.com/api"
 
@@ -26,6 +27,7 @@ exports.getToday = function getToday () {
 exports.postAttendanceCheckPoll = async function postAttendanceCheckPoll(){
     // Weather
     const weather = await weatherData()
+    console.log('weather: ', weather)
 
     // Edit messages
     const messages = JSON.parse(fs.readFileSync('./src/message_template.json', 'utf8'));
