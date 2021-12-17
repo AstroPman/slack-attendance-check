@@ -120,8 +120,8 @@ exports.postAttendanceCheckRemind = async function postAttendanceCheckRemind(){
 exports.postCloudMeeting = async function postCloudMeeting(){
     // Edit messages
     const messages = JSON.parse(fs.readFileSync('./src/message_template_cloud_meeting.json', 'utf8'));
-    messages.channel = "C02JLJFPJ5S"
-    // messages.channel = CHANNEL_ID
+    // messages.channel = "C02JLJFPJ5S"
+    messages.channel = CHANNEL_ID
     const today = exports.getToday()
     const countdown = 31 - today[3]
     messages.blocks[4].elements[0].text = ":mscalendar: " + today[0] + "（2022年まであと" + countdown + "日）"
