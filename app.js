@@ -22,7 +22,7 @@ app.listen(port, () => {
 app.get('/api/v1/', (request, response) => {
     response.send('Hello, World'); 
     functions.postCloudMeeting()
-    functions.postAttendanceCheckPoll()
+    // functions.postAttendanceCheckPoll()
 });
 
 app.get('/api/v1/livenessProbe', (request, response) => {
