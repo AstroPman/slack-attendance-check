@@ -4,9 +4,10 @@ const axios = require('axios');
 const weatherData = require('./weather.js')
 const financeData = require('./finance.js')
 
+
 // Slack Configureation
-// const CHANNEL_ID = process.env.CHANNEL_ID_PROD; // kmp_kk_出社状況確認
-const CHANNEL_ID = process.env.CHANNEL_ID_TEST; // baymax-sandbox
+const CHANNEL_ID = process.env.CHANNEL_ID_PROD; // kmp_kk_出社状況確認
+// const CHANNEL_ID = process.env.CHANNEL_ID_TEST; // baymax-sandbox
 const API_KEY = process.env.API_KEY
 const API_ENDPOINT = "https://slack.com/api"
 
