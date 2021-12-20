@@ -18,18 +18,6 @@ const headers = {
 }
 
 module.exports = async function getFinanceData(){
-    const date  = new Date();
-    let year  = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day   = date.getDate();
-    const today = year + '-' + month + '-' + day;
-    date.setDate(date.getDate() - 1);
-    year  = date.getFullYear();
-    month = date.getMonth() + 1;
-    day   = date.getDate();
-    const yesterday = year + '-' + month + '-' + day;
-    
-    
     // API CALL
     try { 
         const response = await axios.get(API_ENDPOINT, { headers: headers, params : params})
