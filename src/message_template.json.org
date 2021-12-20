@@ -1,44 +1,30 @@
 {
     "channel": "channel_id",
-    "attachments": [			
-		{
+    "attachments": [
+        {
 			"color": "#ff7f50",
-			"blocks": [
-				{
+            "blocks": [
+                {
 					"type": "header",
 					"text": {
 						"type": "plain_text",
-						"text": "YYYY年MM月DD日(*)の出社状況",
+						"text": "This is a header block",
 						"emoji": true
 					}
 				},
 				{
 					"type": "divider"
-				}
-            ]
-        },
-		{
-			"color": "#ff7f50",
-			"blocks": [
-				{
-					"type": "section",
-					"text": {
-						"type": "mrkdwn",
-						"text": ":for-your-information: *Information*"
-					}
-				}
-            ]
-        },
-		{
-            "blocks": [
-                {
-					"type": "divider"
 				},
-				{
+                {
 					"type": "section",
 					"text": {
 						"type": "mrkdwn",
-						"text": "*本日の出社状況を教えてください。*<!channel>"
+						"text": "*本日の出社状況を教えてください。*<!channel>\n本日の天気：晴れ時々曇り\n最高気温： 12℃\n最低気温:5℃"
+					},
+					"accessory": {
+						"type": "image",
+						"image_url": "http://openweathermap.org/img/wn/10d@4x.png",
+						"alt_text": "calendar thumbnail"
 					}
 				},
 				{
@@ -81,7 +67,7 @@
 				}
             ]
         },
-		{
+        {
 			"blocks": [
 				{
 					"type": "section",
