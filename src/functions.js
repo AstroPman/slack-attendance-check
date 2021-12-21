@@ -6,8 +6,8 @@ const financeData = require('./finance.js')
 
 
 // Slack Configureation
-const CHANNEL_ID = process.env.CHANNEL_ID_PROD; // kmp_kk_出社状況確認
-// const CHANNEL_ID = process.env.CHANNEL_ID_TEST; // baymax-sandbox
+// const CHANNEL_ID = process.env.CHANNEL_ID_PROD; // kmp_kk_出社状況確認
+const CHANNEL_ID = process.env.CHANNEL_ID_TEST; // baymax-sandbox
 const API_KEY = process.env.API_KEY
 const API_ENDPOINT = "https://slack.com/api"
 
@@ -96,7 +96,6 @@ async function insertInformation() {
     return messages
 }
 
-
 exports.postAttendanceCheckPoll = async function postAttendanceCheckPoll(){
     // Weather
     // const weather = await weatherData()
@@ -129,13 +128,17 @@ exports.postAttendanceCheckPoll = async function postAttendanceCheckPoll(){
     }
 }
 
-exports.updateAttendanceCheckPoll = async function updateAttendanceCheckPoll(timestamp, attendants){
+exports.updateAttendanceCheckPoll = async function updateAttendanceCheckPoll(timestamp, attendants, messages){
     
     // const weather = await weatherData()
     // const messages = JSON.parse(fs.readFileSync('./src/message_template.json', 'utf8'));
     // messages.channel = CHANNEL_ID
-    const messages = await insertInformation()
-    messages.ts = timestamp
+    
+    
+    // const messages = await insertInformation()
+    // messages.ts = timestamp
+    
+    
     // messages.attachments[0].blocks[0].text.text = exports.getToday()[0] + "の出社状況"
     // messages.attachments[0].blocks[2].text.text =`*出社状況を教えてください。*<!channel>\n今日の大崎の天気: ${weather.description}\n:small_orange_diamond: 最高気温: *${weather.maxTemp}℃*\n:small_blue_diamond: 最低気温: *${weather.minTemp}℃*`
     // messages.attachments[0].blocks[2].accessory.image_url = weather.iconUrl
@@ -181,7 +184,7 @@ exports.postAttendanceCheckRemind = async function postAttendanceCheckRemind(){
     const messages = JSON.parse(fs.readFileSync('./src/message_template.json', 'utf8'));
     messages.channel = CHANNEL_ID
     messages.attachments[0].blocks[0].text.text = exports.getToday()[0] + "の出社状況（リマインド）"
-    messages.attachments[1].blocks[0].text.text = ":bangbang:* 未回答の方はご回答お願いいたします。<!channel> *:bangbang:"
+    messages.attachments[1].blocks[0].text.text = ":bangbang: *未回答の方はご回答お願いいたします。<!channel>* :bangbang:"
     messages.attachments.splice(2, messages.attachments.length - 1)
 
     const headers = {
