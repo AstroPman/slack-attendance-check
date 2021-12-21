@@ -132,8 +132,8 @@ exports.postAttendanceCheckPoll = async function postAttendanceCheckPoll(){
 exports.updateAttendanceCheckPoll = async function updateAttendanceCheckPoll(timestamp, attendants){
     
     // const weather = await weatherData()
-    const messages = JSON.parse(fs.readFileSync('./src/message_template.json', 'utf8'));
-    messages.channel = CHANNEL_ID
+    // const messages = JSON.parse(fs.readFileSync('./src/message_template.json', 'utf8'));
+    // messages.channel = CHANNEL_ID
     const messages = await insertInformation()
     messages.ts = timestamp
     // messages.attachments[0].blocks[0].text.text = exports.getToday()[0] + "の出社状況"
