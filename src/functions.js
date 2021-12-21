@@ -119,10 +119,13 @@ exports.postAttendanceCheckPoll = async function postAttendanceCheckPoll(){
 
     // API CALL
     try { 
-        const response = await axios.post(API_ENDPOINT + "/chat.postMessage", messages, { headers: headers })
-        console.log(response.data); 
+
+        await axios.post(API_ENDPOINT + "/chat.postMessage", messages, { headers: headers })
+
     } catch (error) { 
+
         console.log(error.response); 
+
     }
 }
 
@@ -163,10 +166,13 @@ exports.updateAttendanceCheckPoll = async function updateAttendanceCheckPoll(tim
     console.log(messages)
     // API CALL
     try { 
-        const response = await axios.post(API_ENDPOINT + "/chat.update", messages, { headers: headers })
-        console.log(response.data); 
+
+        await axios.post(API_ENDPOINT + "/chat.update", messages, { headers: headers })
+
     } catch (error) { 
+
         console.log(error.response.body); 
+
     } 
 }
 
@@ -185,10 +191,13 @@ exports.postAttendanceCheckRemind = async function postAttendanceCheckRemind(){
 
     // API CALL
     try { 
-        const response = await axios.post(API_ENDPOINT + "/chat.postMessage", messages, { headers: headers })
-        console.log(response.data); 
+        
+        await axios.post(API_ENDPOINT + "/chat.postMessage", messages, { headers: headers })
+
     } catch (error) { 
+        
         console.log(error.response.body); 
+
     } 
 }
 
@@ -208,9 +217,12 @@ exports.postCloudMeeting = async function postCloudMeeting(){
 
     // API CALL
     try { 
-        const response = await axios.post(API_ENDPOINT + "/chat.postMessage", messages, { headers: headers })
-        console.log(response.data); 
+
+        await axios.post(API_ENDPOINT + "/chat.postMessage", messages, { headers: headers })
+
     } catch (error) { 
+
         console.log(error.response.body); 
+        
     } 
 }

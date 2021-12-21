@@ -32,7 +32,8 @@ app.post('/api/v1/endpoint', (request, response) => {
     const value = requestJson.actions[0].value
     const respondent = "<@" + requestJson.user.name + ">"
     const timestamp = requestJson.message.ts
-    console.log(requestJson.message)
+    console.log('requestJson: ', requestJson)
+    console.log('requestJson.message: ', requestJson.message)
     
     // const value = request.body.value
     // const respondent = "<@" + request.body.user.name + ">"
@@ -48,7 +49,6 @@ app.post('/api/v1/endpoint', (request, response) => {
             const attendants = {
                 [value]: [respondent]
             }
-            console.log("attendants: ", attendants)
             functions.updateAttendanceCheckPoll(timestamp, attendants)
         }
         else if (typeof attendants[value] === "undefined") {
@@ -95,7 +95,6 @@ app.post('/api/v1/endpoint', (request, response) => {
 
 app.get('/api/v1/postCloudMeeting', (request, response) => {
     response.send('');
-    // console.log(request) 
     functions.postCloudMeeting()
 });
 
