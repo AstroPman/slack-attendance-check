@@ -128,11 +128,12 @@ exports.postAttendanceCheckPoll = async function postAttendanceCheckPoll(){
     }
 }
 
-exports.updateAttendanceCheckPoll = async function updateAttendanceCheckPoll(timestamp, attendants, messages){
+exports.updateAttendanceCheckPoll = async function updateAttendanceCheckPoll(messages, attendants){
     
-    // const weather = await weatherData()
-    // const messages = JSON.parse(fs.readFileSync('./src/message_template.json', 'utf8'));
-    // messages.channel = CHANNEL_ID
+    const newMessages = JSON.parse(fs.readFileSync('./src/message_template.json', 'utf8'));
+    newMessages.channel = CHANNEL_ID
+    newMessages.ts = messages.timestamp
+    newMessages.attachments = messages.attachments
     
     
     // const messages = await insertInformation()
@@ -143,22 +144,21 @@ exports.updateAttendanceCheckPoll = async function updateAttendanceCheckPoll(tim
     // messages.attachments[0].blocks[2].text.text =`*出社状況を教えてください。*<!channel>\n今日の大崎の天気: ${weather.description}\n:small_orange_diamond: 最高気温: *${weather.maxTemp}℃*\n:small_blue_diamond: 最低気温: *${weather.minTemp}℃*`
     // messages.attachments[0].blocks[2].accessory.image_url = weather.iconUrl
 
-    console.log('messages: ', messages)
 
     for (item in attendants) {
         const text = attendants[item].join(',')
         const cnt = attendants[item].length
         if (item == "home") {
-            messages.attachments[3].blocks[0].text.text = ":house:  *在宅*\n" + text
-            messages.attachments[3].blocks[1].elements[0].text = "合計" + cnt + "人"
+            newMessages.attachments[3].blocks[0].text.text = ":house:  *在宅*\n" + text
+            newMessages.attachments[3].blocks[1].elements[0].text = "合計" + cnt + "人"
         }
         else if (item == "osaki") {
-            messages.attachments[4].blocks[0].text.text = ":office:  *大崎*\n" + text
-            messages.attachments[4].blocks[1].elements[0].text = "合計" + cnt + "人"
+            newMessages.attachments[4].blocks[0].text.text = ":office:  *大崎*\n" + text
+            newMessages.attachments[4].blocks[1].elements[0].text = "合計" + cnt + "人"
         }
         else {
-            messages.attachments[5].blocks[0].text.text = ":grey_question:  *その他*\n" + text
-            messages.attachments[5].blocks[1].elements[0].text = "合計" + cnt + "人"
+            newMessages.attachments[5].blocks[0].text.text = ":grey_question:  *その他*\n" + text
+            newMessages.attachments[5].blocks[1].elements[0].text = "合計" + cnt + "人"
         }
     }
     // Headers
@@ -166,11 +166,11 @@ exports.updateAttendanceCheckPoll = async function updateAttendanceCheckPoll(tim
         "content-type": "application/json",
         "Authorization": 'Bearer ' + API_KEY
     }
-    console.log(messages)
+
     // API CALL
     try { 
 
-        await axios.post(API_ENDPOINT + "/chat.update", messages, { headers: headers })
+        await axios.post(API_ENDPOINT + "/chat.update", newMessages, { headers: headers })
 
     } catch (error) { 
 
