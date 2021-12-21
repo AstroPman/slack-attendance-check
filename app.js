@@ -32,6 +32,7 @@ app.post('/api/v1/endpoint', (request, response) => {
     const value = requestJson.actions[0].value
     const respondent = "<@" + requestJson.user.name + ">"
     const timestamp = requestJson.message.ts
+    const messages = requestJson.message
     console.log('requestJson: ', requestJson)
     console.log('requestJson.message: ', requestJson.message)
     
@@ -49,7 +50,7 @@ app.post('/api/v1/endpoint', (request, response) => {
             const attendants = {
                 [value]: [respondent]
             }
-            functions.updateAttendanceCheckPoll(timestamp, attendants)
+            functions.updateAttendanceCheckPoll(timestamp, attendants, messages)
         }
         else if (typeof attendants[value] === "undefined") {
             attendance.update({
@@ -63,7 +64,7 @@ app.post('/api/v1/endpoint', (request, response) => {
             }
             attendance.update(attendants)
             attendants[value] = [respondent]
-            functions.updateAttendanceCheckPoll(timestamp, attendants)
+            functions.updateAttendanceCheckPoll(timestamp, attendants, messages)
         }
         else {
             for (const item in attendants) {
@@ -85,7 +86,7 @@ app.post('/api/v1/endpoint', (request, response) => {
                 }
             } 
             attendance.update(attendants);
-            functions.updateAttendanceCheckPoll(timestamp, attendants)
+            functions.updateAttendanceCheckPoll(timestamp, attendants, messages)
         }
     })
     
