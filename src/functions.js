@@ -3,6 +3,8 @@ const axios = require('axios');
 
 const weatherData = require('./weather.js')
 const financeData = require('./finance.js')
+const firebaseDb =  require('./firebase.js');
+const { timeStamp, time } = require('console');
 
 
 // Slack Configureation
@@ -22,10 +24,11 @@ exports.getToday = function getToday () {
     const hour = date.getHours();
     const minute = date.getMinutes();
     const dayOfWeek = date.getDay()
+    const unixtime = date.getTime()
     const dayOfWeekStr = [ "日", "月", "火", "水", "木", "金", "土" ][dayOfWeek]
     const today = year + '年' + month + '月' + day + '日' + '(' + dayOfWeekStr + ')';
     const todayString = year.toString() + month.toString() + day.toString()
-    return [today, todayString, dayOfWeekStr, day]
+    return [today, todayString, dayOfWeekStr, day, unixtime]
 }
 
 async function insertInformation() {
@@ -231,4 +234,25 @@ exports.postCloudMeeting = async function postCloudMeeting(){
         console.log(error.response.body); 
 
     } 
+}
+
+exports.deleteAttendanceDatafromFirebase = async function () {
+    const date = new Date();
+    date.setMonth(date.getMonth() - 1);
+    const oneMonthBeforeUnixtime = date.getTime() * 1000
+    
+    const attendance = firebaseDb.ref('/attendance')
+    attendance.once('value', snapshot => {
+        const removeDays = Object.keys(snapshot.val()).filter(time => {
+            return Number(time) < oneMonthBeforeUnixtime
+        })
+        console.log('1 month ago data will be deleted')
+        console.log('This data will be deleted: ', removeDays)
+        removeDays.forEach( timestamp => {
+            attendance.update({
+                [timestamp]: null
+            })
+        })
+    })
+
 }

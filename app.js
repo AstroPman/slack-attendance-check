@@ -130,3 +130,7 @@ cron.schedule('15 9 * * *', () => {
         functions.postCloudMeeting()
     }
 });
+
+cron.schedule('0 0 * * *', () => {
+    functions.deleteAttendanceDatafromFirebase()
+});
