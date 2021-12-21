@@ -132,7 +132,7 @@ exports.updateAttendanceCheckPoll = async function updateAttendanceCheckPoll(mes
     
     const newMessages = JSON.parse(fs.readFileSync('./src/message_template.json', 'utf8'));
     newMessages.channel = CHANNEL_ID
-    newMessages.ts = messages.timestamp
+    newMessages.ts = messages.ts
     newMessages.attachments = messages.attachments
 
     console.log(newMessages)
