@@ -128,12 +128,12 @@ exports.postAttendanceCheckPoll = async function postAttendanceCheckPoll(){
     }
 }
 
-exports.updateAttendanceCheckPoll = async function updateAttendanceCheckPoll(messages, attendants){
+exports.updateAttendanceCheckPoll = async function updateAttendanceCheckPoll(requestJson, attendants){
     
     const newMessages = JSON.parse(fs.readFileSync('./src/message_template.json', 'utf8'));
-    newMessages.channel = CHANNEL_ID
-    newMessages.ts = messages.ts
-    newMessages.attachments = messages.attachments
+    newMessages.channel = requestJson.container.channel_id
+    newMessages.ts = requestJson.message.ts
+    newMessages.attachments = requestJson.message.attachments
 
     console.log(newMessages)
     
