@@ -134,6 +134,8 @@ exports.updateAttendanceCheckPoll = async function updateAttendanceCheckPoll(mes
     newMessages.channel = CHANNEL_ID
     newMessages.ts = messages.timestamp
     newMessages.attachments = messages.attachments
+
+    console.log(newMessages)
     
     
     // const messages = await insertInformation()
@@ -170,7 +172,8 @@ exports.updateAttendanceCheckPoll = async function updateAttendanceCheckPoll(mes
     // API CALL
     try { 
 
-        await axios.post(API_ENDPOINT + "/chat.update", newMessages, { headers: headers })
+        const response = await axios.post(API_ENDPOINT + "/chat.update", newMessages, { headers: headers })
+        console.log(response.data)
 
     } catch (error) { 
 
