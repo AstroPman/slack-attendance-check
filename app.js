@@ -32,6 +32,7 @@ app.post('/api/v1/endpoint', (request, response) => {
     const value = requestJson.actions[0].value
     const respondent = "<@" + requestJson.user.name + ">"
     const timestamp = requestJson.message.ts
+    console.log(requestJson.message)
     
     // const value = request.body.value
     // const respondent = "<@" + request.body.user.name + ">"
