@@ -7,8 +7,8 @@ const firebaseDb =  require('./firebase.js');
 
 
 // Slack Configureation
-// const CHANNEL_ID = process.env.CHANNEL_ID_PROD; // kmp_kk_出社状況確認
-const CHANNEL_ID = process.env.CHANNEL_ID_TEST; // baymax-sandbox
+const CHANNEL_ID = process.env.CHANNEL_ID_PROD; // kmp_kk_出社状況確認
+// const CHANNEL_ID = process.env.CHANNEL_ID_TEST; // baymax-sandbox
 const API_KEY = process.env.API_KEY
 const API_ENDPOINT = "https://slack.com/api"
 
@@ -140,15 +140,6 @@ async function insertInformation() {
 }
 
 exports.postAttendanceCheckPoll = async function postAttendanceCheckPoll(){
-    // Weather
-    // const weather = await weatherData()
-
-    // Edit messages
-    // const messages = JSON.parse(fs.readFileSync('./src/message_template.json', 'utf8'));
-    // messages.channel = CHANNEL_ID
-    // messages.attachments[0].blocks[0].text.text = exports.getToday()[0] + "の出社状況"
-    // messages.attachments[0].blocks[2].text.text =`*出社状況を教えてください。*<!channel>\n今日の大崎の天気: ${weather.description}\n:small_orange_diamond: 最高気温: *${weather.maxTemp}℃*\n:small_blue_diamond: 最低気温: *${weather.minTemp}℃*`
-    // messages.attachments[0].blocks[2].accessory.image_url = weather.iconUrl
     
     const messages = await insertInformation()
 
@@ -157,8 +148,7 @@ exports.postAttendanceCheckPoll = async function postAttendanceCheckPoll(){
         "content-type": "application/json",
         "Authorization": 'Bearer ' + API_KEY
     }
-    console.log(messages)
-
+    
     // API CALL
     try { 
 
@@ -177,18 +167,6 @@ exports.updateAttendanceCheckPoll = async function updateAttendanceCheckPoll(req
     newMessages.channel = requestJson.container.channel_id
     newMessages.ts = requestJson.message.ts
     newMessages.attachments = requestJson.message.attachments
-
-    console.log(newMessages)
-    
-    
-    // const messages = await insertInformation()
-    // messages.ts = timestamp
-    
-    
-    // messages.attachments[0].blocks[0].text.text = exports.getToday()[0] + "の出社状況"
-    // messages.attachments[0].blocks[2].text.text =`*出社状況を教えてください。*<!channel>\n今日の大崎の天気: ${weather.description}\n:small_orange_diamond: 最高気温: *${weather.maxTemp}℃*\n:small_blue_diamond: 最低気温: *${weather.minTemp}℃*`
-    // messages.attachments[0].blocks[2].accessory.image_url = weather.iconUrl
-
 
     for (item in attendants) {
         const text = attendants[item].join(',')
