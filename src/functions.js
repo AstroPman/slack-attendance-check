@@ -4,12 +4,11 @@ const axios = require('axios');
 const weatherData = require('./weather.js')
 const financeData = require('./finance.js')
 const firebaseDb =  require('./firebase.js');
-const { timeStamp, time } = require('console');
 
 
 // Slack Configureation
-const CHANNEL_ID = process.env.CHANNEL_ID_PROD; // kmp_kk_出社状況確認
-// const CHANNEL_ID = process.env.CHANNEL_ID_TEST; // baymax-sandbox
+// const CHANNEL_ID = process.env.CHANNEL_ID_PROD; // kmp_kk_出社状況確認
+const CHANNEL_ID = process.env.CHANNEL_ID_TEST; // baymax-sandbox
 const API_KEY = process.env.API_KEY
 const API_ENDPOINT = "https://slack.com/api"
 
@@ -84,13 +83,54 @@ async function insertInformation() {
         
     }
     else if (exports.getToday()[2] == "木") {
+        console.log('Today is Thursday')
+        const notifyTimeAtKyndryl = {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": "ILCの入力をお忘れなきようお願いします。"
+            },
+            "accessory": {
+                "type": "button",
+                "text": {
+                    "type": "plain_text",
+                    "text": "Time@Kyndryl :arrow_upper_right:",
+                    "emoji": true
+                },
+                "value": "click_me_123",
+                "url": "https://time.ibm.com/week",
+                "action_id": "time-at-kyndryl"
+            }
+        }
+        messages.attachments[1].blocks.push(notifyTimeAtKyndryl)
+        return messages
     
     }
     else if (exports.getToday()[2] == "金") {
+        console.log('Today is Friday')
+        const notifyTimeAtKyndryl = {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": "ILCの入力をお忘れなきようお願いします。"
+            },
+            "accessory": {
+                "type": "button",
+                "text": {
+                    "type": "plain_text",
+                    "text": "Time@Kyndryl :arrow_upper_right:",
+                    "emoji": true
+                },
+                "value": "click_me_123",
+                "url": "https://time.ibm.com/week",
+                "action_id": "time-at-kyndryl"
+            }
+        }
+        messages.attachments[1].blocks.push(notifyTimeAtKyndryl)
+        return messages
 
     }
     else if(exports.getToday()[2] == "土" || exports.getToday()[2] == "日") {
-
     }
     else {
 
