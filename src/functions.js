@@ -1,7 +1,6 @@
 const fs = require('fs');
 const axios = require('axios');
 const iconv = require('iconv-lite')
-const csvtojson = require('csvtojson')
 
 const weatherData = require('./weather.js')
 const financeData = require('./finance.js')
