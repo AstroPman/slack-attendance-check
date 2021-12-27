@@ -49,38 +49,7 @@
             },
             {
                 "type": "actions",
-                "elements": [
-                    {
-                        "type": "button",
-                        "text": {
-                            "type": "plain_text",
-                            "text": "11:00-12:00",
-                            "emoji": true
-                        },
-                        "value": "click_me_123",
-                        "action_id": "actionId-0"
-                    },
-                    {
-                        "type": "button",
-                        "text": {
-                            "type": "plain_text",
-                            "text": "Click Me",
-                            "emoji": true
-                        },
-                        "value": "click_me_123",
-                        "action_id": "actionId-1"
-                    },
-                    {
-                        "type": "button",
-                        "text": {
-                            "type": "plain_text",
-                            "text": "Click Me",
-                            "emoji": true
-                        },
-                        "value": "click_me_123",
-                        "action_id": "actionId-3"
-                    }
-                ]
+                "elements": []
             },
             {
                 "type": "actions",
