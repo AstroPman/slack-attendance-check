@@ -45,7 +45,7 @@ exports.updateModal = async function (requestJson) {
     try { 
     
         const response = await axios.post(MODAL_API_ENDPOINT + "/views.update", messages, { headers: headers })
-        console.log(response)
+        console.log(response.data)
     
     } catch (error) { 
     
