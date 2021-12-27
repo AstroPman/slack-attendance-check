@@ -1,6 +1,7 @@
 
 const fs = require('fs');
 const axios = require('axios');
+const { text } = require('express');
 
 const MODAL_API_ENDPOINT = 'https://slack.com/api'
 
@@ -57,6 +58,28 @@ exports.updateModal = async function (requestJson) {
 
 exports.pushModal = async function (requestJson) {
     const messages = JSON.parse(fs.readFileSync('./src/message_template_add_options.json', 'utf8'));
+    const option_temp = {
+        "type": "input",
+        "element": {
+            "type": "plain_text_input",
+            "action_id": "plain_text_input-action",
+            "initial_value": "initial_value"
+        },
+        "label": {
+            "type": "plain_text",
+            "text": "Option 1",
+            "emoji": true
+        }
+    }
+
+    requestJson.view.blocks[3].elements.forEach( (element, index) => {
+        num = index + 1
+        option_temp.label.text = "Option " + num
+        option_temp.initial_value = element.text.text
+        messages.view.blocks.splice(num, 0, option_temp)
+        
+    });
+    
     messages.trigger_id = requestJson.trigger_id
 
     messages.view.title.text = "Baymax Poll (updated)"
