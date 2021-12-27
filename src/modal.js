@@ -58,27 +58,25 @@ exports.updateModal = async function (requestJson) {
 
 exports.pushModal = async function (requestJson) {
     const messages = JSON.parse(fs.readFileSync('./src/message_template_add_options.json', 'utf8'));
-    const option_temp = {
-        "type": "input",
-        "element": {
-            "type": "plain_text_input",
-            "action_id": "plain_text_input-action",
-            "initial_value": "initial_value"
-        },
-        "label": {
-            "type": "plain_text",
-            "text": "Option 1",
-            "emoji": true
-        }
-    }
+    const cnt = requestJson.view.blocks[3].elements.length
 
-    requestJson.view.blocks[3].elements.forEach( (element, index) => {
-        num = index + 1
-        option_temp.label.text = "Option " + num
-        option_temp.element.initial_value = element.text.text
-        messages.view.blocks.splice(num, 0, option_temp)
-        
-    });
+    for (let i = 0; i < cnt - 1; i ++) {
+        const num = cnt + 1
+        messages.view.blocks.splice(num , 0, {
+            "type": "input",
+            "element": {
+                "type": "plain_text_input",
+                "action_id": "plain_text_input-action",
+                "initial_value": element.text.text
+            },
+            "label": {
+                "type": "plain_text",
+                "text": "Option " + num,
+                "emoji": true
+            }
+        })
+
+    }
     
     messages.trigger_id = requestJson.trigger_id
 
