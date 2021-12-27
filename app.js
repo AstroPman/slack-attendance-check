@@ -34,15 +34,23 @@ app.post('/api/v1/endpoint', (request, response) => {
     console.log('=========================')
     
     
-    const requestJson = JSON.parse(request.body.payload) 
+    
+    const requestJson = JSON.parse(request.body.payload)
+
+    if (requestJson.container.type == "view") {
+        const viewId = requestJson.container.type
+        const originalMessage = requestJson.container.view
+        console.log('originalMessage: ', originalMessage)
+        modal.updateModal(viewId)
+    }
+
+
+
+
     const value = requestJson.actions[0].value
     const respondent = "<@" + requestJson.user.name + ">"
     const timestamp = requestJson.message.ts
-    
-    // const value = request.body.value
-    // const respondent = "<@" + request.body.user.name + ">"
-    // const timestamp = 123123124
-    
+        
     const attendance = firebaseDb.ref('/').child('attendance/' + ( Number(timestamp) * 10 ** 6).toString())
     attendance.once('value', snapshot => {
         const attendants = snapshot.val()
