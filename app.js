@@ -28,12 +28,6 @@ app.get('/api/v1/livenessProbe', (request, response) => {
 });
 
 app.post('/api/v1/endpoint', (request, response) => {
-    console.log('=========================')
-    console.log('request: ', request)
-    console.log('request.body: ',request.body)
-    console.log('=========================')
-    
-    
     
     const requestJson = JSON.parse(request.body.payload)
 

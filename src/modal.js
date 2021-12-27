@@ -33,7 +33,7 @@ exports.updateModal = async function (requestJson) {
         view_id: requestJson.container.type_id,
         view: requestJson.view
     }
-
+    messages.view.title.text = "Baymax Poll (updated)"
     const API_KEY = process.env.API_KEY
 
     const headers = {
