@@ -4,7 +4,7 @@ const MODAL_API_ENDPOINT = 'https://slack.com/api'
 
 
 
-exports.openModal = function (triggerId) {
+exports.openModal = async function (triggerId) {
     const messages = JSON.parse(fs.readFileSync('./src/message_template_poll.json', 'utf8'));
     messages.trigger_id = triggerId
     const API_KEY = process.env.API_KEY
