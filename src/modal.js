@@ -58,16 +58,17 @@ exports.updateModal = async function (requestJson) {
 
 exports.pushModal = async function (requestJson) {
     const messages = JSON.parse(fs.readFileSync('./src/message_template_add_options.json', 'utf8'));
-    const cnt = requestJson.view.blocks[3].elements.length
+    const elements = requestJson.view.blocks[3].elements
+    const cnt = elements.length
 
     for (let i = 0; i < cnt - 1; i ++) {
-        const num = cnt + 1
+        const num = i + 1
         messages.view.blocks.splice(num , 0, {
             "type": "input",
             "element": {
                 "type": "plain_text_input",
                 "action_id": "plain_text_input-action",
-                "initial_value": element.text.text
+                "initial_value": elements[i].text.text
             },
             "label": {
                 "type": "plain_text",
