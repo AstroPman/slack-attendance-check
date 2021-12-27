@@ -28,7 +28,12 @@ exports.openModal = async function (triggerId) {
     }
 }
 
-exports.updateModal = async function (viewId) {
+exports.updateModal = async function (requestJson) {
+    const messages = {
+        view_id: requestJson.container.type_id,
+        view: requestJson.view
+    }
+
     const API_KEY = process.env.API_KEY
 
     const headers = {

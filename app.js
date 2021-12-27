@@ -38,10 +38,9 @@ app.post('/api/v1/endpoint', (request, response) => {
     const requestJson = JSON.parse(request.body.payload)
 
     if (requestJson.container.type == "view") {
-        const viewId = requestJson.container.type
-        const originalMessage = requestJson.view
-        console.log('originalMessage: ', originalMessage)
-        modal.updateModal(viewId)
+        
+        modal.updateModal(requestJson)
+
     }
 
 
