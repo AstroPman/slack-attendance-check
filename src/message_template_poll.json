@@ -57,8 +57,8 @@
                             "text": ":add-ico: Add Options",
                             "emoji": true
                         },
-                        "value": "click_me_123",
-                        "action_id": "actionId-x",
+                        "value": "add_options",
+                        "action_id": "add_options",
                         "style": "primary"
                     }
                 ]
