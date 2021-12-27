@@ -75,7 +75,7 @@ exports.pushModal = async function (requestJson) {
     requestJson.view.blocks[3].elements.forEach( (element, index) => {
         num = index + 1
         option_temp.label.text = "Option " + num
-        option_temp.initial_value = element.text.text
+        option_temp.element.initial_value = element.text.text
         messages.view.blocks.splice(num, 0, option_temp)
         
     });
