@@ -27,3 +27,24 @@ exports.openModal = async function (triggerId) {
     
     }
 }
+
+exports.updateModal = async function (viewId) {
+    const API_KEY = process.env.API_KEY
+
+    const headers = {
+        "content-type": "application/json",
+        "Authorization": 'Bearer ' + API_KEY
+    }
+    
+    // API CALL
+    try { 
+    
+        await axios.post(MODAL_API_ENDPOINT + "/views.update", messages, { headers: headers })
+    
+    } catch (error) { 
+    
+        console.log(error.response); 
+    
+    }
+
+}
