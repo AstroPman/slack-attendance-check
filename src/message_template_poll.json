@@ -1,0 +1,103 @@
+{
+    "trigger_id": "trigger_id",
+    "view": {
+        "type": "modal",
+        "title": {
+            "type": "plain_text",
+            "text": "Baymax Poll",
+            "emoji": true
+        },
+        "submit": {
+            "type": "plain_text",
+            "text": "Submit",
+            "emoji": true
+        },
+        "close": {
+            "type": "plain_text",
+            "text": "Cancel",
+            "emoji": true
+        },
+        "blocks": [
+            {
+                "type": "input",
+                "element": {
+                    "type": "plain_text_input",
+                    "action_id": "plain_text_input-action"
+                },
+                "label": {
+                    "type": "plain_text",
+                    "text": "Title",
+                    "emoji": true
+                }
+            },
+            {
+                "type": "input",
+                "element": {
+                    "type": "plain_text_input",
+                    "multiline": true,
+                    "action_id": "plain_text_input-action"
+                },
+                "label": {
+                    "type": "plain_text",
+                    "text": "Description",
+                    "emoji": true
+                },
+                "optional": true
+            },
+            {
+                "type": "divider"
+            },
+            {
+                "type": "actions",
+                "elements": [
+                    {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "11:00-12:00",
+                            "emoji": true
+                        },
+                        "value": "click_me_123",
+                        "action_id": "actionId-0"
+                    },
+                    {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Click Me",
+                            "emoji": true
+                        },
+                        "value": "click_me_123",
+                        "action_id": "actionId-1"
+                    },
+                    {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Click Me",
+                            "emoji": true
+                        },
+                        "value": "click_me_123",
+                        "action_id": "actionId-3"
+                    }
+                ]
+            },
+            {
+                "type": "actions",
+                "elements": [
+                    {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "text": ":add-ico: Add Options",
+                            "emoji": true
+                        },
+                        "value": "click_me_123",
+                        "action_id": "actionId-x",
+                        "style": "primary"
+                    }
+                ]
+            }
+        ]
+    }
+}

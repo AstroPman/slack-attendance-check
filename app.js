@@ -1,9 +1,11 @@
+const { request, response } = require('express');
 const express = require('express');
 require('dotenv').config();
 const cron = require('node-cron');
 
 const firebaseDb =  require('./src/firebase.js');
 const functions = require('./src/functions.js');
+const modal = require('./src/modal.js')
 
 
 // Express 
@@ -90,6 +92,12 @@ app.post('/api/v1/endpoint', (request, response) => {
     response.send(''); 
 
 });
+
+app.post('/api/v1/openModal', (request, response) => {
+    console.log(request)
+    // modal.openModal()
+
+})
 
 app.get('/api/v1/postCloudMeeting', (request, response) => {
     response.send('');

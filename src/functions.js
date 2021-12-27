@@ -1,5 +1,7 @@
 const fs = require('fs');
 const axios = require('axios');
+const iconv = require('iconv-lite')
+const csvtojson = require('csvtojson')
 
 const weatherData = require('./weather.js')
 const financeData = require('./finance.js')
@@ -74,7 +76,6 @@ async function insertInformation() {
     messages.attachments[1].blocks = messages.attachments[1].blocks.concat(information)
 
     if (exports.getToday()[2] == "月") {
-        
     }
     else if (exports.getToday()[2] == "火") {
         
@@ -274,3 +275,22 @@ exports.deleteAttendanceDatafromFirebase = async function () {
     })
 
 }
+
+exports.isHoliday = async function () {
+    try { 
+        
+        const response = await axios.get('https://www8.cao.go.jp/chosei/shukujitsu/syukujitsu.csv', {
+            responseType: 'arraybuffer',
+            responseEncoding: 'binary'
+        })
+        const str = iconv.decode(response.data, "Shift-JIS")
+        console.log(str.toCS)
+    } catch (error) { 
+        
+        console.log(error.response); 
+
+    } 
+    
+}
+
+exports.isHoliday()
