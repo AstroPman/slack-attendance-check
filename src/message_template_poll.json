@@ -49,10 +49,6 @@
             },
             {
                 "type": "actions",
-                "elements": []
-            },
-            {
-                "type": "actions",
                 "elements": [
                     {
                         "type": "button",
