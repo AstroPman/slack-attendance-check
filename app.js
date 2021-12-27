@@ -35,7 +35,8 @@ app.post('/api/v1/endpoint', (request, response) => {
 
     if (requestJson.container.type == "view") {
         
-        modal.updateModal(requestJson)
+        // modal.updateModal(requestJson)
+        modal.pushModal(requestJson)
 
     }
     else {

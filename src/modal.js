@@ -56,10 +56,8 @@ exports.updateModal = async function (requestJson) {
 }
 
 exports.pushModal = async function (requestJson) {
-    const messages = JSON.parse(fs.readFileSync('./src/message_template_poll.json', 'utf8'));
-    // delete messages.trigger_id
+    const messages = JSON.parse(fs.readFileSync('./src/message_template_add_options.json', 'utf8'));
     messages.trigger_id = requestJson.trigger_id
-    messages.blocks = requestJson.view.blocks
 
     messages.view.title.text = "Baymax Poll (updated)"
     const API_KEY = process.env.API_KEY
@@ -71,7 +69,7 @@ exports.pushModal = async function (requestJson) {
     // API CALL
     try { 
     
-        const response = await axios.post(MODAL_API_ENDPOINT + "/views.update", messages, { headers: headers })
+        const response = await axios.post(MODAL_API_ENDPOINT + "/views.push", messages, { headers: headers })
         console.log(response.data)
     
     } catch (error) { 

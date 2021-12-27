@@ -1,0 +1,71 @@
+{
+    "trigger_id": "trigger_id",
+    "view":{
+        "type": "modal",
+        "title": {
+            "type": "plain_text",
+            "text": "Baymax Poll",
+            "emoji": true
+        },
+        "submit": {
+            "type": "plain_text",
+            "text": "Submit",
+            "emoji": true
+        },
+        "close": {
+            "type": "plain_text",
+            "text": "Cancel",
+            "emoji": true
+        },
+        "blocks": [
+            {
+                "type": "header",
+                "text": {
+                    "type": "plain_text",
+                    "text": "Add Options",
+                    "emoji": true
+                }
+            },
+            {
+                "type": "input",
+                "element": {
+                    "type": "plain_text_input",
+                    "action_id": "plain_text_input-action"
+                },
+                "label": {
+                    "type": "plain_text",
+                    "text": "Option 1",
+                    "emoji": true
+                },
+                "initial_value": "initial_value"
+            },
+            {
+                "type": "actions",
+                "elements": [
+                    {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Add",
+                            "emoji": true
+                        },
+                        "value": "click_me_123",
+                        "action_id": "add",
+                        "style": "primary"
+                    },
+                    {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Remove",
+                            "emoji": true
+                        },
+                        "value": "click_me_123",
+                        "action_id": "remove",
+                        "style": "danger"
+                    }
+                ]
+            }
+        ]
+    }
+}
