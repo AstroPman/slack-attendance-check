@@ -30,14 +30,14 @@
                 "type": "input",
                 "element": {
                     "type": "plain_text_input",
-                    "action_id": "plain_text_input-action"
+                    "action_id": "plain_text_input-action",
+                    "initial_value": "initial_value"
                 },
                 "label": {
                     "type": "plain_text",
                     "text": "Option 1",
                     "emoji": true
-                },
-                "initial_value": "initial_value"
+                }
             },
             {
                 "type": "actions",
