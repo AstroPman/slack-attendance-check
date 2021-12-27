@@ -42,63 +42,61 @@ app.post('/api/v1/endpoint', (request, response) => {
         modal.updateModal(requestJson)
 
     }
-
-
-
-
-    const value = requestJson.actions[0].value
-    const respondent = "<@" + requestJson.user.name + ">"
-    const timestamp = requestJson.message.ts
-        
-    const attendance = firebaseDb.ref('/').child('attendance/' + ( Number(timestamp) * 10 ** 6).toString())
-    attendance.once('value', snapshot => {
-        const attendants = snapshot.val()
-        if(attendants === null){
-            attendance.update({
-                [value]: [respondent]
-            })
-            const attendants = {
-                [value]: [respondent]
-            }
-            functions.updateAttendanceCheckPoll(requestJson, attendants)
-        }
-        else if (typeof attendants[value] === "undefined") {
-            attendance.update({
-                [value]: [respondent]
-            })
-
-            for (const item in attendants) {         
-                attendants[item] = attendants[item].filter( function (user) {
-                    return user != respondent
+    else {
+        const value = requestJson.actions[0].value
+        const respondent = "<@" + requestJson.user.name + ">"
+        const timestamp = requestJson.message.ts
+            
+        const attendance = firebaseDb.ref('/').child('attendance/' + ( Number(timestamp) * 10 ** 6).toString())
+        attendance.once('value', snapshot => {
+            const attendants = snapshot.val()
+            if(attendants === null){
+                attendance.update({
+                    [value]: [respondent]
                 })
+                const attendants = {
+                    [value]: [respondent]
+                }
+                functions.updateAttendanceCheckPoll(requestJson, attendants)
             }
-            attendance.update(attendants)
-            attendants[value] = [respondent]
-            functions.updateAttendanceCheckPoll(requestJson, attendants)
-        }
-        else {
-            for (const item in attendants) {
-                // attendants[item] = attendants[item].split(',')
-                if (item == value) {
-                    if (!attendants[item].includes(respondent)) {
-                        attendants[item].push(respondent)
+            else if (typeof attendants[value] === "undefined") {
+                attendance.update({
+                    [value]: [respondent]
+                })
+    
+                for (const item in attendants) {         
+                    attendants[item] = attendants[item].filter( function (user) {
+                        return user != respondent
+                    })
+                }
+                attendance.update(attendants)
+                attendants[value] = [respondent]
+                functions.updateAttendanceCheckPoll(requestJson, attendants)
+            }
+            else {
+                for (const item in attendants) {
+                    // attendants[item] = attendants[item].split(',')
+                    if (item == value) {
+                        if (!attendants[item].includes(respondent)) {
+                            attendants[item].push(respondent)
+                        }
+                        else {
+                            attendants[item] = attendants[item].filter( function (user) {
+                                return user != respondent
+                            })
+                        }
                     }
                     else {
                         attendants[item] = attendants[item].filter( function (user) {
                             return user != respondent
                         })
                     }
-                }
-                else {
-                    attendants[item] = attendants[item].filter( function (user) {
-                        return user != respondent
-                    })
-                }
-            } 
-            attendance.update(attendants);
-            functions.updateAttendanceCheckPoll(requestJson, attendants)
-        }
-    })
+                } 
+                attendance.update(attendants);
+                functions.updateAttendanceCheckPoll(requestJson, attendants)
+            }
+        })
+    }
     
     response.send(''); 
 
