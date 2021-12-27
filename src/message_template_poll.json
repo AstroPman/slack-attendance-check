@@ -54,6 +54,26 @@
                         "type": "button",
                         "text": {
                             "type": "plain_text",
+                            "text": "Option xxx",
+                            "emoji": true
+                        },
+                        "value": "Option xxx",
+                        "action_id": "option_1"
+                    },
+                    {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Option yyy",
+                            "emoji": true
+                        },
+                        "value": "Option yyy",
+                        "action_id": "option_2"
+                    },
+                    {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
                             "text": ":add-ico: Add Options",
                             "emoji": true
                         },
