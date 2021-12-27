@@ -29,13 +29,12 @@ exports.openModal = async function (triggerId) {
 }
 
 exports.updateModal = async function (requestJson) {
-    const messages = {
-        view_id: requestJson.container.type_id,
-        view: requestJson.view
-    }
+    const messages = JSON.parse(fs.readFileSync('./src/message_template_poll.json', 'utf8'));
+    messages.view_id = requestJson.container.type_id
+    messages.blocks = requestJson.view.blocks
+
     messages.view.title.text = "Baymax Poll (updated)"
     const API_KEY = process.env.API_KEY
-
     const headers = {
         "content-type": "application/json",
         "Authorization": 'Bearer ' + API_KEY
