@@ -8,7 +8,7 @@ const API_KEY = process.env.FINANCE_API_KEY
 const API_ENDPOINT = 'https://www.alphavantage.co/query'
 
 const params = {
-    function: "TIME_SERIES_DAILY_ADJUSTED",
+    function: "TIME_SERIES_DAILY",
     symbol: "KD",
     apikey: API_KEY
 }
@@ -25,7 +25,7 @@ module.exports = async function getFinanceData(){
         latestData = response.data['Time Series (Daily)'][Object.keys(dailyData)[0]]
         secondLatestData = response.data['Time Series (Daily)'][Object.keys(dailyData)[1]]
         console.log('latestData: ', latestData)
-        console.log('latestData: ', secondLatestData)
+        console.log('secondLatestData: ', secondLatestData)
 
         const diff = Number(latestData['4. close']) - Number(secondLatestData['4. close'])
         if (diff > 0) {
