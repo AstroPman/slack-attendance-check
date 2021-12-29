@@ -124,6 +124,7 @@ app.get('/api/v1/postAttendanceCheckRemind', (request, response) => {
 
 
 // Cron Jobs
+// 1. 出欠アンケート投稿
 cron.schedule('0 10 * * *', () => {
     const dayOfWeek = functions.getToday()[2]
     if (dayOfWeek != "土" || dayOfWeek != "日" ) {
@@ -131,7 +132,7 @@ cron.schedule('0 10 * * *', () => {
         functions.postAttendanceCheckPoll()
     }
 });
-
+// 2. 出欠アンケートリマインド
 cron.schedule('0 13 * * *', () => {
     const dayOfWeek = functions.getToday()[2]
     if (dayOfWeek != "土" || dayOfWeek != "日" ) {
@@ -139,15 +140,16 @@ cron.schedule('0 13 * * *', () => {
         functions.postAttendanceCheckRemind()
     }
 });
+// 3. デジ共朝会
+// cron.schedule('15 9 * * *', () => {
+//     const dayOfWeek = functions.getToday()[2]
+//     if (dayOfWeek != "土" || dayOfWeek != "日" ) {
+//         //土日以外実行されない
+//         functions.postCloudMeeting()
+//     }
+// });
 
-cron.schedule('15 9 * * *', () => {
-    const dayOfWeek = functions.getToday()[2]
-    if (dayOfWeek != "土" || dayOfWeek != "日" ) {
-        //土日以外実行されない
-        functions.postCloudMeeting()
-    }
-});
-
+// 4. Firebase Realtime Database データ削除
 cron.schedule('0 0 * * *', () => {
     functions.deleteAttendanceDatafromFirebase()
 });

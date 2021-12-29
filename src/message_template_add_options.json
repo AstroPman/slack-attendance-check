@@ -9,7 +9,7 @@
         },
         "submit": {
             "type": "plain_text",
-            "text": "Submit",
+            "text": "Save",
             "emoji": true
         },
         "close": {
