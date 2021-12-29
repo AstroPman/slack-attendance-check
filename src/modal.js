@@ -31,7 +31,8 @@ exports.updateModal = async function (requestJson) {
     const messages = JSON.parse(fs.readFileSync('./src/message_template_poll.json', 'utf8'));
     delete messages.trigger_id
     messages.view_id = requestJson.view.previous_view_id
-    const rootViewState = JSON.parse(requestJson.view.private_metadata)
+    const privateMetadata = JSON.parse(requestJson.view.private_metadata)
+    rootViewState = privateMetadata['root_view_state']
     console.log(rootViewState.values)
     console.log(Object.keys(rootViewState.values))
     console.log(rootViewState.values[Object.keys(rootViewState.values)[0]])
