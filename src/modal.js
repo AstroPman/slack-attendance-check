@@ -20,6 +20,7 @@ exports.openModal = async function (triggerId) {
     
         const response = await axios.post(MODAL_API_ENDPOINT + "/views.open", messages, { headers: headers })
         console.log("openModal response: ", response.data)
+        console.log("openModal response: ", response.data.view.blocks)
     
     } catch (error) { 
     

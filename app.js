@@ -105,12 +105,9 @@ app.post('/api/v1/endpoint', (request, response) => {
 });
 
 app.post('/api/v1/openModal', (request, response) => {
-    console.log(request)
     const triggerId = request.body.trigger_id
     modal.openModal(triggerId)
-
     response.send(''); 
-
 })
 
 app.get('/api/v1/postCloudMeeting', (request, response) => {
