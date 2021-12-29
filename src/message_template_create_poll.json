@@ -77,7 +77,7 @@
                 },
                 "label": {
                     "type": "plain_text",
-                    "text": "Label",
+                    "text": "Channel",
                     "emoji": true
                 }
             }
