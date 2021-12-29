@@ -36,12 +36,12 @@ app.post('/api/v1/endpoint', (request, response) => {
 
     if ("view" in requestJson) {
         // recieve actions to modal
-        if (requestJson.actions[0].value == "add_options") {
-            modal.pushModal(requestJson)
-        }
-        else if (requestJson.type == "view_submission") {
+        if (requestJson.type == "view_submission") {
             console.log(requestJson)
             // modal.updateModal(requestJson)
+        }
+        else if (requestJson.actions[0].value == "add_options") {
+            modal.pushModal(requestJson)
         }
         
 
