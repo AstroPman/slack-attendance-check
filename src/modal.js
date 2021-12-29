@@ -11,7 +11,7 @@ const headers = {
 
 
 exports.openModal = async function (triggerId) {
-    const messages = JSON.parse(fs.readFileSync('./src/message_template_poll.json', 'utf8'));
+    const messages = JSON.parse(fs.readFileSync('./src/message_template_create_poll.json', 'utf8'));
     messages.trigger_id = triggerId
         
     // API CALL
@@ -29,7 +29,7 @@ exports.openModal = async function (triggerId) {
 }
 
 exports.updateModal = async function (requestJson) {
-    const messages = JSON.parse(fs.readFileSync('./src/message_template_poll.json', 'utf8'));
+    const messages = JSON.parse(fs.readFileSync('./src/message_template_create_poll.json', 'utf8'));
     delete messages.trigger_id
     messages.view_id = requestJson.view.previous_view_id
     console.log("requestJson.view.private_metadata: ", requestJson.view.private_metadata)
@@ -208,14 +208,12 @@ exports.removeInputForm = async function (requestJson) {
 }
 
 exports.postPoll = async function (requestJson) {
-    console.log("requestJson.view.state: ", requestJson.view.state)
+    console.log(requestJson.view.state)
+    // const header = requestJson.view.state.values[0]
     const elements = requestJson.view.blocks[3].elements.slice(0, -1)
-    console.log(requestJson.view.blocks[3])
-    console.log(elements)
     const options = []
     elements.forEach(element => {
         options.push(element.text.text)
     });
- 
-    console.log('OPTIONS: ', options)
+
 }
