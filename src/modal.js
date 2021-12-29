@@ -77,6 +77,7 @@ exports.updateModal = async function (requestJson) {
     //     console.log(error.response); 
     
     // }
+    console.log('messages: ', messages)
     return messages
 
 }
