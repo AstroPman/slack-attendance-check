@@ -34,9 +34,6 @@ app.post('/api/v1/endpoint', (request, response) => {
     if ("view" in requestJson) {
         // recieve actions to modal
         if (requestJson.type == "view_submission") {
-            console.log(requestJson)
-            console.log("requestJson.state: ", requestJson.view.state)
-            console.log("requestJson.state.blocks: ", requestJson.view.blocks)
             
             modal.updateModal(requestJson)
         }

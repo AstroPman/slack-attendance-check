@@ -34,7 +34,7 @@ exports.updateModal = async function (requestJson) {
     delete messages.trigger_id
     messages.view_id = requestJson.view.previous_view_id
     const privateMetadata = JSON.parse(requestJson.view.private_metadata)
-    rootViewState = privateMetadata['root_view_state']
+    console.log('privateetadata: ', privateMetadata)
     messages.view.blocks[0].element.initial_value = rootViewState.values[Object.keys(rootViewState.values)[0]]['plain_text_input-action'].value
     messages.view.blocks[1].element.initial_value = rootViewState.values[Object.keys(rootViewState.values)[1]]['plain_text_input-action'].value
     
@@ -86,6 +86,7 @@ exports.updateModal = async function (requestJson) {
 
 exports.pushModal = async function (requestJson) {
     const messages = JSON.parse(fs.readFileSync('./src/message_template_add_options.json', 'utf8'));
+    const rootViewBlocks = requestJson.view.blocks
     const elements = requestJson.view.blocks[3].elements
     const cnt = elements.length
 
@@ -108,11 +109,7 @@ exports.pushModal = async function (requestJson) {
     }
     
     messages.trigger_id = requestJson.trigger_id
-    messages.view.private_metadata = JSON.stringify(
-        {
-            "root_view_state": requestJson.view.state
-        }
-    )
+    messages.view.private_metadata = JSON.stringify(rootViewBlocks)
         
     
     // API CALL
