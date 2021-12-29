@@ -70,10 +70,10 @@
                     "type": "conversations_select",
                     "placeholder": {
                         "type": "plain_text",
-                        "text": "Select users",
+                        "text": "Select channel",
                         "emoji": true
                     },
-                    "action_id": "multi_users_select-action"
+                    "action_id": "conversations_select"
                 },
                 "label": {
                     "type": "plain_text",
