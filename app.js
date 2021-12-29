@@ -30,16 +30,13 @@ app.get('/api/v1/livenessProbe', (request, response) => {
 app.post('/api/v1/endpoint', (request, response) => {
     
     const requestJson = JSON.parse(request.body.payload)
-    console.log('request.body: ', request.body)
-    console.log('requestJson: ', requestJson)
-    console.log('isViewExists: ', 'view' in requestJson)
-
+    
     if ("view" in requestJson) {
         // recieve actions to modal
         if (requestJson.type == "view_submission") {
             console.log(requestJson)
             console.log("requestJson.state: ", requestJson.view.state)
-            console.log("requestJson.state.values: ", requestJson.view.state.values)
+            console.log("requestJson.state.blocks: ", requestJson.view.blocks)
             
             modal.updateModal(requestJson)
         }

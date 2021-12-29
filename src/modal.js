@@ -18,7 +18,8 @@ exports.openModal = async function (triggerId) {
     // API CALL
     try { 
     
-        await axios.post(MODAL_API_ENDPOINT + "/views.open", messages, { headers: headers })
+        const response = await axios.post(MODAL_API_ENDPOINT + "/views.open", messages, { headers: headers })
+        console.log("openModal response: ", response.data)
     
     } catch (error) { 
     
@@ -33,9 +34,6 @@ exports.updateModal = async function (requestJson) {
     messages.view_id = requestJson.view.previous_view_id
     const privateMetadata = JSON.parse(requestJson.view.private_metadata)
     rootViewState = privateMetadata['root_view_state']
-    console.log(rootViewState.values)
-    console.log(Object.keys(rootViewState.values))
-    console.log(rootViewState.values[Object.keys(rootViewState.values)[0]])
     messages.view.blocks[0].element.initial_value = rootViewState.values[Object.keys(rootViewState.values)[0]]['plain_text_input-action'].value
     messages.view.blocks[1].element.initial_value = rootViewState.values[Object.keys(rootViewState.values)[1]]['plain_text_input-action'].value
     
