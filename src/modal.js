@@ -208,13 +208,15 @@ exports.removeInputForm = async function (requestJson) {
 }
 
 exports.postPoll = async function (requestJson) {
-    console.log(requestJson.view.state.values)
+    const messages = JSON.parse(fs.readFileSync('./src/message_template.json', 'utf8'));
+    
     const keys = Object.keys(requestJson.view.state.values)
     const title = requestJson.view.state.values[keys[0]]['plain_text_input-action'].value
     const description = requestJson.view.state.values[keys[1]]['plain_text_input-action'].value
-    console.log('title: ', title)
-    console.log('description: ',description)
 
+    messages.attachments[0].blocks[0].text.text = title
+    messages.attachments[1].blocks[0].text.text = "*Description* \n" + description
+    
     const elements = requestJson.view.blocks[3].elements.slice(0, -1)
     const options = []
     elements.forEach(element => {

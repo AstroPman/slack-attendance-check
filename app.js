@@ -113,6 +113,7 @@ app.post('/api/v1/endpoint', (request, response) => {
 });
 
 app.post('/api/v1/openModal', (request, response) => {
+    console.log(JSON.parse(request.body.payload))
     const triggerId = request.body.trigger_id
     modal.openModal(triggerId)
     response.send(''); 
