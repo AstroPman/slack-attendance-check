@@ -102,9 +102,12 @@ exports.pushModal = async function (requestJson) {
     }
     
     messages.trigger_id = requestJson.trigger_id
-    messages.view.private_metadata = {
-        "root_view_state": requestJson.view.state
-    }
+    messages.view.private_metadata = JSON.stringify(
+        {
+            "root_view_state": requestJson.view.state
+        }
+    )
+        
     
     // API CALL
     try { 
