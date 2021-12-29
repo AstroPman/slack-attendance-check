@@ -208,8 +208,10 @@ exports.removeInputForm = async function (requestJson) {
 }
 
 exports.postPoll = async function (requestJson) {
-    console.log(requestJson.view.state)
-    // const header = requestJson.view.state.values[0]
+    console.log(requestJson.view.state.values[0]['plain_text_input-action'])
+    const title = requestJson.view.state.values[0]['plain_text_input-action'].value
+    const description = requestJson.view.state.values[1]['plain_text_input-action'].value
+
     const elements = requestJson.view.blocks[3].elements.slice(0, -1)
     const options = []
     elements.forEach(element => {
