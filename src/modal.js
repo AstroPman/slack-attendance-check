@@ -1,7 +1,6 @@
 
 const fs = require('fs');
 const axios = require('axios');
-const { text } = require('express');
 
 const MODAL_API_ENDPOINT = 'https://slack.com/api'
 const API_KEY = process.env.API_KEY

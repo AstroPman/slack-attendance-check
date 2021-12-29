@@ -44,6 +44,7 @@ app.post('/api/v1/endpoint', (request, response) => {
             modal.updateModal(requestJson)
         }
         else if (requestJson.actions[0].value == "add_options") {
+            console.log(requestJson.view.state)
             modal.pushModal(requestJson)
         }
     }
