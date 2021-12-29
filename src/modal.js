@@ -210,7 +210,7 @@ exports.removeInputForm = async function (requestJson) {
 
 exports.postPoll = async function (requestJson) {
     console.log("requestJson.view.state: ", requestJson.view.state)
-    const blocksLength = requestJson.blocks.length
+    // const blocksLength = requestJson.blocks.length
     const options = requestJson.blocks[3].elements.filter( item => {
         return item.text.text
     })
