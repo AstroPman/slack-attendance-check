@@ -30,6 +30,7 @@ app.get('/api/v1/livenessProbe', (request, response) => {
 app.post('/api/v1/endpoint', (request, response) => {
     
     const requestJson = JSON.parse(request.body.payload)
+    console.log("/api/v1/endpoint requestJso: ", requestJson)
     
     if ("view" in requestJson) {
         // recieve actions to modal
