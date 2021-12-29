@@ -92,7 +92,7 @@ exports.pushModal = async function (requestJson) {
     const cnt = elements.length
 
     if (cnt == 1) {
-        messages.view.blocks.splice(num , 0, {
+        messages.view.blocks.splice(1 , 0, {
             "type": "input",
             "element": {
                 "type": "plain_text_input",
