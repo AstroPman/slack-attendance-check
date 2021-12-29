@@ -213,7 +213,7 @@ exports.postPoll = async function (requestJson) {
     const keys = Object.keys(requestJson.view.state.values)
     const title = requestJson.view.state.values[keys[0]]['plain_text_input-action'].value
     const description = requestJson.view.state.values[keys[1]]['plain_text_input-action'].value
-    const channelId = requestJson.view.state.values[keys[2]]['plain_text_input-action'].value
+    const channelId = requestJson.view.state.values[keys[2]].conversations_select.selected_conversation
 
     messages.attachments[0].blocks[0].text.text = title
     messages.attachments[1].blocks[0].text.text = "*Description* \n" + description
