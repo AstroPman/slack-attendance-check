@@ -30,7 +30,7 @@ exports.openModal = async function (triggerId) {
 
 exports.updateModal = async function (requestJson) {
     const messages = JSON.parse(fs.readFileSync('./src/message_template_poll.json', 'utf8'));
-    messages.view_id = requestJson.view.id
+    messages.view_id = requestJson.view.previous_view_id
     messages.blocks = requestJson.view.blocks
     const elements = []
     const values = requestJson.view.state.values
