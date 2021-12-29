@@ -178,3 +178,26 @@ exports.addInputForm = async function (requestJson) {
     }
 
 }
+
+exports.removeInputForm = async function (requestJson) {
+    const messages = JSON.parse(fs.readFileSync('./src/message_template_add_options.json', 'utf8'));
+    messages.view.blocks = requestJson.view.blocks
+    messages.view.private_metadata = requestJson.view.private_metadata
+    messages.view_id = requestJson.view.id
+    delete messages.trigger_id
+    const num = messages.view.blocks.length - 1
+    messages.view.blocks.splice(-1, 1)
+
+    // API CALL
+    try { 
+    
+        const response = await axios.post(MODAL_API_ENDPOINT + "/views.update", messages, { headers: headers })
+        console.log(response.data)
+    
+    } catch (error) { 
+    
+        console.log(error.response); 
+    
+    }
+
+}

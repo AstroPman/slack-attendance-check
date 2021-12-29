@@ -46,7 +46,7 @@ app.post('/api/v1/endpoint', (request, response) => {
             modal.addInputForm(requestJson)
         }
         else if (requestJson.actions[0].value == "remove_input_form") {
-            console.log("remove input form: ", requestJson)
+            modal.removeInputForm(requestJson)
         }
     }
     else {
