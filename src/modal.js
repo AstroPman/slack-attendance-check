@@ -186,18 +186,24 @@ exports.removeInputForm = async function (requestJson) {
     messages.view_id = requestJson.view.id
     delete messages.trigger_id
     const num = messages.view.blocks.length - 1
-    messages.view.blocks.splice(-2, 1)
-
-    // API CALL
-    try { 
     
-        const response = await axios.post(MODAL_API_ENDPOINT + "/views.update", messages, { headers: headers })
-        console.log(response.data)
+    // Only when two or more input forms exist
+    if (num > 1) {
+        messages.view.blocks.splice(-2, 1)
+        // API CALL
+        try { 
     
-    } catch (error) { 
-    
-        console.log(error.response); 
-    
+            const response = await axios.post(MODAL_API_ENDPOINT + "/views.update", messages, { headers: headers })
+            console.log(response.data)
+        
+        } catch (error) { 
+        
+            console.log(error.response); 
+        
+        }
     }
+
+    
+    
 
 }
