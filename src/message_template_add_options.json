@@ -37,7 +37,7 @@
                             "emoji": true
                         },
                         "value": "click_me_123",
-                        "action_id": "add",
+                        "action_id": "add_input_form",
                         "style": "primary"
                     },
                     {
@@ -48,7 +48,7 @@
                             "emoji": true
                         },
                         "value": "click_me_123",
-                        "action_id": "remove",
+                        "action_id": "remove_input_form",
                         "style": "danger"
                     }
                 ]
