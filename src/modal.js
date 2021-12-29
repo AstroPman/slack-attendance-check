@@ -64,7 +64,7 @@ exports.updateModal = async function (requestJson) {
         }
     )
 
-    messages.blocks[3].elements = elements
+    messages.view.blocks[3].elements = elements
         
     // API CALL
     // try { 
