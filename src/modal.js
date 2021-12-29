@@ -188,7 +188,7 @@ exports.removeInputForm = async function (requestJson) {
     const num = messages.view.blocks.length - 1
     
     // Only when two or more input forms exist
-    if (num > 1) {
+    if (num > 2) {
         messages.view.blocks.splice(-2, 1)
         // API CALL
         try { 
