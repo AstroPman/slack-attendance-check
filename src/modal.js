@@ -150,7 +150,7 @@ exports.addInputForm = async function (requestJson) {
     messages.view_id = requestJson.view.id
     delete messages.trigger_id
     const num = messages.view.blocks.length - 1
-    messages.view.blocks.splice(-2, 0, {
+    messages.view.blocks.splice(-1, 0, {
         "type": "input",
         "element": {
             "type": "plain_text_input",
