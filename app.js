@@ -102,9 +102,9 @@ app.post('/api/v1/endpoint', (request, response) => {
                 functions.updateAttendanceCheckPoll(requestJson, attendants)
             }
         })
+        response.send(''); 
     }
     
-    response.send(''); 
 
 });
 
