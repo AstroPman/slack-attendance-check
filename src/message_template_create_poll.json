@@ -63,6 +63,23 @@
                         "style": "primary"
                     }
                 ]
+            },
+            {
+                "type": "input",
+                "element": {
+                    "type": "conversations_select",
+                    "placeholder": {
+                        "type": "plain_text",
+                        "text": "Select users",
+                        "emoji": true
+                    },
+                    "action_id": "multi_users_select-action"
+                },
+                "label": {
+                    "type": "plain_text",
+                    "text": "Label",
+                    "emoji": true
+                }
             }
         ]
     }
