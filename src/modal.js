@@ -31,7 +31,10 @@ exports.updateModal = async function (requestJson) {
     const messages = JSON.parse(fs.readFileSync('./src/message_template_poll.json', 'utf8'));
     delete messages.trigger_id
     messages.view_id = requestJson.view.previous_view_id
-    // messages.view.blocks = requestJson.view.blocks
+    const rootViewState = JSON.parse(requestJson.view.private_metadata)
+    messages.view.blocks[0].element.initial_value = rootViewState.values[Object.keys(rootViewState.values)[0]]['plain_text_input-action'].value
+    messages.view.blocks[1].element.initial_value = rootViewState.values[Object.keys(rootViewState.values)[1]]['plain_text_input-action'].value
+    
     const elements = []
     const values = requestJson.view.state.values
     for (const key in values) {
