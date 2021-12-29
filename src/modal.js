@@ -91,23 +91,40 @@ exports.pushModal = async function (requestJson) {
     const elements = requestJson.view.blocks[3].elements
     const cnt = elements.length
 
-    for (let i = 0; i < cnt - 1; i ++) {
-        const num = i + 1
+    if (cnt == 0) {
         messages.view.blocks.splice(num , 0, {
             "type": "input",
             "element": {
                 "type": "plain_text_input",
                 "action_id": "plain_text_input-action",
-                "initial_value": elements[i].text.text
             },
             "label": {
                 "type": "plain_text",
-                "text": "Option " + num,
+                "text": "Option 1",
                 "emoji": true
             }
         })
-
     }
+    else {
+        for (let i = 0; i < cnt - 1; i ++) {
+            const num = i + 1
+            messages.view.blocks.splice(num , 0, {
+                "type": "input",
+                "element": {
+                    "type": "plain_text_input",
+                    "action_id": "plain_text_input-action",
+                    "initial_value": elements[i].text.text
+                },
+                "label": {
+                    "type": "plain_text",
+                    "text": "Option " + num,
+                    "emoji": true
+                }
+            })
+    
+        }
+    }
+
     
     messages.trigger_id = requestJson.trigger_id
     messages.view.private_metadata = JSON.stringify(rootViewBlocks)
@@ -124,5 +141,12 @@ exports.pushModal = async function (requestJson) {
         console.log(error.response); 
     
     }
+
+}
+
+exports.addInputForm = async function (requestJson) {
+    const messages = JSON.parse(fs.readFileSync('./src/message_template_add_options.json', 'utf8'));
+    messages.view.blocks = requestJson.view.blocks
+    messages.view.blocks.push
 
 }
