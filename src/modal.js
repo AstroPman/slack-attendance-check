@@ -207,3 +207,7 @@ exports.removeInputForm = async function (requestJson) {
     
 
 }
+
+exports.postPoll = async function (requestJson) {
+    console.log("requestJson.view.state: ", requestJson.view.state)
+}
