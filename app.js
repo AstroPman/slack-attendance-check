@@ -43,7 +43,9 @@ app.post('/api/v1/endpoint', (request, response) => {
             modal.pushModal(requestJson)
         }
         else if (requestJson.actions[0].value == "add_input_form") {
+            const messages = modal.addInputForm(requestJson)
             console.log("add input form: ", requestJson)
+            response.send(messages); 
         }
         else if (requestJson.actions[0].value == "remove_input_form") {
             console.log("remove input form: ", requestJson)
