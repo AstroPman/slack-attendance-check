@@ -148,6 +148,7 @@ exports.pushModal = async function (requestJson) {
 exports.addInputForm = async function (requestJson) {
     const messages = JSON.parse(fs.readFileSync('./src/message_template_add_options.json', 'utf8'));
     messages.view.blocks = requestJson.view.blocks
+    messages.view.private_metadata = requestJson.view.private_metadata
     messages.view_id = requestJson.view.id
     delete messages.trigger_id
     const num = messages.view.blocks.length - 1
