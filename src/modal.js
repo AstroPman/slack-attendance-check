@@ -212,6 +212,7 @@ exports.postPoll = async function (requestJson) {
     const keys = Object.keys(requestJson.view.state.values)
     const title = requestJson.view.state.values[keys[0]]['plain_text_input-action'].value
     const description = requestJson.view.state.values[keys[0]]['plain_text_input-action'].value
+    console.log(title, description)
 
     const elements = requestJson.view.blocks[3].elements.slice(0, -1)
     const options = []
