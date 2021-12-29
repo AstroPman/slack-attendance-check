@@ -102,8 +102,9 @@ exports.pushModal = async function (requestJson) {
     }
     
     messages.trigger_id = requestJson.trigger_id
-
-    messages.view.title.text = "Baymax Poll (updated)"
+    messages.view.private_metadata = {
+        "root_view_state": requestJson.view.state
+    }
     
     // API CALL
     try { 
