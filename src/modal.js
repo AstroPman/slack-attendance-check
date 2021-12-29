@@ -147,7 +147,7 @@ exports.pushModal = async function (requestJson) {
 exports.addInputForm = async function (requestJson) {
     const messages = JSON.parse(fs.readFileSync('./src/message_template_add_options.json', 'utf8'));
     messages.view.blocks = requestJson.view.blocks
-    messages.response_action = "update"
+    messages.view_id = requestJson.view.id
     delete messages.trigger_id
     const num = messages.view.blocks.length - 1
     messages.view.blocks.splice(-2, 0, {
@@ -163,6 +163,16 @@ exports.addInputForm = async function (requestJson) {
         }
     })
 
-    return messages
+    // API CALL
+    try { 
+    
+        const response = await axios.post(MODAL_API_ENDPOINT + "/views.update", messages, { headers: headers })
+        console.log(response.data)
+    
+    } catch (error) { 
+    
+        console.log(error.response); 
+    
+    }
 
 }
