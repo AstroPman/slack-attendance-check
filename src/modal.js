@@ -33,7 +33,7 @@ exports.updateModal = async function (requestJson) {
     delete messages.trigger_id
     messages.response_action = 'update'
     // messages.view_id = requestJson.view.previous_view_id
-    messages.blocks = requestJson.view.blocks
+    messages.view.blocks = requestJson.view.blocks
     const elements = []
     const values = requestJson.view.state.values
     for (const key in values) {
