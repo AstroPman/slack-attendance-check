@@ -34,9 +34,10 @@ exports.updateModal = async function (requestJson) {
     delete messages.trigger_id
     messages.view_id = requestJson.view.previous_view_id
     const privateMetadata = JSON.parse(requestJson.view.private_metadata)
-    console.log('privateetadata: ', privateMetadata)
-    messages.view.blocks[0].element.initial_value = rootViewState.values[Object.keys(rootViewState.values)[0]]['plain_text_input-action'].value
-    messages.view.blocks[1].element.initial_value = rootViewState.values[Object.keys(rootViewState.values)[1]]['plain_text_input-action'].value
+    messages.view.blocks = privateMetadata
+    console.log('privatetadata: ', privateMetadata)
+    // messages.view.blocks[0].element.initial_value = rootViewState.values[Object.keys(rootViewState.values)[0]]['plain_text_input-action'].value
+    // messages.view.blocks[1].element.initial_value = rootViewState.values[Object.keys(rootViewState.values)[1]]['plain_text_input-action'].value
     
     const elements = []
     const values = requestJson.view.state.values
