@@ -32,6 +32,7 @@ app.post('/api/v1/endpoint', (request, response) => {
     const requestJson = JSON.parse(request.body.payload)
     console.log('request.body: ', request.body)
     console.log('requestJson: ', requestJson)
+    console.log('isViewExists: ', 'view' in requestJson)
 
     if (requestJson.container.type == "view") {
         
