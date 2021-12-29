@@ -30,7 +30,9 @@ exports.openModal = async function (triggerId) {
 
 exports.updateModal = async function (requestJson) {
     const messages = JSON.parse(fs.readFileSync('./src/message_template_poll.json', 'utf8'));
-    messages.view_id = requestJson.view.previous_view_id
+    delete messages.trigger_id
+    messages.response_action = 'update'
+    // messages.view_id = requestJson.view.previous_view_id
     messages.blocks = requestJson.view.blocks
     const elements = []
     const values = requestJson.view.state.values
@@ -65,16 +67,17 @@ exports.updateModal = async function (requestJson) {
     messages.blocks[3].elements = elements
         
     // API CALL
-    try { 
+    // try { 
     
-        const response = await axios.post(MODAL_API_ENDPOINT + "/views.update", messages, { headers: headers })
-        console.log(response.data)
+    //     const response = await axios.post(MODAL_API_ENDPOINT + "/views.update", messages, { headers: headers })
+    //     console.log(response.data)
     
-    } catch (error) { 
+    // } catch (error) { 
     
-        console.log(error.response); 
+    //     console.log(error.response); 
     
-    }
+    // }
+    return messages
 
 }
 
