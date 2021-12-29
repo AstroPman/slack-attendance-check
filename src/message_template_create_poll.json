@@ -27,7 +27,7 @@
                 },
                 "label": {
                     "type": "plain_text",
-                    "text": ":large_orange_circle: Title",
+                    "text": ":red-circle-emoji: Title",
                     "emoji": true
                 }
             },
@@ -40,7 +40,7 @@
                 },
                 "label": {
                     "type": "plain_text",
-                    "text": "::large_orange_circle: Description",
+                    "text": ":speech_balloon: Description",
                     "emoji": true
                 },
                 "optional": true
