@@ -91,7 +91,7 @@ exports.pushModal = async function (requestJson) {
     const elements = requestJson.view.blocks[3].elements
     const cnt = elements.length
 
-    if (cnt == 0) {
+    if (cnt == 1) {
         messages.view.blocks.splice(num , 0, {
             "type": "input",
             "element": {
