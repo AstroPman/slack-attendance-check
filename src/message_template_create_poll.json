@@ -27,7 +27,7 @@
                 },
                 "label": {
                     "type": "plain_text",
-                    "text": "Title",
+                    "text": ":large_orange_circle: Title",
                     "emoji": true
                 }
             },
@@ -40,7 +40,7 @@
                 },
                 "label": {
                     "type": "plain_text",
-                    "text": "Description",
+                    "text": "::large_orange_circle: Description",
                     "emoji": true
                 },
                 "optional": true
@@ -77,7 +77,7 @@
                 },
                 "label": {
                     "type": "plain_text",
-                    "text": "Channel",
+                    "text": ":large_orange_circle: Channel",
                     "emoji": true
                 }
             }
