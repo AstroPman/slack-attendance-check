@@ -186,7 +186,7 @@ exports.removeInputForm = async function (requestJson) {
     messages.view_id = requestJson.view.id
     delete messages.trigger_id
     const num = messages.view.blocks.length - 1
-    messages.view.blocks.splice(-1, 1)
+    messages.view.blocks.splice(-2, 1)
 
     // API CALL
     try { 
