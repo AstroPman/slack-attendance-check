@@ -275,7 +275,7 @@ exports.postPoll = async function (requestJson) {
 
     } catch (error) { 
 
-        console.log(error.response.body); 
+        console.log(error.response); 
 
     } 
     
