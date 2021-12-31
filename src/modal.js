@@ -272,7 +272,8 @@ exports.postPoll = async function (requestJson) {
     // API CALL
     try { 
 
-        await axios.post(MODAL_API_ENDPOINT + "/chat.postMessage", messages, { headers: headers })
+        const response = await axios.post(MODAL_API_ENDPOINT + "/chat.postMessage", messages, { headers: headers })
+        console.log(response.data)
 
     } catch (error) { 
 
