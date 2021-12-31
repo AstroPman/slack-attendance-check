@@ -225,22 +225,19 @@ exports.postPoll = async function (requestJson) {
     
     options.forEach((option, index) => {
         const num = index + 1
-        messages.attachments[1].blocks[1].elements.push({
-            "type": "actions",
-            "elements": [
-                {
-                    "type": "button",
-                    "text": {
-                        "type": "plain_text",
-                        "text": option,
-                        "emoji": true
-                    },
-                    "style": "primary",
-                    "value": "option_" + num,
-                    "action_id": "option_" + num
-                }
-            ]
-        })
+        messages.attachments[1].blocks[1].elements.push(
+            {
+                "type": "button",
+                "text": {
+                    "type": "plain_text",
+                    "text": option,
+                    "emoji": true
+                },
+                "style": "primary",
+                "value": "option_" + num,
+                "action_id": "option_" + num
+            }
+        )
 
         messages.attachments[2].blocks.push(
             {

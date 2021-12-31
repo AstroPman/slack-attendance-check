@@ -291,5 +291,3 @@ exports.isHoliday = async function () {
     } 
     
 }
-
-exports.isHoliday()
