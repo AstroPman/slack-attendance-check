@@ -267,6 +267,8 @@ exports.postPoll = async function (requestJson) {
         
     });
 
+    console.log(messages)
+
     // API CALL
     try { 
 
