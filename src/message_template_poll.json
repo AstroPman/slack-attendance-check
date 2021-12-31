@@ -20,9 +20,6 @@
 		{
             "color": "#ff7f50",
             "blocks": [
-                {
-					"type": "divider"
-				},
 				{
 					"type": "section",
 					"text": {
@@ -32,45 +29,12 @@
 				},
 				{
 					"type": "actions",
-					"elements": [
-						{
-							"type": "button",
-							"text": {
-								"type": "plain_text",
-								"text": "Option 1",
-								"emoji": true
-							},
-                            "style": "primary",
-							"value": "option_1",
-							"action_id": "option_1"
-						}
-					]
+					"elements": []
 				}
             ]
         },
 		{
-			"blocks": [
-				{
-					"type": "section",
-					"text": {
-						"type": "mrkdwn",
-						"text": ":house:  *在宅*"
-					}
-				},
-                {
-					"type": "context",
-					"elements": [
-						{
-							"type": "plain_text",
-							"text": "合計0人",
-							"emoji": true
-						}
-					]
-				},
-				{
-					"type": "divider"
-				}
-            ]
+			"blocks": []
         }
     ]
 }

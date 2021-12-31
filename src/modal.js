@@ -225,7 +225,7 @@ exports.postPoll = async function (requestJson) {
     
     options.forEach((option, index) => {
         const num = index + 1
-        messages.attachments[1].blocks.push({
+        messages.attachments[1].blocks[1].elements.push({
             "type": "actions",
             "elements": [
                 {
@@ -241,6 +241,29 @@ exports.postPoll = async function (requestJson) {
                 }
             ]
         })
+
+        messages.attachments[2].blocks.push(
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": option
+                }
+            },
+            {
+                "type": "context",
+                "elements": [
+                    {
+                        "type": "plain_text",
+                        "text": "合計0人",
+                        "emoji": true
+                    }
+                ]
+            },
+            {
+                "type": "divider"
+            }
+        )
         
     });
 
