@@ -208,20 +208,54 @@ exports.removeInputForm = async function (requestJson) {
 }
 
 exports.postPoll = async function (requestJson) {
-    const messages = JSON.parse(fs.readFileSync('./src/message_template.json', 'utf8'));
-    console.log(requestJson.view.state.values)
+    const messages = JSON.parse(fs.readFileSync('./src/message_template_poll.json', 'utf8'));
     const keys = Object.keys(requestJson.view.state.values)
     const title = requestJson.view.state.values[keys[0]]['plain_text_input-action'].value
     const description = requestJson.view.state.values[keys[1]]['plain_text_input-action'].value
     const channelId = requestJson.view.state.values[keys[2]].conversations_select.selected_conversation
-
-    messages.attachments[0].blocks[0].text.text = title
-    messages.attachments[1].blocks[0].text.text = "*Description* \n" + description
-    
     const elements = requestJson.view.blocks[3].elements.slice(0, -1)
     const options = []
     elements.forEach(element => {
         options.push(element.text.text)
     });
+
+    messages.channel = channelId
+    messages.attachments[0].blocks[0].text.text = title
+    messages.attachments[1].blocks[0].text.text = "*Description* \n" + description
+    
+    options.forEach((option, index) => {
+        const num = index + 1
+        messages.attachments[1].blocks.push({
+            "type": "actions",
+            "elements": [
+                {
+                    "type": "button",
+                    "text": {
+                        "type": "plain_text",
+                        "text": option,
+                        "emoji": true
+                    },
+                    "style": "primary",
+                    "value": "option_" + num,
+                    "action_id": "option_" + num
+                }
+            ]
+        })
+        
+    });
+
+    // API CALL
+    try { 
+
+        const response = await axios.post(MODAL_API_ENDPOINT + "/chat.update", newMessages, { headers: headers })
+        console.log(response.data)
+
+    } catch (error) { 
+
+        console.log(error.response.body); 
+
+    } 
+    
+    
 
 }
