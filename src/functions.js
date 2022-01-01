@@ -346,7 +346,8 @@ exports.updatePoll = async function (requestJson, respondents){
             console.log('key: ', key)
             const text = respondents[key].join(',')
             const cnt = respondents[key].length
-            if ('value' in newMessages.blocks[i]) {
+            
+            if (newMessages.blocks[i].block_id.match(/option/)) {
                 console.log("value exists in newMessages.blocks[i]")
                 if (newMessages.blocks[i].value == key){
                     newMessages.blocks[i].text.text = "OPTION \n" + text

@@ -242,6 +242,7 @@ exports.postPoll = async function (requestJson) {
 
         messages.blocks.push(
             {
+                "block_id": "option_" + num,
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
