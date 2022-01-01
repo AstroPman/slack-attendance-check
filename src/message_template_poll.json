@@ -19,6 +19,9 @@
         {
 			"type": "actions",
 			"elements": []
+		},
+        {
+			"type": "divider"
 		}
     ]
 }

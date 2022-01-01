@@ -221,7 +221,7 @@ exports.postPoll = async function (requestJson) {
 
     messages.channel = channelId
     messages.blocks[0].text.text = title
-    messages.blocks[1].text.text = "*Description* \n" + description
+    messages.blocks[1].text.text = ":speech_balloon:  *Description* \n" + description
     
     options.forEach((option, index) => {
         const num = index + 1
@@ -233,7 +233,6 @@ exports.postPoll = async function (requestJson) {
                     "text": option,
                     "emoji": true
                 },
-                "style": "primary",
                 "value": "option_" + num,
                 "action_id": "option_" + num
             }
