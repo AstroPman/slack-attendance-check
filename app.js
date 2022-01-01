@@ -38,6 +38,7 @@ app.post('/api/v1/endpoint', (request, response) => {
             if (requestJson.view.callback_id == "add_options_view")
                 modal.updateModal(requestJson)
             else if (requestJson.view.callback_id == "poll_view") {
+                console.log('requestJson.view.state: ', requestJson.view.state)
                 modal.postPoll(requestJson)
             }
         }
