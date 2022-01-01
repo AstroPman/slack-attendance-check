@@ -82,90 +82,37 @@
                 }
             },
             {
-                "type": "input",
-                "element": {
-                    "type": "static_select",
-                    "placeholder": {
-                        "type": "plain_text",
-                        "text": "Select an item",
-                        "emoji": true
-                    },
-                    "options": [
-                        {
-                            "text": {
-                                "type": "plain_text",
-                                "text": "Yes",
-                                "emoji": true
-                            },
-                            "value": "value-0"
-                        },
-                        {
-                            "text": {
-                                "type": "plain_text",
-                                "text": "No",
-                                "emoji": true
-                            },
-                            "value": "value-1"
-                        }
-                    ],
-                    "initial_option": {
-                        "text": {
-                            "type": "plain_text",
-                            "text": "No",
-                            "emoji": true
-                        },
-                        "value": "value-1"
-                    },
-                    "action_id": "static_select-action"
-                },
-                "label": {
-                    "type": "plain_text",
-                    "text": "Notify at channel",
-                    "emoji": true
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": ":red-circle-emoji:  *Advanced Setting*"
                 }
             },
             {
-                "type": "input",
-                "element": {
-                    "type": "static_select",
-                    "placeholder": {
-                        "type": "plain_text",
-                        "text": "Select an item",
-                        "emoji": true
-                    },
-                    "options": [
-                        {
-                            "text": {
-                                "type": "plain_text",
-                                "text": "Yes",
-                                "emoji": true
-                            },
-                            "value": "value-0"
-                        },
-                        {
-                            "text": {
-                                "type": "plain_text",
-                                "text": "No",
-                                "emoji": true
-                            },
-                            "value": "value-1"
-                        }
-                    ],
-                    "initial_option": {
+                "type": "actions",
+                "elements": [
+                    {
+                        "type": "button",
                         "text": {
                             "type": "plain_text",
-                            "text": "No",
+                            "text": "Notify at channel",
                             "emoji": true
                         },
-                        "value": "value-1"
+                        "style": "normal",
+                        "value": "false",
+                        "action_id": "is_notify_at_channel"
                     },
-                    "action_id": "static_select-action"
-                },
-                "label": {
-                    "type": "plain_text",
-                    "text": "Anonymous",
-                    "emoji": true
-                }
+                    {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Anonymous",
+                            "emoji": true
+                        },
+                        "value": "false",
+                        "action_id": "is_anonymous"
+                    }
+                ]
             }
         ]
     }

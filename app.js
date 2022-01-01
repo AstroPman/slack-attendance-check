@@ -52,6 +52,9 @@ app.post('/api/v1/endpoint', (request, response) => {
         else if (requestJson.actions[0].value == "remove_input_form") {
             modal.removeInputForm(requestJson)
         }
+        else if (requestJson.actions[0].action_id == "is_notify_at_channel" || requestJson.actions[0].action_id == "is_anonymous") {
+            modal.updateButtons(requestJson)
+        }
     }
     else {
 

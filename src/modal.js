@@ -298,3 +298,47 @@ exports.postPoll = async function (requestJson) {
     
 
 }
+
+exports.updateButtons = async function(requestJson) {
+    const messages = JSON.parse(fs.readFileSync('./src/message_template_create_poll.json', 'utf8'));
+    delete messages.trigger_id
+    messages.view_id = requestJson.view.id
+    messages.view.blocks = requestJson.view.id.blocks
+
+    
+    if (requestJson.actions[0].action_id == "is_notify_at_channel") {
+        if (messages.view.blocks[6].elements[0].value == "true") {
+            messages.view.blocks[6].elements[0].value == "false"
+            messages.view.blocks[6].elements[0].style == "normal"
+            messages.view.blocks[6].elements[0].text.text == "Notify at channel"
+        }else{
+            messages.view.blocks[6].elements[0].value == "true"
+            messages.view.blocks[6].elements[0].style == "primary"
+            messages.view.blocks[6].elements[0].text.text == ":heavy_check_mark: Notify at channel"
+        }
+    }
+    else if (requestJson.actions[0].action_id == "is_anonymous") {
+        if (messages.view.blocks[6].elements[1].value == "true") {
+            messages.view.blocks[6].elements[1].value == "false"
+            messages.view.blocks[6].elements[1].style == "normal"
+            messages.view.blocks[6].elements[1].text.text == "Anonymous"
+        }else{
+            messages.view.blocks[6].elements[1].value == "true"
+            messages.view.blocks[6].elements[1].style == "primary"
+            messages.view.blocks[6].elements[1].text.text == ":heavy_check_mark: Anonymous"
+        }
+    }
+        
+    // API CALL
+    try { 
+    
+        const response = await axios.post(MODAL_API_ENDPOINT + "/views.update", messages, { headers: headers })
+        console.log(response.data)
+    
+    } catch (error) { 
+    
+        console.log(error.response); 
+    
+    }
+
+}
