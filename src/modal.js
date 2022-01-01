@@ -304,6 +304,7 @@ exports.updateButtons = async function(requestJson) {
     const messages = JSON.parse(fs.readFileSync('./src/message_template_create_poll.json', 'utf8'));
     messages.view.blocks = requestJson.view.blocks
     messages.view.private_metadata = requestJson.view.private_metadata
+    console.log('requestJson.view.private_metadata: ', requestJson.view.private_metadata)
     messages.view_id = requestJson.view.id
     delete messages.trigger_id
     
@@ -331,7 +332,7 @@ exports.updateButtons = async function(requestJson) {
         }
     }
 
-    console.log('updateButtons: ', messages.view.blocks )
+    console.log('updateButtons: ', messages.view.blocks[6].elements )
         
     // API CALL
     try { 
