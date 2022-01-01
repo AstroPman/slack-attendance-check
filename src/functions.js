@@ -353,7 +353,7 @@ exports.updatePoll = async function (requestJson, respondents){
         }
     }
 
-    console.log("messages: ", messages)
+    console.log("messages: ", newMessages)
     
     // Headers
     const headers = {
