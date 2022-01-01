@@ -34,7 +34,7 @@
                         "type": "button",
                         "text": {
                             "type": "plain_text",
-                            "text": "Add",
+                            "text": "+ Add",
                             "emoji": true
                         },
                         "value": "add_input_form",
@@ -45,7 +45,7 @@
                         "type": "button",
                         "text": {
                             "type": "plain_text",
-                            "text": "Remove",
+                            "text": "- Remove",
                             "emoji": true
                         },
                         "value": "remove_input_form",
