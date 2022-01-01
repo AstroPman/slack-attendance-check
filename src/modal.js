@@ -311,6 +311,7 @@ exports.updateButtons = async function(requestJson) {
     
     if (requestJson.actions[0].action_id == "is_notify_at_channel") {
         if (messages.view.blocks[6].elements[0].value == "true") {
+            console.log('is_notify_at_channel: TRUE')
             messages.view.blocks[6].elements[0].value == "false"
             delete messages.view.blocks[6].elements[0].style
             messages.view.blocks[6].elements[0].text.text == "Notify at channel"
@@ -322,6 +323,7 @@ exports.updateButtons = async function(requestJson) {
     }
     else if (requestJson.actions[0].action_id == "is_anonymous") {
         if (messages.view.blocks[6].elements[1].value == "true") {
+            console.log('is_notify_at_channel: TRUE')
             messages.view.blocks[6].elements[1].value == "false"
             delete messages.view.blocks[6].elements[1].style
             messages.view.blocks[6].elements[1].text.text == "Anonymous"
