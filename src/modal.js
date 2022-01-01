@@ -270,6 +270,7 @@ exports.postPoll = async function (requestJson) {
         
     });
 
+    const signature = isAnonymous ? "Created by " + userName +  " | @Batymax Poll" :"Created by " + userName +  " | @Batymax Poll | Anonymous Poll"
     messages.blocks.push(
         {
             "type": "divider"
@@ -279,7 +280,7 @@ exports.postPoll = async function (requestJson) {
 			"elements": [
 				{
 					"type": "mrkdwn",
-					"text": "Created by " + userName +  " | @Batymax Poll"
+					"text": signature
 				}
 			]
 		}

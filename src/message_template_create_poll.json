@@ -85,7 +85,7 @@
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": ":pushpin:  *Advanced Setting* (Click buttons to enable)"
+                    "text": ":pushpin:  *Advanced Setting*"
                 }
             },
             {
