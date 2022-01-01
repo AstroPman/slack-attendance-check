@@ -253,8 +253,7 @@ exports.postPoll = async function (requestJson) {
                 "elements": [
                     {
                         "type": "mrkdwn",
-                        "text": "`□□□□□□□□□□□□□□□□□□` | 0%（0）",
-                        "emoji": true
+                        "text": "`□□□□□□□□□□□□□□□□□□` | 0%（0）"
                     }
                 ]
             },
