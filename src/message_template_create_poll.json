@@ -95,7 +95,7 @@
                         "type": "button",
                         "text": {
                             "type": "plain_text",
-                            "text": ":heavy_check_mark: Notify at channel",
+                            "text": "Notify at channel",
                             "emoji": true
                         },
                         "value": "false",
@@ -105,7 +105,7 @@
                         "type": "button",
                         "text": {
                             "type": "plain_text",
-                            "text": ":heavy_check_mark: Anonymous",
+                            "text": "Anonymous",
                             "emoji": true
                         },
                         "value": "false",
