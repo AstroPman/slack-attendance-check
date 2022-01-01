@@ -345,9 +345,13 @@ exports.updatePoll = async function (requestJson, respondents){
             const text = respondents[key].join(',')
             const cnt = respondents[key].length
             if ('value' in newMessages.blocks[i]) {
+                console.log("value exists in newMessages.blocks[i]")
                 if (newMessages.blocks[i].value == key){
                     newMessages.blocks[i].text.text = "OPTION \n" + text
                     newMessages.blocks[i + 1].elements[0].text = "合計" + cnt + "人"
+                    console.log("========================================")
+                    console.log(newMessages.blocks[i].text.text)
+                    console.log(newMessages.blocks[i + 1].elements[0].text)
                 }
             }
         }
