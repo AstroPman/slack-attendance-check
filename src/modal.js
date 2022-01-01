@@ -253,7 +253,7 @@ exports.postPoll = async function (requestJson) {
                 "elements": [
                     {
                         "type": "mrkdwn",
-                        "text": "`□□□□□□□□□□□□□□□□□□` | 0%（0）"
+                        "text": "合計0人"
                     }
                 ]
             },

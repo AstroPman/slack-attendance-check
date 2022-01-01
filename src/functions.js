@@ -275,6 +275,101 @@ exports.deleteAttendanceDatafromFirebase = async function () {
 
 }
 
+
+// baymax poll
+exports.registerAnswer = async function (requestJson) {
+    const value = requestJson.actions[0].value
+    const respondent = "<@" + requestJson.user.name + ">"
+    const timestamp = requestJson.message.ts
+            
+    const polls = firebaseDb.ref('/').child('polls/' + ( Number(timestamp) * 10 ** 6).toString())
+    polls.once('value', snapshot => {
+        const results = snapshot.val()
+        if(results === null){
+            polls.update({
+                [value]: [respondent]
+            })
+            const respondents = {
+                [value]: [respondent]
+            }
+            exports.updatePoll(requestJson, respondents)
+        }
+        else if (typeof respondents[value] === "undefined") {
+            polls.update({
+                [value]: [respondent]
+            })
+
+            for (const item in respondents) {         
+                respondents[item] = respondents[item].filter( function (user) {
+                    return user != respondent
+                })
+            }
+            polls.update(respondents)
+            respondents[value] = [respondent]
+            exports.updatePoll(requestJson, respondents)
+        }
+        else {
+            for (const item in respondents) {
+                if (item == value) {
+                    if (!respondents[item].includes(respondent)) {
+                        respondents[item].push(respondent)
+                    }
+                    else {
+                        respondents[item] = respondents[item].filter( function (user) {
+                            return user != respondent
+                        })
+                    }
+                }
+                else {
+                    respondents[item] = respondents[item].filter( function (user) {
+                        return user != respondent
+                    })
+                }
+            } 
+            polls.update(respondents);
+            exports.updatePoll(requestJson, respondents)
+        }
+    })
+}
+
+exports.updatePoll = async function (requestJson, respondents){
+    const newMessages = JSON.parse(fs.readFileSync('./src/message_template_poll.json', 'utf8'));
+    newMessages.channel = requestJson.channel.id
+    newMessages.ts = requestJson.message.ts
+    newMessages.blocks = requestJson.message.blocks
+
+    for (let i = 4; i < newMessages.blocks.length; i ++) {
+        for (key in respondents) {
+            const text = respondents[key].join(',')
+            const cnt = respondents[key].length
+            if ('value' in newMessages.blocks[i]) {
+                if (newMessages.blocks[i].value == key){
+                    newMessages.blocks[i].text.text = ":house:  *在宅*\n" + text
+                    newMessages.blocks[i + 1].elements[0].text = "合計" + cnt + "人"
+                }
+            }
+        }
+    }
+    
+    // Headers
+    const headers = {
+        "content-type": "application/json",
+        "Authorization": 'Bearer ' + API_KEY
+    }
+
+    // API CALL
+    try { 
+
+        const response = await axios.post(API_ENDPOINT + "/chat.update", newMessages, { headers: headers })
+        console.log(response.data)
+
+    } catch (error) { 
+
+        console.log(error.response.body); 
+
+    } 
+}
+
 exports.isHoliday = async function () {
     try { 
         
