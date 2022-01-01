@@ -246,7 +246,7 @@ exports.postPoll = async function (requestJson) {
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": option
+                    "text": "*" + option + "*"
                 }
             },
             {

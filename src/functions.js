@@ -352,7 +352,7 @@ exports.updatePoll = async function (requestJson, respondents){
                 console.log("newMessages.blocks[i].value: ", newMessages.blocks[i].value)
                 if (newMessages.blocks[i].block_id == key){
                     const textHeader = newMessages.blocks[i].text.text.split('\n')[0]
-                    newMessages.blocks[i].text.text = "*" + textHeader +  "*\n" + text
+                    newMessages.blocks[i].text.text = textHeader + "\n" + text
                     newMessages.blocks[i + 1].elements[0].text = "合計" + cnt + "人"
                     console.log("========================================")
                     console.log(newMessages.blocks[i].text.text)
