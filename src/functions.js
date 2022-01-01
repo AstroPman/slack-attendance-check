@@ -344,7 +344,7 @@ exports.updatePoll = async function (requestJson, respondents){
             const cnt = respondents[key].length
             if ('value' in newMessages.blocks[i]) {
                 if (newMessages.blocks[i].value == key){
-                    newMessages.blocks[i].text.text = ":house:  *在宅*\n" + text
+                    newMessages.blocks[i].text.text = "OPTION \n" + text
                     newMessages.blocks[i + 1].elements[0].text = "合計" + cnt + "人"
                 }
             }
