@@ -343,6 +343,7 @@ exports.updatePoll = async function (requestJson, respondents){
     for (let i = 4; i < newMessages.blocks.length; i ++) {
         console.log(i)
         for (key in respondents) {
+            console.log('key: ', key)
             const text = respondents[key].join(',')
             const cnt = respondents[key].length
             if ('value' in newMessages.blocks[i]) {
