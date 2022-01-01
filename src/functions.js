@@ -338,6 +338,8 @@ exports.updatePoll = async function (requestJson, respondents){
     newMessages.ts = requestJson.message.ts
     newMessages.blocks = requestJson.message.blocks
 
+    console.log("respondents: ", respondents)
+
     for (let i = 4; i < newMessages.blocks.length; i ++) {
         for (key in respondents) {
             const text = respondents[key].join(',')
@@ -350,6 +352,8 @@ exports.updatePoll = async function (requestJson, respondents){
             }
         }
     }
+
+    console.log("messages: ", messages)
     
     // Headers
     const headers = {
