@@ -98,7 +98,6 @@
                             "text": "Notify at channel",
                             "emoji": true
                         },
-                        "style": "normal",
                         "value": "false",
                         "action_id": "is_notify_at_channel"
                     },
