@@ -95,20 +95,20 @@
                         "type": "button",
                         "text": {
                             "type": "plain_text",
-                            "text": "Notify at channel",
+                            "text": ":heavy_check_mark: Notify at channel",
                             "emoji": true
                         },
-                        "value": "false",
+                        "value": "true",
                         "action_id": "is_notify_at_channel"
                     },
                     {
                         "type": "button",
                         "text": {
                             "type": "plain_text",
-                            "text": "Anonymous",
+                            "text": ":heavy_check_mark: Anonymous",
                             "emoji": true
                         },
-                        "value": "false",
+                        "value": "true",
                         "action_id": "is_anonymous"
                     }
                 ]

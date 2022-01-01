@@ -317,6 +317,7 @@ exports.updateButtons = async function(requestJson) {
             delete messages.view.blocks[6].elements[0].style
             messages.view.blocks[6].elements[0].text.text == "Notify at channel"
         }else{
+            console.log('is_notify_at_channel: FALSE')
             messages.view.blocks[6].elements[0].value == "true"
             messages.view.blocks[6].elements[0].style == "primary"
             messages.view.blocks[6].elements[0].text.text == ":heavy_check_mark: Notify at channel"
@@ -324,11 +325,12 @@ exports.updateButtons = async function(requestJson) {
     }
     else if (requestJson.actions[0].action_id == "is_anonymous") {
         if (messages.view.blocks[6].elements[1].value == "true") {
-            console.log('is_notify_at_channel: TRUE')
+            console.log('is_anonymous: TRUE')
             messages.view.blocks[6].elements[1].value == "false"
             delete messages.view.blocks[6].elements[1].style
             messages.view.blocks[6].elements[1].text.text == "Anonymous"
         }else{
+            console.log('is_anonymous: FALSE')
             messages.view.blocks[6].elements[1].value == "true"
             messages.view.blocks[6].elements[1].style == "primary"
             messages.view.blocks[6].elements[1].text.text == ":heavy_check_mark: Anonymous"
