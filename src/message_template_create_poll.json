@@ -85,7 +85,7 @@
                 "type": "section",
                 "text": {
                     "type": "mrkdwn",
-                    "text": ":red-circle-emoji:  *Advanced Setting*"
+                    "text": ":red-circle-emoji:  *Advanced Setting* (Click buttons to enable)"
                 }
             },
             {
@@ -98,8 +98,7 @@
                             "text": ":heavy_check_mark: Notify at channel",
                             "emoji": true
                         },
-                        "style": "primary",
-                        "value": "true",
+                        "value": "false",
                         "action_id": "is_notify_at_channel"
                     },
                     {
@@ -109,8 +108,7 @@
                             "text": ":heavy_check_mark: Anonymous",
                             "emoji": true
                         },
-                        "style": "primary",
-                        "value": "true",
+                        "value": "false",
                         "action_id": "is_anonymous"
                     }
                 ]
