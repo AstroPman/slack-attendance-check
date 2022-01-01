@@ -309,6 +309,8 @@ exports.updateButtons = async function(requestJson) {
     
     
     if (requestJson.actions[0].action_id == "is_notify_at_channel") {
+        console.log("messages.view.blocks[6].elements[0].value: ", messages.view.blocks[6].elements[0].value)
+
         if (messages.view.blocks[6].elements[0].value == "true") {
             console.log('is_notify_at_channel: TRUE')
             messages.view.blocks[6].elements[0].value == "false"
