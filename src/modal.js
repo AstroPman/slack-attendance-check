@@ -302,10 +302,12 @@ exports.postPoll = async function (requestJson) {
 exports.updateButtons = async function(requestJson) {
     
     const messages = JSON.parse(fs.readFileSync('./src/message_template_create_poll.json', 'utf8'));
-    delete messages.trigger_id
-    messages.view_id = requestJson.view.id
     messages.view.blocks = requestJson.view.blocks
-
+    messages.view.private_metadata = requestJson.view.private_metadata
+    messages.view_id = requestJson.view.id
+    delete messages.trigger_id
+    
+    
     if (requestJson.actions[0].action_id == "is_notify_at_channel") {
         if (messages.view.blocks[6].elements[0].value == "true") {
             messages.view.blocks[6].elements[0].value == "false"
@@ -329,7 +331,7 @@ exports.updateButtons = async function(requestJson) {
         }
     }
 
-    console.log('updateButtons: ', messages )
+    console.log('updateButtons: ', messages.view.blocks )
         
     // API CALL
     try { 
