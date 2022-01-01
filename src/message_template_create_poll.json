@@ -98,6 +98,7 @@
                             "text": ":heavy_check_mark: Notify at channel",
                             "emoji": true
                         },
+                        "style": "primary",
                         "value": "true",
                         "action_id": "is_notify_at_channel"
                     },
@@ -108,6 +109,7 @@
                             "text": ":heavy_check_mark: Anonymous",
                             "emoji": true
                         },
+                        "style": "primary",
                         "value": "true",
                         "action_id": "is_anonymous"
                     }
