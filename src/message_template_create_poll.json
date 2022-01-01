@@ -80,6 +80,36 @@
                     "text": ":red-circle-emoji:  Channel",
                     "emoji": true
                 }
+            },
+            {
+                "type": "input",
+                "element": {
+                    "type": "checkboxes",
+                    "options": [
+                        {
+                            "text": {
+                                "type": "plain_text",
+                                "text": "Notify @channel",
+                                "emoji": true
+                            },
+                            "value": "notify_at_channel"
+                        },
+                        {
+                            "text": {
+                                "type": "plain_text",
+                                "text": "Anonymous",
+                                "emoji": true
+                            },
+                            "value": "anonymous"
+                        }
+                    ],
+                    "action_id": "advanced_setting"
+                },
+                "label": {
+                    "type": "plain_text",
+                    "text": "Advanced Setting",
+                    "emoji": true
+                }
             }
         ]
     }
