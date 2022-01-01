@@ -289,45 +289,45 @@ exports.registerAnswer = async function (requestJson) {
             polls.update({
                 [value]: [respondent]
             })
-            const respondents = {
+            const results = {
                 [value]: [respondent]
             }
-            exports.updatePoll(requestJson, respondents)
+            exports.updatePoll(requestJson, results)
         }
-        else if (typeof respondents[value] === "undefined") {
+        else if (typeof results[value] === "undefined") {
             polls.update({
                 [value]: [respondent]
             })
 
-            for (const item in respondents) {         
-                respondents[item] = respondents[item].filter( function (user) {
+            for (const item in results) {         
+                results[item] = results[item].filter( function (user) {
                     return user != respondent
                 })
             }
-            polls.update(respondents)
-            respondents[value] = [respondent]
-            exports.updatePoll(requestJson, respondents)
+            polls.update(results)
+            results[value] = [respondent]
+            exports.updatePoll(requestJson, results)
         }
         else {
-            for (const item in respondents) {
+            for (const item in results) {
                 if (item == value) {
-                    if (!respondents[item].includes(respondent)) {
-                        respondents[item].push(respondent)
+                    if (!results[item].includes(respondent)) {
+                        results[item].push(respondent)
                     }
                     else {
-                        respondents[item] = respondents[item].filter( function (user) {
+                        results[item] = results[item].filter( function (user) {
                             return user != respondent
                         })
                     }
                 }
                 else {
-                    respondents[item] = respondents[item].filter( function (user) {
+                    results[item] = results[item].filter( function (user) {
                         return user != respondent
                     })
                 }
             } 
-            polls.update(respondents);
-            exports.updatePoll(requestJson, respondents)
+            polls.update(results);
+            exports.updatePoll(requestJson, results)
         }
     })
 }
