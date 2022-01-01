@@ -1,40 +1,24 @@
 {
     "channel": "channel_id",
-    "attachments": [			
-		{
-			"color": "#ff7f50",
-			"blocks": [
-				{
-					"type": "header",
-					"text": {
-						"type": "plain_text",
-						"text": "Header Title",
-						"emoji": true
-					}
-				},
-				{
-					"type": "divider"
-				}
-            ]
+    "blocks": [
+        {
+            "type": "header",
+            "text": {
+                "type": "plain_text",
+                "text": "Header Title",
+                "emoji": true
+            }
         },
-		{
-            "color": "#ff7f50",
-            "blocks": [
-				{
-					"type": "section",
-					"text": {
-						"type": "mrkdwn",
-						"text": "*Description*"
-					}
-				},
-				{
-					"type": "actions",
-					"elements": []
-				}
-            ]
+        {
+            "type": "section",
+            "text": {
+                "type": "mrkdwn",
+                "text": "*Description*"
+            }
         },
-		{
-			"blocks": []
-        }
+        {
+			"type": "actions",
+			"elements": []
+		}
     ]
 }

@@ -220,12 +220,12 @@ exports.postPoll = async function (requestJson) {
     });
 
     messages.channel = channelId
-    messages.attachments[0].blocks[0].text.text = title
-    messages.attachments[1].blocks[0].text.text = "*Description* \n" + description
+    messages.blocks[0].text.text = title
+    messages.blocks[1].text.text = "*Description* \n" + description
     
     options.forEach((option, index) => {
         const num = index + 1
-        messages.attachments[1].blocks[1].elements.push(
+        messages.blocks[2].elements.push(
             {
                 "type": "button",
                 "text": {
@@ -239,28 +239,28 @@ exports.postPoll = async function (requestJson) {
             }
         )
 
-        messages.attachments[2].blocks.push(
-            {
-                "type": "section",
-                "text": {
-                    "type": "mrkdwn",
-                    "text": option
-                }
-            },
-            {
-                "type": "context",
-                "elements": [
-                    {
-                        "type": "plain_text",
-                        "text": "合計0人",
-                        "emoji": true
-                    }
-                ]
-            },
-            {
-                "type": "divider"
-            }
-        )
+        // messages.attachments[2].blocks.push(
+        //     {
+        //         "type": "section",
+        //         "text": {
+        //             "type": "mrkdwn",
+        //             "text": option
+        //         }
+        //     },
+        //     {
+        //         "type": "context",
+        //         "elements": [
+        //             {
+        //                 "type": "plain_text",
+        //                 "text": "合計0人",
+        //                 "emoji": true
+        //             }
+        //         ]
+        //     },
+        //     {
+        //         "type": "divider"
+        //     }
+        // )
         
     });
 
