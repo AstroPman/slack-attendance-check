@@ -303,7 +303,7 @@ exports.updateButtons = async function(requestJson) {
     const messages = JSON.parse(fs.readFileSync('./src/message_template_create_poll.json', 'utf8'));
     delete messages.trigger_id
     messages.view_id = requestJson.view.id
-    messages.view.blocks = requestJson.view.id.blocks
+    messages.view.blocks = requestJson.view.blocks
 
     
     if (requestJson.actions[0].action_id == "is_notify_at_channel") {
