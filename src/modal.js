@@ -215,19 +215,23 @@ exports.postPoll = async function (requestJson) {
     const title = requestJson.view.state.values[keys[0]]['plain_text_input-action'].value
     const description = requestJson.view.state.values[keys[1]]['plain_text_input-action'].value
     const channelId = requestJson.view.state.values[keys[2]].conversations_select.selected_conversation
-    const isNotifyAtChannel = requestJson.view.state.values[keys[3]].advanced_setting.selected_options[0]
-    const isAnonymous = requestJson.view.state.values[keys[3]].advanced_setting.selected_options[1]
-    console.log('isNotifyAtChannel: ', isNotifyAtChannel)
-    console.log('isAnonymous: ', isAnonymous)
+    
+    // options 
     const elements = requestJson.view.blocks[3].elements.slice(0, -1)
     const options = []
     elements.forEach(element => {
         options.push(element.text.text)
     });
 
+    // advanced settings
+    const settings = requestJson.view.blocks[6].elements
+    const isNotifyAtChannel = settings[0].value == "true"
+    const isAnonymous = settings[1].value == "true"
+
+
     messages.channel = channelId
     messages.blocks[0].text.text = title
-    messages.blocks[1].text.text = ":speech_balloon:  *Description* \n" + description
+    messages.blocks[1].text.text = isNotifyAtChannel ? ":speech_balloon:  *Description*  <!channel>\n" + description : ":speech_balloon:  *Description*\n" + description
     
     options.forEach((option, index) => {
         const num = index + 1
