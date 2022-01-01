@@ -1,6 +1,7 @@
 const fs = require('fs');
 const axios = require('axios');
 
+
 const MODAL_API_ENDPOINT = 'https://slack.com/api'
 const API_KEY = process.env.API_KEY
 const headers = {
@@ -210,6 +211,7 @@ exports.removeInputForm = async function (requestJson) {
 exports.postPoll = async function (requestJson) {
     const messages = JSON.parse(fs.readFileSync('./src/message_template_poll.json', 'utf8'));
     const keys = Object.keys(requestJson.view.state.values)
+    const userName = requestJson.user.username
     const title = requestJson.view.state.values[keys[0]]['plain_text_input-action'].value
     const description = requestJson.view.state.values[keys[1]]['plain_text_input-action'].value
     const channelId = requestJson.view.state.values[keys[2]].conversations_select.selected_conversation
@@ -238,30 +240,42 @@ exports.postPoll = async function (requestJson) {
             }
         )
 
-        // messages.attachments[2].blocks.push(
-        //     {
-        //         "type": "section",
-        //         "text": {
-        //             "type": "mrkdwn",
-        //             "text": option
-        //         }
-        //     },
-        //     {
-        //         "type": "context",
-        //         "elements": [
-        //             {
-        //                 "type": "plain_text",
-        //                 "text": "合計0人",
-        //                 "emoji": true
-        //             }
-        //         ]
-        //     },
-        //     {
-        //         "type": "divider"
-        //     }
-        // )
+        messages.blocks.push(
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": option
+                }
+            },
+            {
+                "type": "context",
+                "elements": [
+                    {
+                        "type": "mrkdwn",
+                        "text": "`□□□□□□□□□□□□□□□□□□` | 0%（0）",
+                        "emoji": true
+                    }
+                ]
+            },
+        )
         
     });
+
+    messages.blocks.push(
+        {
+            "type": "divider"
+        },
+        {
+			"type": "context",
+			"elements": [
+				{
+					"type": "mrkdwn",
+					"text": "Created by " + userName +  " | @Batymax Poll"
+				}
+			]
+		}
+    )
 
     console.log(messages)
 
