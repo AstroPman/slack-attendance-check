@@ -84,30 +84,86 @@
             {
                 "type": "input",
                 "element": {
-                    "type": "checkboxes",
+                    "type": "static_select",
+                    "placeholder": {
+                        "type": "plain_text",
+                        "text": "Select an item",
+                        "emoji": true
+                    },
                     "options": [
                         {
                             "text": {
                                 "type": "plain_text",
-                                "text": "Notify @channel",
+                                "text": "Yes",
                                 "emoji": true
                             },
-                            "value": "notify_at_channel"
+                            "value": "value-0"
                         },
                         {
                             "text": {
                                 "type": "plain_text",
-                                "text": "Anonymous",
+                                "text": "No",
                                 "emoji": true
                             },
-                            "value": "anonymous"
+                            "value": "value-1"
                         }
                     ],
-                    "action_id": "advanced_setting"
+                    "initial_option": {
+                        "text": {
+                            "type": "plain_text",
+                            "text": "No",
+                            "emoji": true
+                        },
+                        "value": "value-1"
+                    },
+                    "action_id": "static_select-action"
                 },
                 "label": {
                     "type": "plain_text",
-                    "text": ":red-circle-emoji:  Advanced Setting",
+                    "text": "Notify at channel",
+                    "emoji": true
+                }
+            },
+            {
+                "type": "input",
+                "element": {
+                    "type": "static_select",
+                    "placeholder": {
+                        "type": "plain_text",
+                        "text": "Select an item",
+                        "emoji": true
+                    },
+                    "options": [
+                        {
+                            "text": {
+                                "type": "plain_text",
+                                "text": "Yes",
+                                "emoji": true
+                            },
+                            "value": "value-0"
+                        },
+                        {
+                            "text": {
+                                "type": "plain_text",
+                                "text": "No",
+                                "emoji": true
+                            },
+                            "value": "value-1"
+                        }
+                    ],
+                    "initial_option": {
+                        "text": {
+                            "type": "plain_text",
+                            "text": "No",
+                            "emoji": true
+                        },
+                        "value": "value-1"
+                    },
+                    "action_id": "static_select-action"
+                },
+                "label": {
+                    "type": "plain_text",
+                    "text": "Anonymous",
                     "emoji": true
                 }
             }
