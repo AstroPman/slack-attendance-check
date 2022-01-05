@@ -413,6 +413,7 @@ exports.updatePoll = async function (requestJson, respondents){
     newMessages.blocks = requestJson.message.blocks
     const signature = requestJson.message.blocks[requestJson.message.blocks.length - 1].elements[0].text
     const isAnonymous = signature.includes('Anonymous')
+    const silhouetteIcon =  ":bust_in_silhouette: "
 
     for (let i = 4; i < newMessages.blocks.length; i ++) {
         for (key in respondents) {
@@ -422,7 +423,7 @@ exports.updatePoll = async function (requestJson, respondents){
             if (newMessages.blocks[i].block_id.match(/option/)) {
                 if (newMessages.blocks[i].block_id == key){
                     const textHeader = newMessages.blocks[i].text.text.split('\n')[0]
-                    newMessages.blocks[i].text.text = isAnonymous ? textHeader : textHeader + "\n" + text 
+                    newMessages.blocks[i].text.text = isAnonymous ? textHeader + "\n" + silhouetteIcon.repeat(cnt) : textHeader + "\n" + text 
                     newMessages.blocks[i + 1].elements[0].text = "合計" + cnt + "人"
                 }
             }
@@ -466,3 +467,8 @@ exports.isHoliday = async function () {
     
 }
 
+
+const cnt = 5
+const text = "bust_in_silhouette "
+
+console.log(text.repeat(cnt))

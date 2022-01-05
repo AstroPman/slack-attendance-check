@@ -228,7 +228,7 @@ exports.postPoll = async function (requestJson) {
         isMultipleSelection: settings[3].value == "true"
     }
     let description = advancedSettings.isNotifyAtChannel ? ":speech_balloon:  *Description*  <!channel>\n" + descriptionContent : ":speech_balloon:  *Description*\n" + descriptionContent
-    const signature = `Created by ${ userName } | @Batymax Poll | ${ advancedSettings.isAnonymous ? "| Anonymous Poll" : "" } ${ advancedSettings.isMultipleSelection ? "| Multiple Selection" : "| Single Selection"}`
+    const signature = `Created by ${ userName } | @Batymax Poll ${ advancedSettings.isAnonymous ? "| Anonymous Poll" : "" } ${ advancedSettings.isMultipleSelection ? "| Multiple Selection" : "| Single Selection"}`
     const userList =  advancedSettings.isNotifyToUsers ? requestJson.view.state.values[keys[3]]['multi_users_select-action'].selected_users : null
     let users = ""
     if(userList){
