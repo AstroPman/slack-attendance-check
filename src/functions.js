@@ -275,7 +275,6 @@ exports.deleteAttendanceDatafromFirebase = async function () {
 
 }
 
-
 // baymax poll
 exports.registerAnswer = async function (requestJson) {
     const value = requestJson.actions[0].value
@@ -338,32 +337,22 @@ exports.updatePoll = async function (requestJson, respondents){
     newMessages.ts = requestJson.message.ts
     newMessages.blocks = requestJson.message.blocks
 
-    console.log("respondents: ", respondents)
-
     for (let i = 4; i < newMessages.blocks.length; i ++) {
-        console.log(i)
         for (key in respondents) {
-            console.log('key: ', key)
-            
             const text = respondents[key].join(',')
             const cnt = respondents[key].length
             
             if (newMessages.blocks[i].block_id.match(/option/)) {
-                console.log("newMessages.blocks[i].value: ", newMessages.blocks[i].value)
                 if (newMessages.blocks[i].block_id == key){
                     const textHeader = newMessages.blocks[i].text.text.split('\n')[0]
                     newMessages.blocks[i].text.text = textHeader + "\n" + text
                     newMessages.blocks[i + 1].elements[0].text = "合計" + cnt + "人"
-                    console.log("========================================")
-                    console.log(newMessages.blocks[i].text.text)
-                    console.log(newMessages.blocks[i + 1].elements[0].text)
                 }
             }
         }
     }
 
-    console.log("messages: ", newMessages)
-    
+
     // Headers
     const headers = {
         "content-type": "application/json",

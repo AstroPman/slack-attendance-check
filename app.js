@@ -28,9 +28,10 @@ app.get('/api/v1/livenessProbe', (request, response) => {
 });
 
 app.post('/api/v1/endpoint', (request, response) => {
-    
+    // parse request body to json
     const requestJson = JSON.parse(request.body.payload)
-    console.log("/api/v1/endpoint requestJso: ", requestJson)
+    console.log("============================================")
+    console.log("/api/v1/endpoint requestJson: ", requestJson)
     
     if ("view" in requestJson) {
         // recieve actions to modal
@@ -38,12 +39,10 @@ app.post('/api/v1/endpoint', (request, response) => {
             if (requestJson.view.callback_id == "add_options_view")
                 modal.updateModal(requestJson)
             else if (requestJson.view.callback_id == "poll_view") {
-                console.log('requestJson.view.state: ', requestJson.view.state)
                 modal.postPoll(requestJson)
             }
         }
         else if (requestJson.actions[0].value == "add_options") {
-            console.log("Add Options requestJson.view.blocks: ", requestJson.view.blocks)
             modal.pushModal(requestJson)
         }
         else if (requestJson.actions[0].value == "add_input_form") {
@@ -121,7 +120,6 @@ app.post('/api/v1/endpoint', (request, response) => {
 });
 
 app.post('/api/v1/openModal', (request, response) => {
-    console.log(request)
     const triggerId = request.body.trigger_id
     modal.openModal(triggerId)
     response.send(''); 
@@ -160,13 +158,13 @@ cron.schedule('0 13 * * *', () => {
     }
 });
 // 3. デジ共朝会
-// cron.schedule('15 9 * * *', () => {
-//     const dayOfWeek = functions.getToday()[2]
-//     if (dayOfWeek != "土" || dayOfWeek != "日" ) {
-//         //土日以外実行されない
-//         functions.postCloudMeeting()
-//     }
-// });
+cron.schedule('15 9 * * *', () => {
+    const dayOfWeek = functions.getToday()[2]
+    if (dayOfWeek != "土" || dayOfWeek != "日" ) {
+        //土日以外実行されない
+        functions.postCloudMeeting()
+    }
+});
 
 // 4. Firebase Realtime Database データ削除
 cron.schedule('0 0 * * *', () => {

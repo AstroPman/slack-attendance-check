@@ -1,7 +1,6 @@
 const fs = require('fs');
 const axios = require('axios');
 
-
 const MODAL_API_ENDPOINT = 'https://slack.com/api'
 const API_KEY = process.env.API_KEY
 const headers = {
@@ -209,15 +208,16 @@ exports.removeInputForm = async function (requestJson) {
 }
 
 exports.postPoll = async function (requestJson) {
+    // load message template
     const messages = JSON.parse(fs.readFileSync('./src/message_template_poll.json', 'utf8'));
-    const keys = Object.keys(requestJson.view.state.values)
-    const userName = requestJson.user.username
-    const title = requestJson.view.state.values[keys[0]]['plain_text_input-action'].value
-    const description = requestJson.view.state.values[keys[1]]['plain_text_input-action'].value
-    const channelId = requestJson.view.state.values[keys[2]].conversations_select.selected_conversation
     
-    // options 
-    const elements = requestJson.view.blocks[3].elements.slice(0, -1)
+    // extract data from request
+    const userName = requestJson.user.username
+    const keys = Object.keys(requestJson.view.state.values)
+    const title = requestJson.view.state.values[keys[0]]['plain_text_input-action'].value
+    const descriptionContent = requestJson.view.state.values[keys[1]]['plain_text_input-action'].value
+    const channelId = requestJson.view.state.values[keys[2]].conversations_select.selected_conversation
+    const elements = requestJson.view.blocks[3].elements.slice(0, -1)  // extract created options
     const options = []
     elements.forEach(element => {
         options.push(element.text.text)
@@ -225,13 +225,18 @@ exports.postPoll = async function (requestJson) {
 
     // advanced settings
     const settings = requestJson.view.blocks[6].elements
-    const isNotifyAtChannel = settings[0].value == "true"
-    const isAnonymous = settings[1].value == "true"
+    const advancedSettings = {
+        isNotifyAtChannel: settings[0].value == "true",
+        isAnonymous: settings[1].value == "true"
+    }
+    const description = advancedSettings.isNotifyAtChannel ? ":speech_balloon:  *Description*  <!channel>\n" + descriptionContent : ":speech_balloon:  *Description*\n" + descriptionContent
+    const signature = advancedSettings.isAnonymousisAnonymous ? "Created by " + userName +  " | @Batymax Poll" : "Created by " + userName +  " | @Batymax Poll | Anonymous Poll"
 
 
+    // Edit new messages
     messages.channel = channelId
     messages.blocks[0].text.text = title
-    messages.blocks[1].text.text = isNotifyAtChannel ? ":speech_balloon:  *Description*  <!channel>\n" + description : ":speech_balloon:  *Description*\n" + description
+    messages.blocks[1].text.text = description
     
     options.forEach((option, index) => {
         const num = index + 1
@@ -270,8 +275,7 @@ exports.postPoll = async function (requestJson) {
         
     });
 
-    const signature = isAnonymous ? "Created by " + userName +  " | @Batymax Poll" :"Created by " + userName +  " | @Batymax Poll | Anonymous Poll"
-    messages.blocks.push(
+    messages.blocks.push( // insert signature block in the end
         {
             "type": "divider"
         },
@@ -286,64 +290,57 @@ exports.postPoll = async function (requestJson) {
 		}
     )
 
-    console.log(messages)
-
     // API CALL
     try { 
 
         const response = await axios.post(MODAL_API_ENDPOINT + "/chat.postMessage", messages, { headers: headers })
-        console.log(response.data)
+        console.log("postPoll response.data: ", response.data)
 
     } catch (error) { 
 
-        console.log(error.response); 
+        console.log("postPoll error.response: ", error.response); 
 
     }
-    
-    
-
 }
 
 exports.updateButtons = async function(requestJson) {
-    
+    // load message template
     const messages = JSON.parse(fs.readFileSync('./src/message_template_create_poll.json', 'utf8'));
+    
+    // overwrite template with request data
     messages.view.blocks = requestJson.view.blocks
-    console.log('requestJson.view.blocks: ', requestJson.view.blocks)
     messages.view_id = requestJson.view.id
     delete messages.trigger_id
-    
-    
-    if (requestJson.actions[0].action_id == "is_notify_at_channel") {
-        console.log("messages.view.blocks[6].elements[0].value: ", messages.view.blocks[6].elements[0].value)
 
-        if (messages.view.blocks[6].elements[0].value == "true") {
-            console.log('is_notify_at_channel: TRUE')
-            messages.view.blocks[6].elements[0].value = "false"
+    // extract data from request
+    const actionId = requestJson.actions[0].action_id
+    
+    if (actionId == "is_notify_at_channel") {
+        const isCurrentValueTrue = messages.view.blocks[6].elements[0].value == "true"
+        messages.view.blocks[6].elements[0].value = isCurrentValueTrue ? "false" : "true"
+        messages.view.blocks[6].elements[0].text.text = isCurrentValueTrue ? "Notify at channel" : ":heavy_check_mark: Notify at channel"
+        
+        if (isCurrentValueTrue) {
+            // remove style property to make the button style set default
             delete messages.view.blocks[6].elements[0].style
-            messages.view.blocks[6].elements[0].text.text = "Notify at channel"
         }else{
-            console.log('is_notify_at_channel: FALSE')
-            messages.view.blocks[6].elements[0].value = "true"
+            // overwite button style to primary
             messages.view.blocks[6].elements[0].style = "primary"
-            messages.view.blocks[6].elements[0].text.text = ":heavy_check_mark: Notify at channel"
         }
     }
-    else if (requestJson.actions[0].action_id == "is_anonymous") {
-        if (messages.view.blocks[6].elements[1].value == "true") {
-            console.log('is_anonymous: TRUE')
-            messages.view.blocks[6].elements[1].value = "false"
-            messages.view.blocks[6].elements[1].text.text = "Anonymous"
+    else if (actionId == "is_anonymous") {
+        const isCurrentValueTrue = messages.view.blocks[6].elements[1].value == "true"
+        messages.view.blocks[6].elements[1].value = isCurrentValueTrue ? "false" : "true"
+        messages.view.blocks[6].elements[1].text.text = isCurrentValueTrue ? "Anonymous" : ":heavy_check_mark: Anonymous"
+        if (isCurrentValueTrue) {
+            // remove style property to make the button style set default
             delete messages.view.blocks[6].elements[1].style
         }else{
-            console.log('is_anonymous: FALSE')
-            messages.view.blocks[6].elements[1].value = "true"
-            messages.view.blocks[6].elements[1].text.text = ":heavy_check_mark: Anonymous"
+            // overwite button style to primary
             messages.view.blocks[6].elements[1].style = "primary"
         }
     }
-
-    console.log('updateButtons: ', messages.view.blocks[6].elements )
-        
+    
     // API CALL
     try { 
     
