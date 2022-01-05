@@ -346,10 +346,13 @@ exports.registerAnswer = async function (requestJson) {
     const value = requestJson.actions[0].value
     const respondent = "<@" + requestJson.user.name + ">"
     const timestamp = requestJson.message.ts
+    const signature = requestJson.message.blocks[requestJson.message.blocks.length - 1].elements[0].text
+    const isMultipleSelection = signature.includes('Multiple')
             
     const polls = firebaseDb.ref('/').child('polls/' + ( Number(timestamp) * 10 ** 6).toString())
     polls.once('value', snapshot => {
         const results = snapshot.val()
+        // 初回回答（pollの回答が一つも存在しない場合）
         if(results === null){
             polls.update({
                 [value]: [respondent]
@@ -359,20 +362,24 @@ exports.registerAnswer = async function (requestJson) {
             }
             exports.updatePoll(requestJson, results)
         }
+        // 初選択（初めて該当の選択肢が選択された場合）
         else if (typeof results[value] === "undefined") {
             polls.update({
                 [value]: [respondent]
             })
 
-            for (const item in results) {         
-                results[item] = results[item].filter( function (user) {
-                    return user != respondent
-                })
+            if(!isMultipleSelection) {
+                for (const item in results) {         
+                    results[item] = results[item].filter( function (user) {
+                        return user != respondent
+                    })
+                }
             }
             polls.update(results)
             results[value] = [respondent]
             exports.updatePoll(requestJson, results)
         }
+        // 全ての選択肢が一度以上選択されたことある場合
         else {
             for (const item in results) {
                 if (item == value) {
@@ -386,9 +393,11 @@ exports.registerAnswer = async function (requestJson) {
                     }
                 }
                 else {
-                    results[item] = results[item].filter( function (user) {
-                        return user != respondent
-                    })
+                    if(!isMultipleSelection){
+                        results[item] = results[item].filter( function (user) {
+                            return user != respondent
+                        })
+                    }
                 }
             } 
             polls.update(results);

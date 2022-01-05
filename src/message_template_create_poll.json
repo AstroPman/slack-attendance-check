@@ -120,6 +120,16 @@
                         },
                         "value": "false",
                         "action_id": "is_notify_to_user"
+                    },
+                    {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Multiple choices",
+                            "emoji": true
+                        },
+                        "value": "false",
+                        "action_id": "is_multiple_selection"
                     }
                 ]
             }

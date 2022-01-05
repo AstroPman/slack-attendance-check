@@ -224,10 +224,11 @@ exports.postPoll = async function (requestJson) {
     const advancedSettings = {
         isNotifyAtChannel: settings[0].value == "true",
         isAnonymous: settings[1].value == "true",
-        isNotifyToUsers: settings[2].value == "true"
+        isNotifyToUsers: settings[2].value == "true",
+        isMultipleSelection: settings[3].value == "true"
     }
     let description = advancedSettings.isNotifyAtChannel ? ":speech_balloon:  *Description*  <!channel>\n" + descriptionContent : ":speech_balloon:  *Description*\n" + descriptionContent
-    const signature = advancedSettings.isAnonymous ? "Created by " + userName +  " | @Batymax Poll | Anonymous Poll" : "Created by " + userName +  " | @Batymax Poll"
+    const signature = `Created by ${ userName } | @Batymax Poll | ${ advancedSettings.isAnonymous ? "| Anonymous Poll" : "" } ${ advancedSettings.isMultipleSelection ? "| Multiple Selection" : "| Single Selection"}`
     const userList =  advancedSettings.isNotifyToUsers ? requestJson.view.state.values[keys[3]]['multi_users_select-action'].selected_users : null
     let users = ""
     if(userList){
@@ -375,6 +376,18 @@ exports.updateButtons = async function(requestJson) {
                     "emoji": true
                 }
             })
+        }
+    }
+    else if (actionId == "is_multiple_selection") {
+        const isCurrentValueTrue = messages.view.blocks[6].elements[3].value == "true"
+        messages.view.blocks[6].elements[3].value = isCurrentValueTrue ? "false" : "true"
+        messages.view.blocks[6].elements[3].text.text = isCurrentValueTrue ? "Multiple Seletion" : ":heavy_check_mark: Multiple Seletion"
+        if (isCurrentValueTrue) {
+            // remove style property to make the button style set default
+            delete messages.view.blocks[6].elements[3].style
+        }else{
+            // overwite button style to primary
+            messages.view.blocks[6].elements[3].style = "primary"
         }
     }
     
