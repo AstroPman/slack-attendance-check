@@ -402,7 +402,7 @@ exports.updatePoll = async function (requestJson, respondents){
     newMessages.channel = requestJson.channel.id
     newMessages.ts = requestJson.message.ts
     newMessages.blocks = requestJson.message.blocks
-    const signature = requestJson.message.blocks[-1].elements[0].text
+    const signature = requestJson.message.blocks[requestJson.message.blocks.length - 1].elements[0].text
     const isAnonymous = signature.includes('Anonymous')
 
     for (let i = 4; i < newMessages.blocks.length; i ++) {
