@@ -110,6 +110,16 @@
                         },
                         "value": "false",
                         "action_id": "is_anonymous"
+                    },
+                    {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Notify to users",
+                            "emoji": true
+                        },
+                        "value": "false",
+                        "action_id": "is_notify_to_user"
                     }
                 ]
             }

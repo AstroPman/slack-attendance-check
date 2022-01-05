@@ -340,6 +340,38 @@ exports.updateButtons = async function(requestJson) {
             messages.view.blocks[6].elements[1].style = "primary"
         }
     }
+    else if (actionId == "is_notify_to_user") {
+        const isCurrentValueTrue = messages.view.blocks[6].elements[1].value == "true"
+        messages.view.blocks[6].elements[2].value = isCurrentValueTrue ? "false" : "true"
+        messages.view.blocks[6].elements[2].text.text = isCurrentValueTrue ? "Notify to User" : ":heavy_check_mark: Notify to User"
+        if (isCurrentValueTrue) {
+            // remove style property to make the button style set default
+            delete messages.view.blocks[6].elements[2].style
+            // remove multi-user-select form
+            messages.view.blocks.pop()
+        }else{
+            // overwite button style to primary
+            messages.view.blocks[6].elements[2].style = "primary"
+            // add multi-user-select form
+            messages.view.blocks.push({
+                "type": "input",
+                "element": {
+                    "type": "multi_users_select",
+                    "placeholder": {
+                        "type": "plain_text",
+                        "text": "Select users",
+                        "emoji": true
+                    },
+                    "action_id": "multi_users_select-action"
+                },
+                "label": {
+                    "type": "plain_text",
+                    "text": "Users",
+                    "emoji": true
+                }
+            })
+        }
+    }
     
     // API CALL
     try { 
