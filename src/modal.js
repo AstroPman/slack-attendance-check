@@ -228,7 +228,7 @@ exports.postPoll = async function (requestJson) {
     }
     let description = advancedSettings.isNotifyAtChannel ? ":speech_balloon:  *Description*  <!channel>\n" + descriptionContent : ":speech_balloon:  *Description*\n" + descriptionContent
     const signature = advancedSettings.isAnonymous ? "Created by " + userName +  " | @Batymax Poll | Anonymous Poll" : "Created by " + userName +  " | @Batymax Poll"
-    const userList = requestJson.view.state.values[keys[3]]['multi_users_select-action'].selected_users || null
+    const userList =  isNotifyToUsers ? requestJson.view.state.values[keys[3]]['multi_users_select-action'].selected_users : null
     let users = ""
     if(userList){
         userList.forEach(userId => {
