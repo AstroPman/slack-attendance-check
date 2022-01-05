@@ -55,7 +55,7 @@
                         "type": "button",
                         "text": {
                             "type": "plain_text",
-                            "text": ":heavy_plus_sign: Add Options",
+                            "text": ":add-ico: Add Options",
                             "emoji": true
                         },
                         "value": "add_options",
