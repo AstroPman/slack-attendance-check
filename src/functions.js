@@ -402,6 +402,8 @@ exports.updatePoll = async function (requestJson, respondents){
     newMessages.channel = requestJson.channel.id
     newMessages.ts = requestJson.message.ts
     newMessages.blocks = requestJson.message.blocks
+    const signature = requestJson.message.blocks[-1].elements[0].text
+    const isAnonymous = signature.includes('Anonymous')
 
     for (let i = 4; i < newMessages.blocks.length; i ++) {
         for (key in respondents) {
@@ -411,7 +413,7 @@ exports.updatePoll = async function (requestJson, respondents){
             if (newMessages.blocks[i].block_id.match(/option/)) {
                 if (newMessages.blocks[i].block_id == key){
                     const textHeader = newMessages.blocks[i].text.text.split('\n')[0]
-                    newMessages.blocks[i].text.text = textHeader + "\n" + text
+                    newMessages.blocks[i].text.text = isAnonymous ? textHeader : textHeader + "\n" + text 
                     newMessages.blocks[i + 1].elements[0].text = "合計" + cnt + "人"
                 }
             }
