@@ -6,7 +6,6 @@ const weatherData = require('./weather.js')
 const financeData = require('./finance.js')
 const firebaseDb =  require('./firebase.js');
 
-
 // Slack Configureation
 const CHANNEL_ID = process.env.CHANNEL_ID_PROD; // kmp_kk_出社状況確認
 // const CHANNEL_ID = process.env.CHANNEL_ID_TEST; // baymax-sandbox
@@ -25,10 +24,13 @@ exports.getToday = function getToday () {
     const minute = date.getMinutes();
     const dayOfWeek = date.getDay()
     const unixtime = date.getTime()
+    const newYear = 1672498800000 // 2023年1月1日 ms
     const dayOfWeekStr = [ "日", "月", "火", "水", "木", "金", "土" ][dayOfWeek]
     const today = year + '年' + month + '月' + day + '日' + '(' + dayOfWeekStr + ')';
     const todayString = year.toString() + month.toString() + day.toString()
-    return [today, todayString, dayOfWeekStr, day, unixtime]
+    const diff = newYear - unixtime
+    const countdown = Math.floor(diff/(24 * 60 * 60 * 1000))
+    return [today, todayString, dayOfWeekStr, day, unixtime, countdown]
 }
 
 async function insertInformation() {
@@ -228,32 +230,6 @@ exports.postAttendanceCheckRemind = async function postAttendanceCheckRemind(){
     } 
 }
 
-exports.postCloudMeeting = async function postCloudMeeting(){
-    // Edit messages
-    const messages = JSON.parse(fs.readFileSync('./src/message_template_cloud_meeting.json', 'utf8'));
-    messages.channel = "C02JLJFPJ5S"
-    // messages.channel = CHANNEL_ID
-    const today = exports.getToday()
-    const countdown = 31 - today[3]
-    messages.blocks[4].elements[0].text = ":mscalendar: " + today[0] + "（2022年まであと" + countdown + "日）"
-
-    const headers = {
-        "content-type": "application/json",
-        "Authorization": 'Bearer ' + API_KEY
-    }
-
-    // API CALL
-    try { 
-
-        await axios.post(API_ENDPOINT + "/chat.postMessage", messages, { headers: headers })
-
-    } catch (error) { 
-
-        console.log(error.response.body); 
-
-    } 
-}
-
 exports.deleteAttendanceDatafromFirebase = async function () {
     const date = new Date();
     date.setMonth(date.getMonth() - 1);
@@ -273,6 +249,96 @@ exports.deleteAttendanceDatafromFirebase = async function () {
         })
     })
 
+}
+
+// 出欠アンケート
+exports.attendanceCheck = async function (requestJson) {
+    // extranct data from request
+    const value = requestJson.actions[0].value
+    const respondent = "<@" + requestJson.user.name + ">"
+    const timestamp = requestJson.message.ts
+    
+    // firebase realtime database
+    const attendance = firebaseDb.ref('/').child('attendance/' + ( Number(timestamp) * 10 ** 6).toString())
+    
+    // overwrite attendance status
+    attendance.once('value', snapshot => {
+        const attendants = snapshot.val()
+        if(attendants === null){
+            attendance.update({
+                [value]: [respondent]
+            })
+            const attendants = {
+                [value]: [respondent]
+            }
+            // functions.updateAttendanceCheckPoll(requestJson, attendants)
+            exports.updateAttendanceCheckPoll(requestJson, attendants)
+        }
+        else if (typeof attendants[value] === "undefined") {
+            attendance.update({
+                [value]: [respondent]
+            })
+
+            for (const item in attendants) {         
+                attendants[item] = attendants[item].filter( function (user) {
+                    return user != respondent
+                })
+            }
+            attendance.update(attendants)
+            attendants[value] = [respondent]
+            // functions.updateAttendanceCheckPoll(requestJson, attendants)
+            exports.updateAttendanceCheckPoll(requestJson, attendants)
+        }
+        else {
+            for (const item in attendants) {
+                // attendants[item] = attendants[item].split(',')
+                if (item == value) {
+                    if (!attendants[item].includes(respondent)) {
+                        attendants[item].push(respondent)
+                    }
+                    else {
+                        attendants[item] = attendants[item].filter( function (user) {
+                            return user != respondent
+                        })
+                    }
+                }
+                else {
+                    attendants[item] = attendants[item].filter( function (user) {
+                        return user != respondent
+                    })
+                }
+            } 
+            attendance.update(attendants);
+            // functions.updateAttendanceCheckPoll(requestJson, attendants)
+            exports.updateAttendanceCheckPoll(requestJson, attendants)
+        }
+    })
+}
+
+// デジ共朝会リマインダー
+exports.postCloudMeeting = async function postCloudMeeting(){
+    // Edit messages
+    const messages = JSON.parse(fs.readFileSync('./src/message_template_cloud_meeting.json', 'utf8'));
+    messages.channel = "C02JLJFPJ5S"
+    // messages.channel = CHANNEL_ID
+    const today = exports.getToday()
+    messages.blocks[4].elements[0].text = ":mscalendar: " + today[0] + "（2023年まであと" + today[5] + "日）"
+
+    const headers = {
+        "content-type": "application/json",
+        "Authorization": 'Bearer ' + API_KEY
+    }
+
+    // API CALL
+    try { 
+
+        await axios.post(API_ENDPOINT + "/chat.postMessage", messages, { headers: headers })
+
+    } catch (error) { 
+
+        console.log(error.response.body); 
+
+    } 
 }
 
 // baymax poll
@@ -388,3 +454,4 @@ exports.isHoliday = async function () {
     } 
     
 }
+
