@@ -346,7 +346,7 @@ exports.updateButtons = async function(requestJson) {
         }
     }
     else if (actionId == "is_notify_to_user") {
-        const isCurrentValueTrue = messages.view.blocks[6].elements[1].value == "true"
+        const isCurrentValueTrue = messages.view.blocks[6].elements[2].value == "true"
         messages.view.blocks[6].elements[2].value = isCurrentValueTrue ? "false" : "true"
         messages.view.blocks[6].elements[2].text.text = isCurrentValueTrue ? "Notify to User" : ":heavy_check_mark: Notify to User"
         if (isCurrentValueTrue) {
