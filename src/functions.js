@@ -252,7 +252,7 @@ exports.deleteAttendanceDatafromFirebase = async function () {
 }
 
 // 出欠アンケート
-exports.attendanceCheck = async function (requestJson) {
+exports.attendanceCheckMain = async function (requestJson) {
     // extranct data from request
     const value = requestJson.actions[0].value
     const respondent = "<@" + requestJson.user.name + ">"

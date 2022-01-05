@@ -60,7 +60,7 @@ app.post('/api/v1/endpoint', (request, response) => {
         // functions.registerAnswer(requestJson)
         
         // 出欠アンケート
-        functions.postAttendanceCheckPoll(requestJson)
+        functions.attendanceCheckMain(requestJson)
         // const value = requestJson.actions[0].value
         // const respondent = "<@" + requestJson.user.name + ">"
         // const timestamp = requestJson.message.ts
