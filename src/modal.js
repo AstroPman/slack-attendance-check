@@ -212,7 +212,6 @@ exports.postPoll = async function (requestJson) {
     const keys = Object.keys(requestJson.view.state.values)
     const title = requestJson.view.state.values[keys[0]]['plain_text_input-action'].value
     const descriptionContent = requestJson.view.state.values[keys[1]]['plain_text_input-action'].value
-    const users = requestJson.view.state.values[keys[2]] || null
     console.log('users: ', users)
     const channelId = requestJson.view.state.values[keys[2]].conversations_select.selected_conversation
     const elements = requestJson.view.blocks[3].elements.slice(0, -1)  // extract created options
@@ -228,14 +227,17 @@ exports.postPoll = async function (requestJson) {
         isAnonymous: settings[1].value == "true",
         isNotifyToUsers: settings[2].value == "true"
     }
-    const description = advancedSettings.isNotifyAtChannel ? ":speech_balloon:  *Description*  <!channel>\n" + descriptionContent : ":speech_balloon:  *Description*\n" + descriptionContent
+    let description = advancedSettings.isNotifyAtChannel ? ":speech_balloon:  *Description*  <!channel>\n" + descriptionContent : ":speech_balloon:  *Description*\n" + descriptionContent
     const signature = advancedSettings.isAnonymous ? "Created by " + userName +  " | @Batymax Poll | Anonymous Poll" : "Created by " + userName +  " | @Batymax Poll"
-    // const users = advancedSettings.isAnonymous ? "Created by " + userName +  " | @Batymax Poll | Anonymous Poll" : "Created by " + userName +  " | @Batymax Poll"
-
-    // private_metadata
-    const privateMetadata = {
-        advancedSettings: advancedSettings
+    const userList = requestJson.view.state.values[keys[2]]['multi_users_select-action'].selected_users || null
+    let users = ""
+    if(userList){
+        userList.forEach(userId => {
+            users += '<@' + userId + '>'
+        })
+        description += '\n' + users
     }
+
 
     // Edit new messages
     messages.channel = channelId
