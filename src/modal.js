@@ -226,7 +226,7 @@ exports.postPoll = async function (requestJson) {
         isAnonymous: settings[1].value == "true"
     }
     const description = advancedSettings.isNotifyAtChannel ? ":speech_balloon:  *Description*  <!channel>\n" + descriptionContent : ":speech_balloon:  *Description*\n" + descriptionContent
-    const signature = advancedSettings.isAnonymous ? "Created by " + userName +  " | @Batymax Poll" : "Created by " + userName +  " | @Batymax Poll | Anonymous Poll"
+    const signature = advancedSettings.isAnonymous ? "Created by " + userName +  " | @Batymax Poll | Anonymous Poll" : "Created by " + userName +  " | @Batymax Poll"
 
     // private_metadata
     const privateMetadata = {
