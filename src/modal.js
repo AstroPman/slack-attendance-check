@@ -362,7 +362,7 @@ exports.updateButtons = async function(requestJson) {
             // remove multi-user-select form
             // messages.view.blocks.pop()
             messages.view.blocks = messages.view.blocks.filter(element => {
-                return element.block_id != "notify_to_channel"
+                return element.block_id != "notify_to_users"
             })
         }else{
             // overwite button style to primary
