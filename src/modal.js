@@ -213,6 +213,7 @@ exports.postPoll = async function (requestJson) {
     const title = requestJson.view.state.values[keys[0]]['plain_text_input-action'].value
     const descriptionContent = requestJson.view.state.values[keys[1]]['plain_text_input-action'].value
     const channelId = requestJson.view.state.values[keys[2]].conversations_select.selected_conversation
+    const threadTimestamp = 1641433508.000200
     const elements = requestJson.view.blocks[3].elements.slice(0, -1)  // extract created options
     const options = []
     elements.forEach(element => {
@@ -241,6 +242,7 @@ exports.postPoll = async function (requestJson) {
 
     // Edit new messages
     messages.channel = channelId
+    messages.thread_ts = threadTimestamp
     messages.blocks[0].text.text = title
     messages.blocks[1].text.text = description
     
