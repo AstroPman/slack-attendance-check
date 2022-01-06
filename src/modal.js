@@ -360,7 +360,10 @@ exports.updateButtons = async function(requestJson) {
             // remove style property to make the button style set default
             delete messages.view.blocks[6].elements[2].style
             // remove multi-user-select form
-            messages.view.blocks.pop()
+            // messages.view.blocks.pop()
+            messages.view.blocks = messages.view.blocks.filter(element => {
+                return element.block_id != "notify_to_channel"
+            })
         }else{
             // overwite button style to primary
             messages.view.blocks[6].elements[2].style = "primary"
@@ -411,3 +414,18 @@ exports.updateButtons = async function(requestJson) {
     }
 
 }
+
+
+let words = [
+    {
+        block_id: "A"
+    },
+    {
+        block_id: "B"
+    },
+    {
+        block_id: "C"
+    }
+]
+words = words.filter(word => word.block_id != "A")
+console.log(words)
