@@ -246,7 +246,7 @@ exports.postPoll = async function (requestJson) {
     const threadUrl = advancedSettings.isPostInThread ? requestJson.view.state.values["post_in_thread"]["plain_text_input-action"].value : null
 
     if(threadUrl){
-        const ts = url.split('/').pop().replace('p','')
+        const ts = threadUrl.split('/').pop().replace('p','')
         const threadTimestamp = (Number(ts) * 10 ** (-6)).toFixed(6)
     }
 
