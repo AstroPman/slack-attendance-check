@@ -210,6 +210,7 @@ exports.postPoll = async function (requestJson) {
     // extract data from request
     const userName = requestJson.user.username
     const keys = Object.keys(requestJson.view.state.values)
+    console.log('KEYS: ', keys)
     const title = requestJson.view.state.values[keys[0]]['plain_text_input-action'].value
     const descriptionContent = requestJson.view.state.values[keys[1]]['plain_text_input-action'].value
     const channelId = requestJson.view.state.values[keys[2]].conversations_select.selected_conversation
