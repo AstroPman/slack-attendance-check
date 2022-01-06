@@ -416,7 +416,7 @@ exports.updateButtons = async function(requestJson) {
             delete messages.view.blocks[6].elements[4].style
             // remove multi-user-select form
             messages.view.blocks = messages.view.blocks.filter(element => {
-                return element.block_id != "is_post_in_thread"
+                return element.block_id != "post_in_thread"
             })
         }else{
             // overwite button style to primary
