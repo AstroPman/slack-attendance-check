@@ -248,7 +248,7 @@ exports.postPoll = async function (requestJson) {
     console.log('threadUrl: ', threadUrl)
      
     const threadTimestamp = function (threadUrl) {
-        if(threadUrl) {
+        if(threadUrl != null) {
             const ts = threadUrl.split('/').pop().replace('p','')
             const threadTimestamp = (Number(ts) * 10 ** (-6)).toFixed(6)
             return threadTimestamp
