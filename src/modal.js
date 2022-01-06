@@ -244,11 +244,18 @@ exports.postPoll = async function (requestJson) {
     }
 
     const threadUrl = advancedSettings.isPostInThread ? requestJson.view.state.values["post_in_thread"]["plain_text_input-action"].value : null
+    console.log('advancedSettings.isPostInThread: ', advancedSettings.isPostInThread)
+    console.log('threadUrl: ', threadUrl)
      
     const threadTimestamp = function (threadUrl) {
-        const ts = threadUrl.split('/').pop().replace('p','')
-        const threadTimestamp = (Number(ts) * 10 ** (-6)).toFixed(6)
-        return threadTimestamp
+        if(threadUrl) {
+            const ts = threadUrl.split('/').pop().replace('p','')
+            const threadTimestamp = (Number(ts) * 10 ** (-6)).toFixed(6)
+            return threadTimestamp
+        }
+        else{
+            return null
+        }
     }
 
 
