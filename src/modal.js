@@ -233,7 +233,7 @@ exports.postPoll = async function (requestJson) {
     }
     let description = advancedSettings.isNotifyAtChannel ? ":speech_balloon:  *Description*  <!channel>\n" + descriptionContent : ":speech_balloon:  *Description*\n" + descriptionContent
     const today = functions.getToday()[6]
-    const signature = `Created on ${today} by ${ userName } @Batymax Poll ${ advancedSettings.isAnonymous ? "| Anonymous Poll" : "" } ${ advancedSettings.isMultipleSelection ? "| Multiple Selection" : "| Single Selection"}`
+    const signature = `Created by ${ userName } @Batymax Poll ${ advancedSettings.isAnonymous ? "| Anonymous Poll" : "" } ${ advancedSettings.isMultipleSelection ? "| Multiple Selection" : "| Single Selection"}`
     const userList =  advancedSettings.isNotifyToUsers ? requestJson.view.state.values['notify_to_users']['multi_users_select-action'].selected_users : null
     let users = ""
     if(userList){
@@ -244,16 +244,17 @@ exports.postPoll = async function (requestJson) {
     }
 
     const threadUrl = advancedSettings.isPostInThread ? requestJson.view.state.values["post_in_thread"]["plain_text_input-action"].value : null
-
-    if(threadUrl){
+     
+    const threadTimestamp = function (threadUrl) {
         const ts = threadUrl.split('/').pop().replace('p','')
         const threadTimestamp = (Number(ts) * 10 ** (-6)).toFixed(6)
+        return threadTimestamp
     }
 
 
     // Edit new messages
     messages.channel = channelId
-    messages.thread_ts = threadTimestamp
+    messages.thread_ts = threadTimestamp(threadUrl)
     messages.blocks[0].text.text = title
     messages.blocks[1].text.text = description
     
