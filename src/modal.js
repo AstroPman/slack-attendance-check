@@ -1,7 +1,7 @@
 const fs = require('fs');
 const axios = require('axios');
 
-const functions = require('./functions.js')
+const functions = require('./functions.js');
 
 const MODAL_API_ENDPOINT = 'https://slack.com/api'
 const API_KEY = process.env.API_KEY
@@ -216,7 +216,6 @@ exports.postPoll = async function (requestJson) {
     const title = requestJson.view.state.values["title"]['plain_text_input-action'].value
     const descriptionContent = requestJson.view.state.values["description"]['plain_text_input-action'].value
     const channelId = requestJson.view.state.values["channel"].conversations_select.selected_conversation
-    // const threadTimestamp = "1641436232.000700"
     const elements = requestJson.view.blocks[3].elements.slice(0, -1)  // extract created options
     const options = []
     elements.forEach(element => {
@@ -229,7 +228,8 @@ exports.postPoll = async function (requestJson) {
         isNotifyAtChannel: settings[0].value == "true",
         isAnonymous: settings[1].value == "true",
         isNotifyToUsers: settings[2].value == "true",
-        isMultipleSelection: settings[3].value == "true"
+        isMultipleSelection: settings[3].value == "true",
+        isPostInThread: settings[4].value == "true"
     }
     let description = advancedSettings.isNotifyAtChannel ? ":speech_balloon:  *Description*  <!channel>\n" + descriptionContent : ":speech_balloon:  *Description*\n" + descriptionContent
     const today = functions.getToday()[6]
@@ -243,10 +243,17 @@ exports.postPoll = async function (requestJson) {
         description += '\n' + users
     }
 
+    const threadUrl = advancedSettings.isPostInThread ? requestJson.view.state.values["post_in_thread"]["plain_text_input-action"].value : null
+
+    if(threadUrl){
+        const ts = url.split('/').pop().replace('p','')
+        const threadTimestamp = (Number(ts) * 10 ** (-6)).toFixed(6)
+    }
+
 
     // Edit new messages
     messages.channel = channelId
-    // messages.thread_ts = threadTimestamp
+    messages.thread_ts = threadTimestamp
     messages.blocks[0].text.text = title
     messages.blocks[1].text.text = description
     
@@ -400,6 +407,41 @@ exports.updateButtons = async function(requestJson) {
             messages.view.blocks[6].elements[3].style = "primary"
         }
     }
+    else if (actionId == "is_post_in_thread") {
+        const isCurrentValueTrue = messages.view.blocks[6].elements[4].value == "true"
+        messages.view.blocks[6].elements[4].value = isCurrentValueTrue ? "false" : "true"
+        messages.view.blocks[6].elements[4].text.text = isCurrentValueTrue ? "Post in thread" : ":heavy_check_mark: Post in thread"
+        if (isCurrentValueTrue) {
+            // remove style property to make the button style set default
+            delete messages.view.blocks[6].elements[4].style
+            // remove multi-user-select form
+            messages.view.blocks = messages.view.blocks.filter(element => {
+                return element.block_id != "is_post_in_thread"
+            })
+        }else{
+            // overwite button style to primary
+            messages.view.blocks[6].elements[4].style = "primary"
+            // add multi-user-select form
+            messages.view.blocks.push(
+                {
+                    "type": "input",
+                    "block_id": "post_in_thread",
+                    "element": {
+                        "type": "plain_text_input",
+                        "action_id": "plain_text_input-action"
+                    },
+                    "hint": {
+                        "type": "plain_text",
+                        "text": "Provide Link URL of parent post of thread"
+                    },
+                    "label": {
+                        "type": "plain_text",
+                        "text": "Thread URL",
+                        "emoji": true
+                    }
+                })
+        }
+    }
     
     // API CALL
     try { 
@@ -416,16 +458,4 @@ exports.updateButtons = async function(requestJson) {
 }
 
 
-let words = [
-    {
-        block_id: "A"
-    },
-    {
-        block_id: "B"
-    },
-    {
-        block_id: "C"
-    }
-]
-words = words.filter(word => word.block_id != "A")
-console.log(words)
+

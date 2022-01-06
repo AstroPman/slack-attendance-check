@@ -128,11 +128,21 @@
                         "type": "button",
                         "text": {
                             "type": "plain_text",
-                            "text": "Multiple choices",
+                            "text": "Multiple selection",
                             "emoji": true
                         },
                         "value": "false",
                         "action_id": "is_multiple_selection"
+                    },
+                    {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "Post in thread",
+                            "emoji": true
+                        },
+                        "value": "false",
+                        "action_id": "is_post_in_thread"
                     }
                 ]
             }
