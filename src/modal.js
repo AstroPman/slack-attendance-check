@@ -211,9 +211,9 @@ exports.postPoll = async function (requestJson) {
     const userName = requestJson.user.username
     const keys = Object.keys(requestJson.view.state.values)
     console.log('KEYS: ', keys)
-    const title = requestJson.view.state.values[keys[0]]['plain_text_input-action'].value
-    const descriptionContent = requestJson.view.state.values[keys[1]]['plain_text_input-action'].value
-    const channelId = requestJson.view.state.values[keys[2]].conversations_select.selected_conversation
+    const title = requestJson.view.state.values["title"]['plain_text_input-action'].value
+    const descriptionContent = requestJson.view.state.values["description"]['plain_text_input-action'].value
+    const channelId = requestJson.view.state.values["channel"].conversations_select.selected_conversation
     // const threadTimestamp = "1641436232.000700"
     const elements = requestJson.view.blocks[3].elements.slice(0, -1)  // extract created options
     const options = []
@@ -231,7 +231,7 @@ exports.postPoll = async function (requestJson) {
     }
     let description = advancedSettings.isNotifyAtChannel ? ":speech_balloon:  *Description*  <!channel>\n" + descriptionContent : ":speech_balloon:  *Description*\n" + descriptionContent
     const signature = `Created by ${ userName } @Batymax Poll ${ advancedSettings.isAnonymous ? "| Anonymous Poll" : "" } ${ advancedSettings.isMultipleSelection ? "| Multiple Selection" : "| Single Selection"}`
-    const userList =  advancedSettings.isNotifyToUsers ? requestJson.view.state.values[keys[3]]['multi_users_select-action'].selected_users : null
+    const userList =  advancedSettings.isNotifyToUsers ? requestJson.view.state.values['notify_to_users']['multi_users_select-action'].selected_users : null
     let users = ""
     if(userList){
         userList.forEach(userId => {
@@ -364,6 +364,7 @@ exports.updateButtons = async function(requestJson) {
             // add multi-user-select form
             messages.view.blocks.push({
                 "type": "input",
+                "block_id": "notify_to_users",
                 "element": {
                     "type": "multi_users_select",
                     "placeholder": {
