@@ -1,6 +1,8 @@
 const fs = require('fs');
 const axios = require('axios');
 
+const functions = require('./functions.js')
+
 const MODAL_API_ENDPOINT = 'https://slack.com/api'
 const API_KEY = process.env.API_KEY
 const headers = {
@@ -230,7 +232,8 @@ exports.postPoll = async function (requestJson) {
         isMultipleSelection: settings[3].value == "true"
     }
     let description = advancedSettings.isNotifyAtChannel ? ":speech_balloon:  *Description*  <!channel>\n" + descriptionContent : ":speech_balloon:  *Description*\n" + descriptionContent
-    const signature = `Created by ${ userName } @Batymax Poll ${ advancedSettings.isAnonymous ? "| Anonymous Poll" : "" } ${ advancedSettings.isMultipleSelection ? "| Multiple Selection" : "| Single Selection"}`
+    const today = functions.getToday()[6]
+    const signature = `Created on ${today} by ${ userName } @Batymax Poll ${ advancedSettings.isAnonymous ? "| Anonymous Poll" : "" } ${ advancedSettings.isMultipleSelection ? "| Multiple Selection" : "| Single Selection"}`
     const userList =  advancedSettings.isNotifyToUsers ? requestJson.view.state.values['notify_to_users']['multi_users_select-action'].selected_users : null
     let users = ""
     if(userList){

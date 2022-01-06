@@ -26,11 +26,12 @@ exports.getToday = function getToday () {
     const unixtime = date.getTime()
     const newYear = 1672498800000 // 2023年1月1日 ms
     const dayOfWeekStr = [ "日", "月", "火", "水", "木", "金", "土" ][dayOfWeek]
+    const engDate = date.toDateString()
     const today = year + '年' + month + '月' + day + '日' + '(' + dayOfWeekStr + ')';
     const todayString = year.toString() + month.toString() + day.toString()
     const diff = newYear - unixtime
     const countdown = Math.floor(diff/(24 * 60 * 60 * 1000))
-    return [today, todayString, dayOfWeekStr, day, unixtime, countdown]
+    return [today, todayString, dayOfWeekStr, day, unixtime, countdown, engDate]
 }
 
 async function insertInformation() {
