@@ -2,7 +2,6 @@ const express = require('express');
 require('dotenv').config();
 const cron = require('node-cron');
 
-const firebaseDb =  require('./src/firebase.js');
 const functions = require('./src/functions.js');
 const modal = require('./src/modal.js')
 
@@ -77,17 +76,17 @@ app.post('/api/v1/openModal', (request, response) => {
 })
 
 app.get('/api/v1/postCloudMeeting', (request, response) => {
-    response.send('');
     functions.postCloudMeeting()
+    response.send('');
 });
 
 app.get('/api/v1/postAttendanceCheckPoll', (request, response) => {
-    response.send(''); 
     functions.postAttendanceCheckPoll()
+    response.send(''); 
 });
 app.get('/api/v1/postAttendanceCheckRemind', (request, response) => {
-    response.send(''); 
     functions.postAttendanceCheckRemind()
+    response.send(''); 
 });
 
 

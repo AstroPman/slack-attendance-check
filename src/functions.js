@@ -321,9 +321,32 @@ exports.postCloudMeeting = async function postCloudMeeting(){
     // Edit messages
     const messages = JSON.parse(fs.readFileSync('./src/message_template_cloud_meeting.json', 'utf8'));
     messages.channel = "C02JLJFPJ5S"
-    // messages.channel = CHANNEL_ID
+    // messages.channel = "C02QMRLRQ75"
     const today = exports.getToday()
-    messages.blocks[4].elements[0].text = ":mscalendar: " + today[0] + "（2023年まであと" + today[5] + "日）"
+    messages.blocks[6].elements[0].text = ":mscalendar: " + today[0] + "（2023年まであと" + today[5] + "日）"
+    
+    const dayOfWeek = today[2]
+    if (dayOfWeek == "木") {
+        messages.blocks[4] = {
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*:large_yellow_circle:  本日の連絡*\n本日は先週分のPC台帳の記入期限となります。大崎へ出社しPCの持込持出をされた方は *本日15:00* までに必ず日時を記載ください。"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": ":link:  PC管理台帳",
+					"emoji": true
+				},
+				"style": "primary",
+				"value": "click_me_123",
+				"url": "https://ptnsfgs.box.com/s/4nifheh7jmldl0mbr1rwemcb4vfcwcpi",
+				"action_id": "button-action"
+			}
+		}
+    }
 
     const headers = {
         "content-type": "application/json",
@@ -469,7 +492,6 @@ exports.isHoliday = async function () {
 }
 
 
-const cnt = 5
-const text = "bust_in_silhouette "
-
-console.log(text.repeat(cnt))
+const date = new Date()
+const dateArr = date.toDateString().split(' ')
+console.log(dateArr[2] + " " + dateArr[1] + " | by yuichi.masutani | " )

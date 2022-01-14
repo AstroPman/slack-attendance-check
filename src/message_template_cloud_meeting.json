@@ -36,6 +36,16 @@
 			"type": "divider"
 		},
 		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*:large_yellow_circle:  本日の連絡事項*\n特になし"
+			}
+		},
+		{
+			"type": "divider"
+		},
+		{
 			"type": "context",
 			"elements": [
 				{

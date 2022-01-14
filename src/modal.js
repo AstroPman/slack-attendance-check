@@ -211,8 +211,6 @@ exports.postPoll = async function (requestJson) {
     
     // extract data from request
     const userName = requestJson.user.username
-    const keys = Object.keys(requestJson.view.state.values)
-    console.log('KEYS: ', keys)
     const title = requestJson.view.state.values["title"]['plain_text_input-action'].value
     const descriptionContent = requestJson.view.state.values["description"]['plain_text_input-action'].value
     const channelId = requestJson.view.state.values["channel"].conversations_select.selected_conversation
@@ -244,8 +242,6 @@ exports.postPoll = async function (requestJson) {
     }
 
     const threadUrl = advancedSettings.isPostInThread ? requestJson.view.state.values["post_in_thread"]["plain_text_input-action"].value : null
-    console.log('advancedSettings.isPostInThread: ', advancedSettings.isPostInThread)
-    console.log('threadUrl: ', threadUrl)
      
     const threadTimestamp = function (threadUrl) {
         if(threadUrl != null) {
@@ -375,7 +371,6 @@ exports.updateButtons = async function(requestJson) {
             // remove style property to make the button style set default
             delete messages.view.blocks[6].elements[2].style
             // remove multi-user-select form
-            // messages.view.blocks.pop()
             messages.view.blocks = messages.view.blocks.filter(element => {
                 return element.block_id != "notify_to_users"
             })
@@ -464,6 +459,3 @@ exports.updateButtons = async function(requestJson) {
     }
 
 }
-
-
-
