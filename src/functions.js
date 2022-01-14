@@ -326,7 +326,7 @@ exports.postCloudMeeting = async function postCloudMeeting(){
     messages.blocks[6].elements[0].text = ":mscalendar: " + today[0] + "（2023年まであと" + today[5] + "日）"
     
     const dayOfWeek = today[2]
-    if (dayOfWeek == "木") {
+    if (dayOfWeek == "金") {
         messages.blocks[4] = {
 			"type": "section",
 			"text": {
