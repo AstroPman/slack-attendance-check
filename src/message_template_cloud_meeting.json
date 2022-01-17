@@ -29,7 +29,7 @@
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
-				"text": "*関連資料リンク*<!channel>\n:white_small_square:<https://ibm.box.com/s/ylxdqlza0aycir5f3qep98ju5trrkm0l|勤務予定表>\n :white_small_square:<https://digitalserviceproject.slack.com/archives/C02KVPYM2BA|Webex更新情報（to #基盤-アプリ連絡用）>\n :white_small_square:<https://developer.webex.com/docs/api/changelog|Webex API Change Log>\n :white_small_square:<https://kyndryl.slack.com/archives/C02KRRQJE4R|GitLabコミット確認>\n :white_small_square:<https://digitalserviceproject.slack.com/archives/C02K12XU6TV|IBMCloudメンテナンス通知>\n :white_small_square:<https://digitalserviceproject.slack.com/archives/G012RTBH9KR|WatsonStudio通知（音声アップロード）>"
+				"text": "*関連資料リンク*<!channel>\n:white_small_square:<https://ibm.box.com/s/ylxdqlza0aycir5f3qep98ju5trrkm0l|勤務予定表>\n :white_small_square:<https://digitalserviceproject.slack.com/archives/C02KVPYM2BA|Webex更新情報（to #基盤-アプリ連絡用）>\n :white_small_square:<https://developer.webex.com/docs/api/changelog|Webex API Change Log>\n :white_small_square:<https://kyndryl.slack.com/archives/C02KRRQJE4R|GitLabコミット確認>\n :white_small_square:<https://digitalserviceproject.slack.com/archives/C02K12XU6TV|IBMCloudメンテナンス通知>\n :white_small_square:<https://digitalserviceproject.slack.com/archives/G012RTBH9KR|WatsonStudio通知（音声アップロード）>\n :white_small_square:<https://ibm.box.com/s/nj7by8riexr598vsjuzk06azgzdf3xw0|大崎出社ご確認>"
 			}
 		},
 		{
