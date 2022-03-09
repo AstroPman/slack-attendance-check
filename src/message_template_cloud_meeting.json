@@ -16,12 +16,23 @@
 					"type": "button",
 					"text": {
 						"type": "plain_text",
-						"text": ":webex: 会議を開く",
+						"text": ":webex: 維持保守朝会",
 						"emoji": true
 					},
 					"value": "click_me_123",
-					"url": "https://kyndryl.webex.com/kyndryl/j.php?MTID=mb08de1a552041ba2c02923106a1e48d1",
+					"url": "https://kyndryl.webex.com/kyndryl/j.php?MTID=m3954174b7ae9c5f9a3ec512d16837571",
 					"action_id": "actionId-0"
+				},
+				{
+					"type": "button",
+					"text": {
+						"type": "plain_text",
+						"text": ":webex: 法人Web告知朝会",
+						"emoji": true
+					},
+					"value": "click_me_123",
+					"url": "https://example.com",
+					"action_id": "actionId-1"
 				}
 			]
 		},
