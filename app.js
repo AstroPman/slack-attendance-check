@@ -111,7 +111,8 @@ cron.schedule('0 13 * * *', () => {
 cron.schedule('* * * * *', () => {
     const dayOfWeek = functions.getToday()[2]
     console.log(dayOfWeek)
-    if (dayOfWeek != "土" || dayOfWeek != "日" ) {
+    // if (dayOfWeek != "土" || dayOfWeek != "日" ) {
+    if (dayOfWeek != "月" ) {
         //土日以外実行される
         functions.postCloudMeeting()
     }
