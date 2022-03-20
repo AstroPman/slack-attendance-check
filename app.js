@@ -117,6 +117,7 @@ cron.schedule('15 9 * * *', () => {
 });
 
 // 4. Firebase Realtime Database データ削除
-cron.schedule('0 0 * * *', () => {
-    functions.deleteAttendanceDatafromFirebase()
+cron.schedule('0 9 * * *', () => {
+    console.log('excuted')
+    functions.deleteOldDatafromFirebase()
 });

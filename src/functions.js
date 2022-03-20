@@ -235,7 +235,11 @@ exports.postAttendanceCheckRemind = async function postAttendanceCheckRemind(){
 // Poll削除結果投稿
 exports.postFirebaseDeleteResult = async function postFirebaseDeleteResult(cnt_deleted_poll){
     const today = exports.getToday()[6]
-    const header = today + " Firebase Data Delete Result"
+    const title = today + ": Firebase Data Delete Result"
+    const headers = {
+        "content-type": "application/json",
+        "Authorization": 'Bearer ' + API_KEY
+    }
     
     const messages = {
         "channel": "C02QMRLRQ75",  //baymax_sandbox
@@ -246,7 +250,7 @@ exports.postFirebaseDeleteResult = async function postFirebaseDeleteResult(cnt_d
                         "type": "section",
                         "text": {
                             "type": "mrkdwn",
-                            "text": "*" + header + "Firebase Data Delete Result*\n:blue-check: " + cnt_deleted_poll + " polls have been deleted."
+                            "text": "*" + title + "Firebase Data Delete Result*\n:blue-check: " + cnt_deleted_poll + " polls have been deleted."
                         }
                     }
                 ]
@@ -262,26 +266,44 @@ exports.postFirebaseDeleteResult = async function postFirebaseDeleteResult(cnt_d
 
     } catch (error) { 
 
-        console.log(error.response.body); 
+        console.log(error.response); 
 
     } 
 
 }
 
-exports.deleteAttendanceDatafromFirebase = async function () {
+exports.deleteOldDatafromFirebase = async function () {
     const date = new Date();
     date.setMonth(date.getMonth() - 1);
     const oneMonthBeforeUnixtime = date.getTime() * 1000
-    
+
+    // delete data from attendance
     const attendance = firebaseDb.ref('/attendance')
     attendance.once('value', snapshot => {
         const removeDays = Object.keys(snapshot.val()).filter(time => {
+            console.log('time: ', time)
             return Number(time) < oneMonthBeforeUnixtime
         })
-        console.log('1 month ago data will be deleted')
-        console.log('This data will be deleted: ', removeDays)
+        console.log('removeDays: ',removeDays)
         removeDays.forEach( timestamp => {
             attendance.update({
+                [timestamp]: null
+            })
+        })
+        cnt_deleted_poll = removeDays.length
+        exports.postFirebaseDeleteResult(cnt_deleted_poll)
+    })
+
+    // delete data from polls
+    const polls = firebaseDb.ref('/polls')
+    polls.once('value', snapshot => {
+        const removeDays = Object.keys(snapshot.val()).filter(time => {
+            console.log('time: ', time)
+            return Number(time) < oneMonthBeforeUnixtime
+        })
+        console.log('removeDays: ',removeDays)
+        removeDays.forEach( timestamp => {
+            polls.update({
                 [timestamp]: null
             })
         })
