@@ -142,6 +142,7 @@ async function insertInformation() {
     return messages
 }
 
+
 exports.postAttendanceCheckPoll = async function postAttendanceCheckPoll(){
     
     const messages = await insertInformation()
@@ -231,6 +232,42 @@ exports.postAttendanceCheckRemind = async function postAttendanceCheckRemind(){
     } 
 }
 
+// Poll削除結果投稿
+exports.postFirebaseDeleteResult = async function postFirebaseDeleteResult(cnt_deleted_poll){
+    const today = exports.getToday()[6]
+    const header = today + " Firebase Data Delete Result"
+    
+    const messages = {
+        "channel": "C02QMRLRQ75",  //baymax_sandbox
+        "attachments": [
+            {
+                "blocks": [
+                    {
+                        "type": "section",
+                        "text": {
+                            "type": "mrkdwn",
+                            "text": "*" + header + "Firebase Data Delete Result*\n:blue-check: " + cnt_deleted_poll + " polls have been deleted."
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+    
+    
+    // API CALL
+    try { 
+
+        await axios.post(API_ENDPOINT + "/chat.postMessage", messages, { headers: headers })
+
+    } catch (error) { 
+
+        console.log(error.response.body); 
+
+    } 
+
+}
+
 exports.deleteAttendanceDatafromFirebase = async function () {
     const date = new Date();
     date.setMonth(date.getMonth() - 1);
@@ -248,6 +285,8 @@ exports.deleteAttendanceDatafromFirebase = async function () {
                 [timestamp]: null
             })
         })
+        cnt_deleted_poll = removeDays.length
+        exports.postFirebaseDeleteResult(cnt_deleted_poll)
     })
 
 }
@@ -320,8 +359,8 @@ exports.attendanceCheckMain = async function (requestJson) {
 exports.postCloudMeeting = async function postCloudMeeting(){
     // Edit messages
     const messages = JSON.parse(fs.readFileSync('./src/message_template_cloud_meeting.json', 'utf8'));
-    // messages.channel = "C02JLJFPJ5S"  //infra-unyo
-    messages.channel = "C02QMRLRQ75"  //baymax_sandbox
+    messages.channel = "C02JLJFPJ5S"  //infra-unyo
+    // messages.channel = "C02QMRLRQ75"  //baymax_sandbox
     const today = exports.getToday()
     messages.blocks[6].elements[0].text = ":mscalendar: " + today[0] + "（2023年まであと" + today[5] + "日）"
     
@@ -352,6 +391,7 @@ exports.postCloudMeeting = async function postCloudMeeting(){
         "content-type": "application/json",
         "Authorization": 'Bearer ' + API_KEY
     }
+    
 
     // API CALL
     try { 
@@ -364,6 +404,7 @@ exports.postCloudMeeting = async function postCloudMeeting(){
 
     } 
 }
+
 
 // baymax poll
 exports.registerAnswer = async function (requestJson) {
