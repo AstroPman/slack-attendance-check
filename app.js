@@ -95,7 +95,7 @@ app.get('/api/v1/postAttendanceCheckRemind', (request, response) => {
 cron.schedule('0 10 * * *', () => {
     const dayOfWeek = functions.getToday()[2]
     if (dayOfWeek != "土" || dayOfWeek != "日" ) {
-        //土日以外実行されない
+        //土日以外実行される
         functions.postAttendanceCheckPoll()
     }
 });
@@ -103,15 +103,15 @@ cron.schedule('0 10 * * *', () => {
 cron.schedule('0 13 * * *', () => {
     const dayOfWeek = functions.getToday()[2]
     if (dayOfWeek != "土" || dayOfWeek != "日" ) {
-        //土日以外実行されない
+        //土日以外実行される
         functions.postAttendanceCheckRemind()
     }
 });
 // 3. デジ共朝会
-cron.schedule('15 9 * * *', () => {
+cron.schedule('* * * * *', () => {
     const dayOfWeek = functions.getToday()[2]
     if (dayOfWeek != "土" || dayOfWeek != "日" ) {
-        //土日以外実行されない
+        //土日以外実行される
         functions.postCloudMeeting()
     }
 });
