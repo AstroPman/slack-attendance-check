@@ -121,3 +121,6 @@ cron.schedule('0 9 * * *', () => {
     console.log('excuted')
     functions.deleteOldDatafromFirebase()
 });
+
+
+
