@@ -381,13 +381,13 @@ exports.attendanceCheckMain = async function (requestJson) {
 exports.postCloudMeeting = async function postCloudMeeting(){
     // Edit messages
     const messages = JSON.parse(fs.readFileSync('./src/message_template_cloud_meeting.json', 'utf8'));
-    // messages.channel = "C02JLJFPJ5S"  //infra-unyo
-    messages.channel = "C02QMRLRQ75"  //baymax_sandbox
+    messages.channel = "C02JLJFPJ5S"  //infra-unyo
+    // messages.channel = "C02QMRLRQ75"  //baymax_sandbox
     const today = exports.getToday()
     messages.blocks[6].elements[0].text = ":mscalendar: " + today[0] + "（2023年まであと" + today[5] + "日）"
     
     const dayOfWeek = today[2]
-    if (dayOfWeek == "水") {
+    if (dayOfWeek == "木") {
         messages.blocks[4] = {
 			"type": "section",
 			"text": {
