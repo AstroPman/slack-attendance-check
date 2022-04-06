@@ -387,6 +387,15 @@ exports.postCloudMeeting = async function postCloudMeeting(){
     messages.blocks[6].elements[0].text = ":mscalendar: " + today[0] + "（2023年まであと" + today[5] + "日）"
     
     const dayOfWeek = today[2]
+    if (dayOfWeek == "水") {
+        messages.blocks[4] = {
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*:large_yellow_circle:  本日の連絡*\n明日のお客様定例の実施内容につきまして相談させてください。"
+			}
+		}
+    }
     if (dayOfWeek == "金") {
         messages.blocks[4] = {
 			"type": "section",
