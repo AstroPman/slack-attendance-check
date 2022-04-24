@@ -17,6 +17,8 @@ const serviceAccount = {
   "client_x509_cert_url": env.SA_CLIENT_X509_CERT_URL
 }
 
+console.log(serviceAccount)
+
 
 // Initialize the app with a service account, granting admin privileges
 admin.initializeApp({

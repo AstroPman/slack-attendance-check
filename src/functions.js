@@ -6,14 +6,6 @@ const weatherData = require('./weather.js')
 const financeData = require('./finance.js')
 const firebaseDb =  require('./firebase.js');
 
-const attendanceXXX = firebaseDb.ref('/attendance')
-attendanceXXX.once('value', snapshot => {
-        console.log('snapshot', snapshot.val())
-    })
-
-console.log('attendanceXXX: ', attendanceXXX)
-
-
 
 // Slack Configureation
 const CHANNEL_ID = process.env.CHANNEL_ID_PROD; // kmp_kk_出社状況確認
