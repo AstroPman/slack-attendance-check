@@ -12,7 +12,7 @@ const CHANNEL_ID = process.env.CHANNEL_ID_PROD; // kmp_kk_出社状況確認
 const API_KEY = process.env.API_KEY
 const API_ENDPOINT = "https://slack.com/api"
 
-console.log('Env: ', process.env)
+console.log('Env: ', process.env.TEST_JSON)
 
 
 
