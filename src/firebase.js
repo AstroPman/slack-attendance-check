@@ -8,7 +8,7 @@ const serviceAccount = {
   "type": "service_account",
   "project_id": env.SA_PROJECT_ID,
   "private_key_id": env.SA_PRIVATE_KEY_ID,
-  "private_key": env.SA_PRIVATE_KEY.replace(/\\/g, "\n"),
+  "private_key": env.SA_PRIVATE_KEY.replace(/\\n/g, "\n"),
   "client_email": env.SA_CLIENT_EMAIL,
   "client_id": env.SA_CLIENT_ID,
   "auth_uri": env.SA_AUTH_URI,
