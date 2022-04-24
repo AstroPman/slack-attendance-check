@@ -2,7 +2,7 @@ const admin = require("firebase-admin");
 require('dotenv').config();
 
 const env = process.env
-// const serviceAccount = require(env.SERVICE_ACCOUNT_KEY_PATH);
+
 const serviceAccount = {
   "type": "service_account",
   "project_id": env.SA_PROJECT_ID,
@@ -15,9 +15,6 @@ const serviceAccount = {
   "auth_provider_x509_cert_url": env.SA_AUTH_PROVIDER_X509_CERT_URL,
   "client_x509_cert_url": env.SA_CLIENT_X509_CERT_URL
 }
-console.log(serviceAccount)
-console.log(typeof serviceAccount)
-
 
 // Initialize the app with a service account, granting admin privileges
 admin.initializeApp({
