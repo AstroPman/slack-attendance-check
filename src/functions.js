@@ -10,6 +10,7 @@ const attendanceXXX = firebaseDb.ref('/attendance')
 attendanceXXX.once('value', snapshot => {
         console.log('snapshot', snapshot.val())
     })
+print('XXXX')
 
 
 
