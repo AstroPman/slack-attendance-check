@@ -393,7 +393,19 @@ exports.postCloudMeeting = async function postCloudMeeting(){
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
-				"text": "*:large_yellow_circle:  本日の連絡*\n明日のお客様定例の実施内容につきまして相談させてください。"
+				"text": "*:large_yellow_circle:  本日の連絡*\n明日のお客様定例の実施内容につきまして相談させてください。\n明日はは先週分のPC台帳の記入期限となります。大崎へ出社しPCの持込持出をされた方は必ず日時を記載ください。"
+			},
+			"accessory": {
+				"type": "button",
+				"text": {
+					"type": "plain_text",
+					"text": ":link:  PC管理台帳",
+					"emoji": true
+				},
+				"style": "primary",
+				"value": "click_me_123",
+				"url": "https://ptnsfgs.box.com/s/4nifheh7jmldl0mbr1rwemcb4vfcwcpi",
+				"action_id": "button-action"
 			}
 		}
     }
