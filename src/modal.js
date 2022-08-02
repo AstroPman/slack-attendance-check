@@ -518,22 +518,17 @@ exports.updateReminderView = async function (requestJson) {
         }
     }
 
-    console.log('messages.view.blocks[-1]: ', messages.view.blocks[messages.view.blocks.length - 1])
-    // messages.view.blocks[-1].accessory.style = "primary"
-        
-    // API CALL
-    try { 
-    
-        const response = await axios.post(MODAL_API_ENDPOINT + "/views.update", messages, { headers: headers })
-        console.log(response.data)
-    
-    } catch (error) { 
-    
-        console.log(error.response); 
-    
+    if(reccurencePattern && reccurenceDays){
+        messages.view.blocks[messages.view.blocks.length - 1].text.text = 'Remind on ' + reccurenceDays.toString() + ' ' + reccurencePattern
+        messages.view.blocks[messages.view.blocks.length - 1].accessory.style = "primary"
     }
 
-
+    // API CALL
+    try { 
+        const response = await axios.post(MODAL_API_ENDPOINT + "/views.update", messages, { headers: headers })
+    } catch (error) { 
+        console.log(error.response)
+    }
 }
 
 exports.pushReccurenceSetting = async function (requestJson) {
