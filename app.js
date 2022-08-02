@@ -90,6 +90,13 @@ app.get('/api/v1/postAttendanceCheckRemind', (request, response) => {
     response.send(''); 
 });
 
+app.post('/api/v1/reminder', (request, response) => {
+    const triggerId = request.body.trigger_id
+    modal.openReminder(triggerId)
+    response.send(''); 
+})
+
+
 
 // Cron Jobs
 // 1. 出欠アンケート投稿

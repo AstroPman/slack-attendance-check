@@ -1,0 +1,76 @@
+{
+    "channel": "channel_id",
+    "blocks": [
+		{
+			"type": "input",
+			"element": {
+				"type": "plain_text_input",
+				"multiline": true,
+				"action_id": "plain_text_input-action"
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "What you remind",
+				"emoji": true
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*Notify to*"
+			},
+			"accessory": {
+				"type": "multi_conversations_select",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Select conversations",
+					"emoji": true
+				},
+				"action_id": "multi_conversations_select-action"
+			}
+		},
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "*Date/Time*"
+			}
+		},
+		{
+			"type": "actions",
+			"elements": [
+				{
+					"type": "datepicker",
+					"initial_date": "1990-04-28",
+					"placeholder": {
+						"type": "plain_text",
+						"text": "Select a date",
+						"emoji": true
+					},
+					"action_id": "remind_datepicker"
+				},
+				{
+					"type": "timepicker",
+					"initial_time": "13:37",
+					"placeholder": {
+						"type": "plain_text",
+						"text": "Select time",
+						"emoji": true
+					},
+					"action_id": "remind_timepicker"
+				},
+				{
+					"type": "button",
+					"text": {
+						"type": "plain_text",
+						"text": "Reccurence",
+						"emoji": true
+					},
+					"value": "click_me_123",
+					"action_id": "remind_reccurence"
+				}
+			]
+		}
+	]
+}

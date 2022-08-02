@@ -11,6 +11,11 @@ const headers = {
 }
 
 
+/*
+
+Baymax Poll
+
+*/
 
 exports.openModal = async function (triggerId) {
     const messages = JSON.parse(fs.readFileSync('./src/message_template_create_poll.json', 'utf8'));
@@ -458,4 +463,25 @@ exports.updateButtons = async function(requestJson) {
     
     }
 
+}
+
+
+/*
+
+Baymax Reminder
+
+*/
+
+exports.openReminder = async function (triggerId) {
+    const messages = JSON.parse(fs.readFileSync('./src/message_template_create_reminder.json', 'utf8'));
+    messages.trigger_id = triggerId
+        
+    try {     
+        const response = await axios.post(MODAL_API_ENDPOINT + "/views.open", messages, { headers: headers })
+        console.log("openModal response: ", response.data)
+        console.log("openModal response: ", response.data.view.blocks)
+    
+    } catch (error) { 
+        console.log(error.response); 
+    }
 }
