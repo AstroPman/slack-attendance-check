@@ -519,8 +519,9 @@ exports.updateReminderView = async function (requestJson) {
     }
 
     if(reccurencePattern && reccurenceDays){
-        messages.view.blocks[messages.view.blocks.length - 1].text.text = 'Remind on ' + reccurenceDays.toString() + ' ' + reccurencePattern
+        messages.view.blocks[messages.view.blocks.length - 1].text.text = '*Remind ' + reccurencePattern + ' | ' + reccurenceDays.toString() + '*'
         messages.view.blocks[messages.view.blocks.length - 1].accessory.style = "primary"
+        messages.view.blocks[messages.view.blocks.length - 1].accessory.text.text = "✔︎ Recurence"
     }
 
     // API CALL
@@ -651,6 +652,9 @@ exports.updateReccurenceSetting = async function (requestJson) {
 				"text": "This feature is comming Soon :bow:"
 			}
 		}
+    }
+    else {
+        reccurenceSetting = {}
     }
 
     messages.view.blocks.push(reccurenceSetting)
