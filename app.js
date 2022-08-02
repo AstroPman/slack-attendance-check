@@ -58,7 +58,7 @@ app.post('/api/v1/endpoint', (request, response) => {
             modal.updateButtons(requestJson)
         }
         else if (requestJson.actions[0].value == "open_reccurence_settings") {
-            modal.pushModal(requestJson)
+            modal.pushReccurenceSetting(requestJson)
         }
     }
     else if (requestJson.type == "block_actions") {
