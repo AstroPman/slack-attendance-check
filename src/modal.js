@@ -520,7 +520,7 @@ exports.updateReccurenceSetting = async function (requestJson) {
     messages.view_id = requestJson.view.id
     delete messages.trigger_id
     
-    if(messages.view.blocks.length > 1) {
+    if(messages.view.blocks.length > 2) {
         messages.view.blocks.pop()
     }
 
