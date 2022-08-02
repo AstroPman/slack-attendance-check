@@ -554,20 +554,25 @@ exports.pushReccurenceSetting = async function (requestJson) {
 
 exports.updateReccurenceSetting = async function (requestJson) {
 
-    let selected_value = ''
-    if(requestJson.actions[0].selected_option){
-        selected_value = requestJson.actions[0].selected_option.value
-    }
+    // Shaping Messages
     const messages = JSON.parse(fs.readFileSync('./src/message_template_reccurence_setting.json', 'utf8'));
     messages.view.blocks = requestJson.view.blocks
     messages.view.private_metadata = requestJson.view.private_metadata
     messages.view_id = requestJson.view.id
     delete messages.trigger_id
     
+    // Delete options based on reccurence pattern
     if(messages.view.blocks.length > 2) {
         messages.view.blocks.pop()
     }
 
+    // Check if the reccurence pattern is selected
+    let selected_value = ''
+    if(requestJson.actions[0].selected_option){
+        selected_value = requestJson.actions[0].selected_option.value
+    }
+    
+    // Add reccurence options based on the pattern
     let reccurenceSetting
     if (selected_value == 'static_select_reminder_weekly'){
         reccurenceSetting = {
@@ -656,11 +661,10 @@ exports.updateReccurenceSetting = async function (requestJson) {
 			}
 		}
     }
-    else {
-        reccurenceSetting = {}
+    
+    if (selected_value){
+        messages.view.blocks.push(reccurenceSetting)
     }
-
-    messages.view.blocks.push(reccurenceSetting)
 
     // API CALL
     try { 
