@@ -518,6 +518,7 @@ exports.updateReminderView = async function (requestJson) {
         }
     }
 
+    console.log('reccurenceDays; ', reccurenceDays)
     if(reccurencePattern && reccurenceDays){
         messages.view.blocks[messages.view.blocks.length - 1].text.text = '*Remind ' + reccurencePattern + ' | ' + reccurenceDays.toString() + '*'
         messages.view.blocks[messages.view.blocks.length - 1].accessory.style = "primary"
