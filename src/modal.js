@@ -512,6 +512,7 @@ exports.updateReminderView = async function (requestJson) {
             console.log('reccurencePattern: ', reccurencePattern)
         }
         else if(Object.keys(values[key]) == 'checkbox_action_choose_day'){
+            console.log('value: ',values[key]['checkbox_action_choose_day']['selected_options'])
             for (const option in values[key]['checkbox_action_choose_day']['selected_options']){
                 reccurenceDays.push(option.text.text)
             }
