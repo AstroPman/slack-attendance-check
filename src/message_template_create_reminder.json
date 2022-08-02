@@ -93,8 +93,8 @@
 						"text": "Reccurence",
 						"emoji": true
 					},
-					"value": "button-action_reccurence_setting",
-					"action_id": "button-action_reccurence_setting"
+					"value": "open_reccurence_settings",
+					"action_id": "open_reccurence_settings"
 				}
 			}
 		]
