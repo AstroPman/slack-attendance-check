@@ -491,6 +491,34 @@ exports.openReminder = async function (triggerId) {
     }
 }
 
+exports.updateReminderView = async function (requestJson) {
+
+    console.log('requestJson.view.state.values: ',requestJson.view.state.values)
+
+    const messages = JSON.parse(fs.readFileSync('./src/message_template_create_reminder.json', 'utf8'));
+    delete messages.trigger_id
+    messages.view_id = requestJson.view.previous_view_id
+    const privateMetadata = JSON.parse(requestJson.view.private_metadata)
+    messages.view.blocks = privateMetadata
+
+    messages.view.blocks[-1].text.text = "XXXXXXXX"
+    messages.view.blocks[-1].accessory.style = "primary"
+        
+    // API CALL
+    try { 
+    
+        const response = await axios.post(MODAL_API_ENDPOINT + "/views.update", messages, { headers: headers })
+        console.log(response.data)
+    
+    } catch (error) { 
+    
+        console.log(error.response); 
+    
+    }
+
+
+}
+
 exports.pushReccurenceSetting = async function (requestJson) {
     const messages = JSON.parse(fs.readFileSync('./src/message_template_reccurence_setting.json', 'utf8'));
     const rootViewBlocks = requestJson.view.blocks
