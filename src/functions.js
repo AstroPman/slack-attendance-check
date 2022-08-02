@@ -549,3 +549,16 @@ exports.isHoliday = async function () {
 const date = new Date()
 const dateArr = date.toDateString().split(' ')
 console.log(dateArr[2] + " " + dateArr[1] + " | by yuichi.masutani | " )
+
+
+/*
+
+Baymax Reminder
+
+*/
+
+exports.registerReminder = async function () {
+
+    console.log("register reminder")
+
+}

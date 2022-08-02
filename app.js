@@ -41,6 +41,9 @@ app.post('/api/v1/endpoint', (request, response) => {
             else if (requestJson.view.callback_id == "poll_view") {
                 modal.postPoll(requestJson)
             }
+            else if (requestJson.view.callback_id == "reminder_view") {
+                functions.registerReminder(requestJson)
+            }
         }
         else if (requestJson.actions[0].value == "add_options") {
             modal.pushModal(requestJson)

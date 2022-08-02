@@ -1,11 +1,11 @@
 {
     "trigger_id": "trigger_id",
     "view": {
-        "callback_id": "poll_view",
+        "callback_id": "reminder_view",
         "type": "modal",
         "title": {
             "type": "plain_text",
-            "text": "Baymax Poll",
+            "text": "Baymax Reminder",
             "emoji": true
         },
         "submit": {

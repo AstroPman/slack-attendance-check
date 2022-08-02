@@ -476,9 +476,6 @@ exports.openReminder = async function (triggerId) {
     const messages = JSON.parse(fs.readFileSync('./src/message_template_create_reminder.json', 'utf8'));
     const initial_date = functions.getToday()[7]
     const initial_time = functions.getToday()[8]
-
-    console.log('initial_date: ', initial_date)
-    console.log('initial_time: ', initial_time)
     
     messages.trigger_id = triggerId
     messages.view.blocks[3].elements[0].initial_date = initial_date
