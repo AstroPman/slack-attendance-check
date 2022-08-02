@@ -1,0 +1,74 @@
+{
+    "trigger_id": "trigger_id",
+    "view":{
+        "callback_id": "reccurence_setting_view",
+        "type": "modal",
+        "title": {
+            "type": "plain_text",
+            "text": "Baymax Reminder",
+            "emoji": true
+        },
+        "submit": {
+            "type": "plain_text",
+            "text": "Save",
+            "emoji": true
+        },
+        "close": {
+            "type": "plain_text",
+            "text": "Cancel",
+            "emoji": true
+        },
+        "blocks": [
+            {
+                "type": "header",
+                "text": {
+                    "type": "plain_text",
+                    "text": "Reccurence Setting",
+                    "emoji": true
+                }
+            },
+            {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "*Reccurence Pattern*"
+                },
+                "accessory": {
+                    "type": "static_select",
+                    "placeholder": {
+                        "type": "plain_text",
+                        "text": "Select an item",
+                        "emoji": true
+                    },
+                    "options": [
+                        {
+                            "text": {
+                                "type": "plain_text",
+                                "text": "Weekly",
+                                "emoji": true
+                            },
+                            "value": "static_select_reminder_weekly"
+                        },
+                        {
+                            "text": {
+                                "type": "plain_text",
+                                "text": "Monthly",
+                                "emoji": true
+                            },
+                            "value": "static_select_reminder_monthly"
+                        },
+                        {
+                            "text": {
+                                "type": "plain_text",
+                                "text": "Yearly",
+                                "emoji": true
+                            },
+                            "value": "static_select_reminder_yearly"
+                        }
+                    ],
+                    "action_id": "static_select_reminder_patterns"
+                }
+            }
+        ]
+    }
+}

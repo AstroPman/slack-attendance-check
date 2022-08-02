@@ -57,6 +57,9 @@ app.post('/api/v1/endpoint', (request, response) => {
         else if (requestJson.actions[0].action_id == "is_notify_at_channel" || requestJson.actions[0].action_id == "is_anonymous" || requestJson.actions[0].action_id == "is_notify_to_user" || requestJson.actions[0].action_id == 'is_multiple_selection' || requestJson.actions[0].action_id == 'is_post_in_thread') {
             modal.updateButtons(requestJson)
         }
+        else if (requestJson.actions[0].value == "open_reccurence_settings") {
+            modal.pushModal(requestJson)
+        }
     }
     else if (requestJson.type == "block_actions") {
         if(requestJson.actions[0].action_id.includes("option_")) {

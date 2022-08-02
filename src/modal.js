@@ -490,3 +490,23 @@ exports.openReminder = async function (triggerId) {
         console.log(error.response); 
     }
 }
+
+exports.pushReccurenceSetting = async function (requestJson) {
+    const messages = JSON.parse(fs.readFileSync('./src/message_template_add_options.json', 'utf8'));
+    const rootViewBlocks = requestJson.view.blocks
+    messages.trigger_id = requestJson.trigger_id
+    messages.view.private_metadata = JSON.stringify(rootViewBlocks)
+        
+    // API CALL
+    try { 
+    
+        const response = await axios.post(MODAL_API_ENDPOINT + "/views.push", messages, { headers: headers })
+        console.log(response.data)
+    
+    } catch (error) { 
+    
+        console.log(error.response); 
+    
+    }
+
+}
