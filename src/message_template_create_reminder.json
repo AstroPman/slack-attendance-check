@@ -77,18 +77,25 @@
 							"emoji": true
 						},
 						"action_id": "remind_timepicker"
-					},
-					{
-						"type": "button",
-						"text": {
-							"type": "plain_text",
-							"text": "Reccurence",
-							"emoji": true
-						},
-						"value": "click_me_123",
-						"action_id": "remind_reccurence"
 					}
 				]
+			},
+			{
+				"type": "section",
+				"text": {
+					"type": "mrkdwn",
+					"text": " "
+				},
+				"accessory": {
+					"type": "button",
+					"text": {
+						"type": "plain_text",
+						"text": "Reccurence",
+						"emoji": true
+					},
+					"value": "button-action_reccurence_setting",
+					"action_id": "button-action_reccurence_setting"
+				}
 			}
 		]
     }
