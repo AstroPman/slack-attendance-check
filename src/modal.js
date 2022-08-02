@@ -554,7 +554,7 @@ exports.pushReccurenceSetting = async function (requestJson) {
 
 exports.updateReccurenceSetting = async function (requestJson) {
     
-    const selected_value = requestJson.actions[0].selected_option.value
+    const selected_value = requestJson.actions[0].selected_option.value || null
     const messages = JSON.parse(fs.readFileSync('./src/message_template_reccurence_setting.json', 'utf8'));
     messages.view.blocks = requestJson.view.blocks
     messages.view.private_metadata = requestJson.view.private_metadata
