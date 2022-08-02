@@ -515,9 +515,15 @@ exports.updateReccurenceSetting = async function (requestJson) {
     
     const selected_value = requestJson.actions[0].selected_option.value
     const messages = JSON.parse(fs.readFileSync('./src/message_template_reccurence_setting.json', 'utf8'));
+    messages.view.blocks = requestJson.view.blocks
+    messages.view.private_metadata = requestJson.view.private_metadata
     messages.view_id = requestJson.view.id
     delete messages.trigger_id
     
+    if(messages.view.blocks.length > 1) {
+        messages.view.blocks.pop()
+    }
+
     let reccurenceSetting
     if (selected_value == 'static_select_reminder_weekly'){
         reccurenceSetting = {
