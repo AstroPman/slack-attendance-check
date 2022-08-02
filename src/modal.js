@@ -514,7 +514,7 @@ exports.pushReccurenceSetting = async function (requestJson) {
 exports.updateReccurenceSetting = async function (requestJson) {
     
     const selected_value = requestJson.actions[0].selected_option.value
-    const messages = JSON.parse(fs.readFileSync('./src/message_template_add_options.json', 'utf8'));
+    const messages = JSON.parse(fs.readFileSync('./src/message_template_reccurence_setting.json', 'utf8'));
     messages.view_id = requestJson.view.id
     delete messages.trigger_id
     
