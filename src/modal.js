@@ -509,19 +509,17 @@ exports.updateReminderView = async function (requestJson) {
     for (const key in values){
         if(Object.keys(values[key]) == 'static_select_reminder_patterns'){
             reccurencePattern = values[key]['static_select_reminder_patterns']['selected_option'].text.text
-            console.log('reccurencePattern: ', reccurencePattern)
         }
         else if(Object.keys(values[key]) == 'checkbox_action_choose_day'){
             console.log('value: ',values[key]['checkbox_action_choose_day']['selected_options'])
             for (const option of values[key]['checkbox_action_choose_day']['selected_options']){
                 reccurenceDays.push(option.text.text)
             }
-            console.log('reccurenceDays: ', reccurenceDays)
         }
     }
 
-    messages.view.blocks[-1].text.text = "XXXXXXXX"
-    messages.view.blocks[-1].accessory.style = "primary"
+    console.log('messages.view.blocks[-1]: ', messages.view.blocks[-1])
+    // messages.view.blocks[-1].accessory.style = "primary"
         
     // API CALL
     try { 
