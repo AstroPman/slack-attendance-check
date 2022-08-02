@@ -474,7 +474,11 @@ Baymax Reminder
 
 exports.openReminder = async function (triggerId) {
     const messages = JSON.parse(fs.readFileSync('./src/message_template_create_reminder.json', 'utf8'));
+    const initial_date = functions.getToday[7]
+    
     messages.trigger_id = triggerId
+    messages.view.blocks[3].elements[0].initial_date = initial_date
+    
         
     try {     
         const response = await axios.post(MODAL_API_ENDPOINT + "/views.open", messages, { headers: headers })
