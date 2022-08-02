@@ -28,7 +28,7 @@ module.exports = admin.database();
 const fireStore = admin.firestore();
 
 async function test() {
-  const ref = db.collection("schedules");
+  const ref = fireStore.collection("schedules");
   const snapshot = await ref.get();
   return snapshot.docs.map(s => s.data());
 }
