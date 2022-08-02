@@ -60,6 +60,9 @@ app.post('/api/v1/endpoint', (request, response) => {
         else if (requestJson.actions[0].value == "open_reccurence_settings") {
             modal.pushReccurenceSetting(requestJson)
         }
+        else if (requestJson.actions[0].action_id == 'static_select_reminder_patterns') {
+            modal.updateReccurenceSetting(requestJson)
+        }
     }
     else if (requestJson.type == "block_actions") {
         if(requestJson.actions[0].action_id.includes("option_")) {
