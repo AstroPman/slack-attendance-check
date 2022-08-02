@@ -518,8 +518,10 @@ exports.updateReminderView = async function (requestJson) {
         }
     }
 
-    console.log('reccurenceDays; ', reccurenceDays)
-    if(reccurencePattern && reccurenceDays){
+    console.log('reccurenceDays: ', reccurenceDays)
+    console.log('reccurencePattern && reccurenceDays: ',reccurencePattern && reccurenceDays)
+
+    if(reccurencePattern && reccurenceDays.length > 0){
         messages.view.blocks[messages.view.blocks.length - 1].text.text = '*Remind ' + reccurencePattern + ' | ' + reccurenceDays.toString() + '*'
         messages.view.blocks[messages.view.blocks.length - 1].accessory.style = "primary"
         messages.view.blocks[messages.view.blocks.length - 1].accessory.text.text = "✔︎ Recurence"
