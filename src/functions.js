@@ -31,9 +31,10 @@ exports.getToday = function getToday () {
     const today = year + '年' + month + '月' + day + '日' + '(' + dayOfWeekStr + ')';
     const todayString = year.toString() + month.toString() + day.toString()
     const todayStringDash =  year.toString() + '-' + month.toString().padStart(2, '0') + day.toString().padStart(2, '0')
+    const time = hour.toString().padStart(2, '0') + minute.toString().padStart(2, '0') // hh:mm
     const diff = newYear - unixtime
     const countdown = Math.floor(diff/(24 * 60 * 60 * 1000))
-    return [today, todayString, dayOfWeekStr, day, unixtime, countdown, engDate, todayStringDash]
+    return [today, todayString, dayOfWeekStr, day, unixtime, countdown, engDate, todayStringDash, time]
 }
 
 async function insertInformation() {
