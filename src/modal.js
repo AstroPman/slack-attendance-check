@@ -518,7 +518,7 @@ exports.updateReminderView = async function (requestJson) {
         }
     }
 
-    console.log('messages.view.blocks[-1]: ', messages.view.blocks[-1])
+    console.log('messages.view.blocks[-1]: ', messages.view.blocks[messages.view.blocks.length - 1])
     // messages.view.blocks[-1].accessory.style = "primary"
         
     // API CALL
