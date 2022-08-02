@@ -4,10 +4,10 @@ const iconv = require('iconv-lite')
 
 const weatherData = require('./weather.js')
 const financeData = require('./finance.js')
-// const firebaseDb =  require('./firebase.js')
 const firebase =  require('./firebase.js')
+const db = firebase.db
+const fireStore = firebase.fireStore
 
-const firebaseDb = firebase.db
 
 
 // Slack Configureation
@@ -284,7 +284,7 @@ exports.deleteOldDatafromFirebase = async function () {
     const oneMonthBeforeUnixtime = date.getTime() * 1000
 
     // delete data from attendance
-    const attendance = firebaseDb.ref('/attendance')
+    const attendance = db.ref('/attendance')
     attendance.once('value', snapshot => {
         const removeDays = Object.keys(snapshot.val()).filter(time => {
             console.log('time: ', time)
@@ -301,7 +301,7 @@ exports.deleteOldDatafromFirebase = async function () {
     })
 
     // delete data from polls
-    const polls = firebaseDb.ref('/polls')
+    const polls = db.ref('/polls')
     polls.once('value', snapshot => {
         const removeDays = Object.keys(snapshot.val()).filter(time => {
             console.log('time: ', time)
@@ -327,7 +327,7 @@ exports.attendanceCheckMain = async function (requestJson) {
     const timestamp = requestJson.message.ts
     
     // firebase realtime database
-    const attendance = firebaseDb.ref('/').child('attendance/' + ( Number(timestamp) * 10 ** 6).toString())
+    const attendance = db.ref('/').child('attendance/' + ( Number(timestamp) * 10 ** 6).toString())
     
     // overwrite attendance status
     attendance.once('value', snapshot => {
@@ -430,7 +430,7 @@ exports.registerAnswer = async function (requestJson) {
     const signature = requestJson.message.blocks[requestJson.message.blocks.length - 1].elements[0].text
     const isMultipleSelection = signature.includes('Multiple')
             
-    const polls = firebaseDb.ref('/').child('polls/' + ( Number(timestamp) * 10 ** 6).toString())
+    const polls = db.ref('/').child('polls/' + ( Number(timestamp) * 10 ** 6).toString())
     polls.once('value', snapshot => {
         const results = snapshot.val()
         // 初回回答（pollの回答が一つも存在しない場合）
@@ -561,7 +561,14 @@ Baymax Reminder
 */
 
 exports.registerReminder = async function () {
+    const ref = fireStore.collection("reminders");
+    const snapshot = await ref.get();
+    
+    snapshot.docs.map(s => console.log(s.data()))
+}
 
-    console.log("register reminder")
-
+exports.getReminders = async function () {
+    const ref = fireStore.collection("reminders");
+    const snapshot = await ref.get();
+    return snapshot.docs.map(s => s.data());
 }
