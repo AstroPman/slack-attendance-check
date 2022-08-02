@@ -512,100 +512,109 @@ exports.pushReccurenceSetting = async function (requestJson) {
 }
 
 exports.updateReccurenceSetting = async function (requestJson) {
-    console.log("UPDATE_RECCURENCE; ", requestJson.actions[0].selected_option)
-    // const messages = JSON.parse(fs.readFileSync('./src/message_template_add_options.json', 'utf8'));
-    // messages.view.blocks = requestJson.view.blocks
-    // messages.view.private_metadata = requestJson.view.private_metadata
-    // messages.view_id = requestJson.view.id
-    // delete messages.trigger_id
+    
+    const selected_value = requestJson.actions[0].selected_option.value
+    const messages = JSON.parse(fs.readFileSync('./src/message_template_add_options.json', 'utf8'));
+    messages.view.blocks = requestJson.view.blocks
+    messages.view.private_metadata = requestJson.view.private_metadata
+    messages.view_id = requestJson.view.id
+    delete messages.trigger_id
 
-    // const weeklyReccurenceSetting = {
-    //     "type": "actions",
-    //     "elements": [
-    //         {
-    //             "type": "checkboxes",
-    //             "options": [
-    //                 {
-    //                     "text": {
-    //                         "type": "plain_text",
-    //                         "text": "Sunday",
-    //                         "emoji": true
-    //                     },
-    //                     "value": "checkbox_sunday"
-    //                 },
-    //                 {
-    //                     "text": {
-    //                         "type": "plain_text",
-    //                         "text": "Monday",
-    //                         "emoji": true
-    //                     },
-    //                     "value": "checkbox_monday"
-    //                 },
-    //                 {
-    //                     "text": {
-    //                         "type": "plain_text",
-    //                         "text": "Tuesday",
-    //                         "emoji": true
-    //                     },
-    //                     "value": "checkbox_tuesday"
-    //                 },
-    //                 {
-    //                     "text": {
-    //                         "type": "plain_text",
-    //                         "text": "Wednesday",
-    //                         "emoji": true
-    //                     },
-    //                     "value": "checkbox_wednesday"
-    //                 },
-    //                 {
-    //                     "text": {
-    //                         "type": "plain_text",
-    //                         "text": "Thursday",
-    //                         "emoji": true
-    //                     },
-    //                     "value": "checkbox_thursday"
-    //                 },
-    //                 {
-    //                     "text": {
-    //                         "type": "plain_text",
-    //                         "text": "Friday",
-    //                         "emoji": true
-    //                     },
-    //                     "value": "checkbox_friday"
-    //                 },
-    //                 {
-    //                     "text": {
-    //                         "type": "plain_text",
-    //                         "text": "Saturday",
-    //                         "emoji": true
-    //                     },
-    //                     "value": "checkbox_saturday"
-    //                 }
-    //             ],
-    //             "action_id": "checkbox_action_choose_day"
-    //         }
-    //     ]
-    // }
+    if (selected_value == 'static_select_reminder_weekly'){
+        const reccurenceSetting = {
+            "type": "actions",
+            "elements": [
+                {
+                    "type": "checkboxes",
+                    "options": [
+                        {
+                            "text": {
+                                "type": "plain_text",
+                                "text": "Sunday",
+                                "emoji": true
+                            },
+                            "value": "checkbox_sunday"
+                        },
+                        {
+                            "text": {
+                                "type": "plain_text",
+                                "text": "Monday",
+                                "emoji": true
+                            },
+                            "value": "checkbox_monday"
+                        },
+                        {
+                            "text": {
+                                "type": "plain_text",
+                                "text": "Tuesday",
+                                "emoji": true
+                            },
+                            "value": "checkbox_tuesday"
+                        },
+                        {
+                            "text": {
+                                "type": "plain_text",
+                                "text": "Wednesday",
+                                "emoji": true
+                            },
+                            "value": "checkbox_wednesday"
+                        },
+                        {
+                            "text": {
+                                "type": "plain_text",
+                                "text": "Thursday",
+                                "emoji": true
+                            },
+                            "value": "checkbox_thursday"
+                        },
+                        {
+                            "text": {
+                                "type": "plain_text",
+                                "text": "Friday",
+                                "emoji": true
+                            },
+                            "value": "checkbox_friday"
+                        },
+                        {
+                            "text": {
+                                "type": "plain_text",
+                                "text": "Saturday",
+                                "emoji": true
+                            },
+                            "value": "checkbox_saturday"
+                        }
+                    ],
+                    "action_id": "checkbox_action_choose_day"
+                }
+            ]
+        }
+    }
+    else if(selected_value == 'static_select_reminder_monthly'){
+        const reccurenceSetting = {
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "This feature is comming Soon :bow:"
+			}
+		}
+    }
+    else if(selected_value == 'static_select_reminder_yearly'){
+        const reccurenceSetting = {
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "This feature is comming Soon :bow:"
+			}
+		}
+    }
 
+    messages.view.blocks.push(reccurenceSetting)
 
-    // messages.view.blocks.splice(-1, 0, {
-    //     "type": "input",
-    //     "element": {
-    //         "type": "plain_text_input",
-    //         "action_id": "plain_text_input-action",
-    //     },
-    //     "label": {
-    //         "type": "plain_text",
-    //         "text": "Option " + num,
-    //         "emoji": true
-    //     }
-    // })
-
-    // // API CALL
-    // try { 
-    //     const response = await axios.post(MODAL_API_ENDPOINT + "/views.update", messages, { headers: headers })
-    //     console.log(response.data)
-    // } catch (error) { 
-    //     console.log(error.response);
-    // }
+    // API CALL
+    try { 
+        const response = await axios.post(MODAL_API_ENDPOINT + "/views.update", messages, { headers: headers })
+        console.log(response.data)
+    } catch (error) { 
+        console.log(error.response);
+    }    
 }
