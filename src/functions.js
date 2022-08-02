@@ -4,7 +4,10 @@ const iconv = require('iconv-lite')
 
 const weatherData = require('./weather.js')
 const financeData = require('./finance.js')
-const firebaseDb =  require('./firebase.js');
+// const firebaseDb =  require('./firebase.js')
+const firebase =  require('./firebase.js')
+
+const firebaseDb = firebase.db
 
 
 // Slack Configureation

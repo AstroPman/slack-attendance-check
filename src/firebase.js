@@ -23,23 +23,6 @@ admin.initializeApp({
 });
 
 
-module.exports = admin.database();
-
-const fireStore = admin.firestore();
-
-async function test() {
-  const ref = fireStore.collection("schedules");
-  const snapshot = await ref.get();
-  return snapshot.docs.map(s => s.data());
-}
-
-async function main() {
-  console.log(`***** START MAIN *****`);
-  const users = await test();
-  users.forEach((v) => console.log(`user=${JSON.stringify(v)}`))
-  console.log(`***** END   MAIN *****`);
-}
-
-main().then();
-
-
+// module.exports = admin.database();
+exports.db = admin.database();
+exports.fireStore = admin.firestore();
