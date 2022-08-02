@@ -501,6 +501,21 @@ exports.updateReminderView = async function (requestJson) {
     const privateMetadata = JSON.parse(requestJson.view.private_metadata)
     messages.view.blocks = privateMetadata
 
+    const values = requestJson.view.state.values
+
+    let reccurencePattern
+
+    for (const key in values){
+        if(Object.keys(values[key]) == 'static_select_reminder_patterns'){
+            reccurencePattern = values[key]['static_select_reminder_patterns']['selected_option']
+            console.log('reccurencePattern: ', reccurencePattern)
+        }
+        else if(Object.keys(values[key]) == 'checkbox_action_choose_day'){
+            selectedDays = values[key]['checkbox_action_choose_day']['selected_options']
+            console.log('choose day: ', selectedDays)
+        }
+    }
+
     messages.view.blocks[-1].text.text = "XXXXXXXX"
     messages.view.blocks[-1].accessory.style = "primary"
         
