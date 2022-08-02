@@ -492,7 +492,7 @@ exports.openReminder = async function (triggerId) {
 }
 
 exports.pushReccurenceSetting = async function (requestJson) {
-    const messages = JSON.parse(fs.readFileSync('./src/message_template_add_options.json', 'utf8'));
+    const messages = JSON.parse(fs.readFileSync('./src/message_template_reccurence_setting.json', 'utf8'));
     const rootViewBlocks = requestJson.view.blocks
     messages.trigger_id = requestJson.trigger_id
     messages.view.private_metadata = JSON.stringify(rootViewBlocks)
