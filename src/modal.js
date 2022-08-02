@@ -513,17 +513,16 @@ exports.pushReccurenceSetting = async function (requestJson) {
 
 exports.updateReccurenceSetting = async function (requestJson) {
     
-    const selected_value = await requestJson.actions[0].selected_option.value
-    console.log('requestJson.actions[0].selected_option: ', requestJson.actions[0].selected_option)
-    console.log('selected_value: ', selected_value)
+    const selected_value = requestJson.actions[0].selected_option.value
     const messages = JSON.parse(fs.readFileSync('./src/message_template_add_options.json', 'utf8'));
     messages.view.blocks = requestJson.view.blocks
     messages.view.private_metadata = requestJson.view.private_metadata
     messages.view_id = requestJson.view.id
     delete messages.trigger_id
+    let reccurenceSetting
 
     if (selected_value == 'static_select_reminder_weekly'){
-        const reccurenceSetting = {
+        reccurenceSetting = {
             "type": "actions",
             "elements": [
                 {
@@ -592,7 +591,7 @@ exports.updateReccurenceSetting = async function (requestJson) {
         }
     }
     else if(selected_value == 'static_select_reminder_monthly'){
-        const reccurenceSetting = {
+        reccurenceSetting = {
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
@@ -601,7 +600,7 @@ exports.updateReccurenceSetting = async function (requestJson) {
 		}
     }
     else if(selected_value == 'static_select_reminder_yearly'){
-        const reccurenceSetting = {
+        reccurenceSetting = {
 			"type": "section",
 			"text": {
 				"type": "mrkdwn",
