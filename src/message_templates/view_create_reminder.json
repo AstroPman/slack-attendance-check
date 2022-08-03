@@ -34,20 +34,21 @@
 				}
 			},
 			{
-				"type": "section",
+				"type": "input",
 				"block_id": "reminder_conversation",
-				"text": {
-					"type": "mrkdwn",
-					"text": "*Notify to*"
-				},
-				"accessory": {
+				"element": {
 					"type": "conversations_select",
 					"placeholder": {
 						"type": "plain_text",
-						"text": "Select conversations",
+						"text": "Select Conversation",
 						"emoji": true
 					},
 					"action_id": "conversations_select-action"
+				},
+				"label": {
+					"type": "plain_text",
+					"text": "Send to",
+					"emoji": true
 				}
 			},
 			{
