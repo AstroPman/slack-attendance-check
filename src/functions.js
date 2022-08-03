@@ -560,12 +560,16 @@ exports.isHoliday = async function () {
 exports.registerReminder = async function (requestJson) {
 
     const values = requestJson.view.state.values
+    const ts = values.reminder_date.remind_datepicker.selected_date + ' ' + values.reminder_time.remind_timepicker.selected_time
     const reccurenceSetting = requestJson.view.blocks[requestJson.view.blocks.length - 1].text.text
+
+
+    console.log('timestamp: ', ts)
 
     const reminder = {
         content: values.reminder_content['plain_text_input-action'].value,
         conversation: values.reminder_conversation['conversations_select-action'].selected_conversation,
-        start: values.reminder_datetime.remind_timepicker.selected_date,
+        start: Date.parse(ts.replace( /-/g, '/')/1000),
         reccurence: reccurenceSetting
     }
 

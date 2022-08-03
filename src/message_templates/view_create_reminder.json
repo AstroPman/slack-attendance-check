@@ -62,7 +62,7 @@
 						"text": "Select a date",
 						"emoji": true
 					},
-					"action_id": "datepicker-action"
+					"action_id": "remind_datepicker"
 				},
 				"label": {
 					"type": "plain_text",
@@ -81,7 +81,7 @@
 						"text": "Select time",
 						"emoji": true
 					},
-					"action_id": "timepicker-action"
+					"action_id": "remind_timepicker"
 				},
 				"label": {
 					"type": "plain_text",
