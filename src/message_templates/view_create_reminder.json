@@ -35,7 +35,7 @@
 			},
 			{
 				"type": "section",
-				"block_id": "reminder_target",
+				"block_id": "reminder_conversation",
 				"text": {
 					"type": "mrkdwn",
 					"text": "*Notify to*"
