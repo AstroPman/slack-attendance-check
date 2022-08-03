@@ -562,28 +562,47 @@ exports.registerReminder = async function (requestJson) {
     const values = requestJson.view.state.values
     const ts = values.reminder_date.remind_datepicker.selected_date + ' ' + values.reminder_time.remind_timepicker.selected_time
     const reccurenceSetting = requestJson.view.blocks[requestJson.view.blocks.length - 1].text.text
-
-
-    console.log('timestamp: ', ts)
+    
+    let reccurence = {}
+    if (reccurenceSetting.includes('Weekly')){
+        reccurence = {
+            pattern: 'weekly',
+            rule: {
+                sun: reccurenceSetting.includes('Sunday'),
+                mon: reccurenceSetting.includes('Monday'),
+                tue: reccurenceSetting.includes('Tuesday'),
+                wed: reccurenceSetting.includes('Wednesday'),
+                thu: reccurenceSetting.includes('Thursday'),
+                fri: reccurenceSetting.includes('Friday'),
+                sat: reccurenceSetting.includes('Saturday')
+            }
+        }
+    }
+    else if(reccurenceSetting.includes('Monthly')){
+        reccurence = {
+        // Monthly用設定
+        }
+    }
+    else if(reccurenceSetting.includes('Yearly')){
+        reccurence = {
+        // Yearly用設定
+        }
+    }
 
     const reminder = {
         content: values.reminder_content['plain_text_input-action'].value,
         conversation: values.reminder_conversation['conversations_select-action'].selected_conversation,
-        start: Date.parse(ts.replace( /-/g, '/')/1000),
-        reccurence: reccurenceSetting
+        start: Date.parse(ts.replace( /-/g,'/'))/1000,
+        reccurence: reccurence
     }
-
     
-    console.log(reminder)
-    
-    // 1. register reminder info
-    // fireStore.collection("reminders").add(reminder)
-    // .then((docRef) => {
-    //     console.log("Document written with ID: ", docRef.id)
-    // })
-    // .catch((error) => {
-    //     console.error("Error adding document: ", error);
-    // });
+    fireStore.collection("reminders").add(reminder)
+    .then((docRef) => {
+        console.log("Document written with ID: ", docRef.id)
+    })
+    .catch((error) => {
+        console.error("Error adding document: ", error);
+    });
 
 
     // 2. schedule the reminder
