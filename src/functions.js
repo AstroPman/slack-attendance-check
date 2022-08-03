@@ -4,7 +4,7 @@ const iconv = require('iconv-lite')
 
 const weatherData = require('./weather.js')
 const financeData = require('./finance.js')
-const firebase =  require('./firebase.js')
+const firebase =  require('./firebase.js');
 const db = firebase.db
 const fireStore = firebase.fireStore
 
@@ -592,24 +592,19 @@ exports.registerReminder = async function (requestJson) {
     const reminder = {
         content: values.reminder_content['plain_text_input-action'].value,
         conversation: values.reminder_conversation['conversations_select-action'].selected_conversation,
-        start: Date.parse(ts.replace( /-/g,'/'))/1000,
+        start: Date.parse(ts.replace( /-/g,'/')),
         reccurence: reccurence
     }
     
     fireStore.collection("reminders").add(reminder)
     .then((docRef) => {
         console.log("Document written with ID: ", docRef.id)
+
+        // shceduleReminder()
     })
     .catch((error) => {
         console.error("Error adding document: ", error);
     });
-
-
-    // 2. schedule the reminder
-    // const ref = fireStore.collection("reminders");
-    // const snapshot = await ref.get();
-    
-    // snapshot.docs.map(s => console.log(s.data()))
 }
 
 exports.getReminders = async function () {
@@ -617,3 +612,31 @@ exports.getReminders = async function () {
     const snapshot = await ref.get();
     return snapshot.docs.map(s => s.data());
 }
+
+scheduleReminder = async function (reminder) {
+
+    const start = reminder.start
+
+}
+
+formatDate = (timestamp) => {
+    const date = new Date(timestamp)
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+    const day = date.getDay() + 1
+    const hour = date.getHours()
+
+    const formattedDate = year.toString() + month.toString().padStart(2, '0') + day.toString().padStart(2, '0')
+
+    return formattedDate
+
+}
+
+
+// const date = new Date(2022, 7,10,9,10,00)
+
+console.log(formatDate(1659452400 * 1000)) 
+
+// console.log(date.getFullYear())
+// console.log(date.getMonth())
+// console.log(date.getDay())
