@@ -18,7 +18,7 @@ Baymax Poll
 */
 
 exports.openModal = async function (triggerId) {
-    const messages = JSON.parse(fs.readFileSync('./src/message_templates/view_create_poll', 'utf8'));
+    const messages = JSON.parse(fs.readFileSync('./src/message_templates/view_create_poll.json', 'utf8'));
     messages.trigger_id = triggerId
         
     // API CALL
@@ -36,7 +36,7 @@ exports.openModal = async function (triggerId) {
 }
 
 exports.updateModal = async function (requestJson) {
-    const messages = JSON.parse(fs.readFileSync('./src/message_templates/view_create_poll', 'utf8'));
+    const messages = JSON.parse(fs.readFileSync('./src/message_templates/view_create_poll.json', 'utf8'));
     delete messages.trigger_id
     messages.view_id = requestJson.view.previous_view_id
     const privateMetadata = JSON.parse(requestJson.view.private_metadata)
@@ -333,7 +333,7 @@ exports.postPoll = async function (requestJson) {
 
 exports.updateButtons = async function(requestJson) {
     // load message template
-    const messages = JSON.parse(fs.readFileSync('./src/message_templates/view_create_poll', 'utf8'));
+    const messages = JSON.parse(fs.readFileSync('./src/message_templates/view_create_poll.json', 'utf8'));
     
     // overwrite template with request data
     messages.view.blocks = requestJson.view.blocks

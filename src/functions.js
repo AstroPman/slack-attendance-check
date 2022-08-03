@@ -608,10 +608,25 @@ exports.registerReminder = async function (requestJson) {
     });
 }
 
-exports.getReminders = async function () {
-    const ref = fireStore.collection("reminders");
-    const snapshot = await ref.get();
-    return snapshot.docs.map(s => s.data());
+exports.getReminders = async function (user_id) {
+    const reminders = fireStore.collection("reminders").doc(user_id).get()
+    .then((doc) => {
+        if (doc.exists){
+            return doc.data()
+        }
+        else{
+            console.log('the document does not exist.')
+            return null
+        }
+    }).catch((error) => {
+        console.error("Error to get document", error)
+        return null
+    })
+
+    return reminders
+
+
+    // return snapshot.docs.map(s => s.data());
 }
 
 scheduleReminder = async function (reminder, id) {
@@ -667,4 +682,64 @@ formatDatetime = (timestamp) => {
 
     return [formattedDate, formattedTime]
 
+}
+
+exports.postReminderList = async function (reminders, user_id){
+    
+    const messages = JSON.parse(fs.readFileSync('./src/message_templates/block_reminder_list.json', 'utf8'))
+    messages.channel = user_id
+
+    if(reminders.length < 1){
+        messages.blocks.splice(1,0, {
+            "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "No reminders"
+                }    
+            }
+        )
+    }
+    else{
+        for(key in reminders){
+            const d = reminders[key].start.toDate()
+            const date = `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDay()} ${d.getHours()}:00 `
+            
+            messages.blocks.splice(1,0, {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": reminders[key].content + ' | ' +  date
+                    },
+                    "accessory": {
+                        "type": "button",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "...",
+                            "emoji": true
+                        },
+                        "value": "setting",
+                        "action_id": key
+                    }
+                }
+            )
+        }
+
+    }
+
+    // Headers
+    const headers = {
+        "content-type": "application/json",
+        "Authorization": 'Bearer ' + API_KEY
+    }
+    
+    // API CALL
+    try { 
+
+        await axios.post(API_ENDPOINT + "/chat.postMessage", messages, { headers: headers })
+
+    } catch (error) { 
+
+        console.log(error.response); 
+
+    }
 }

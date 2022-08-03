@@ -1,6 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const cron = require('node-cron');
+const { firebase } = require('./src/firebase.js');
 
 
 const functions = require('./src/functions.js');
@@ -104,10 +105,13 @@ app.get('/api/v1/postAttendanceCheckRemind', (request, response) => {
     response.send(''); 
 });
 
-app.post('/api/v1/reminder', (request, response) => {
-    const triggerId = request.body.trigger_id
-    modal.openReminder(triggerId)
-    response.send(''); 
+app.post('/api/v1/reminder', async (request, response) => {
+    // const triggerId = request.body.trigger_id
+    // modal.openReminder(triggerId)
+    // response.send(''); 
+    const user_id = request.body.user_id
+    const reminders = await functions.getReminders(user_id)
+    functions.postReminderList(reminders)
 })
 
 
@@ -118,7 +122,7 @@ cron.schedule('0 10 * * *', () => {
     const dayOfWeek = functions.getToday()[2]
     if (dayOfWeek != "土" || dayOfWeek != "日" ) {
         //土日以外実行される
-        functions.postAttendanceCheckPoll()
+      functions.postAttendanceCheckPoll()
     }
 });
 // 2. 出欠アンケートリマインド
@@ -143,6 +147,16 @@ cron.schedule('0 9 * * *', () => {
     console.log('excuted')
     functions.deleteOldDatafromFirebase()
 });
+
+
+// async function debug (){
+//     const user_id = 'U027Z4X5ZMM'
+//     const reminders = await functions.getReminders(user_id)
+//     functions.postReminderList(reminders, user_id)
+// }
+
+// debug()
+
 
 
 
