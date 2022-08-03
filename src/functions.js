@@ -5,10 +5,11 @@ const iconv = require('iconv-lite')
 const weatherData = require('./weather.js')
 const financeData = require('./finance.js')
 const firebase =  require('./firebase.js');
-const db = firebase.db
-const fireStore = firebase.fireStore
+// const db = firebase.db
+// const fireStore = firebase.fireStore
 
-
+const db = firebase.firebase.database()
+const fireStore = firebase.firebase.firestore()
 
 
 /*
@@ -598,9 +599,9 @@ exports.registerReminder = async function (requestJson) {
     
     fireStore.collection("reminders").add(reminder)
     .then((docRef) => {
-        console.log("Document written with ID: ", docRef.id)
 
-        // shceduleReminder()
+        scheduleReminder(reminder, docRef.id)
+
     })
     .catch((error) => {
         console.error("Error adding document: ", error);
@@ -613,13 +614,47 @@ exports.getReminders = async function () {
     return snapshot.docs.map(s => s.data());
 }
 
-scheduleReminder = async function (reminder) {
-
+scheduleReminder = async function (reminder, id) {
+    
     const start = reminder.start
+    const date = formatDatetime(start)[0]
+    const time = formatDatetime(start)[1]
+    const collection = fireStore.collection("schedules")
 
+    // get current shedule
+    collection.doc(date).get()
+    .then((doc) => {
+        if (doc.exists){
+            const data = doc.data()
+            if (!data[time].includes(id)){
+                data[time].push(id)
+                collection.doc(date).set(data)
+                .then((result) => {
+                    console.log(result)
+                })
+                .catch((error) => {
+                    console.error("Error adding document: ", error);
+                });
+            }
+        } else {
+            const data = {
+                [time]: [id]
+            }
+            collection.doc(date).set(data)
+                .then((result) => {
+                    console.log(result)
+                })
+                .catch((error) => {
+                    console.error("Error adding document: ", error);
+                });
+        }})
+    .catch((error) => {
+        console.log("Error getting document:", error);
+    });
+    
 }
 
-formatDate = (timestamp) => {
+formatDatetime = (timestamp) => {
     const date = new Date(timestamp)
     const year = date.getFullYear()
     const month = date.getMonth() + 1
@@ -627,16 +662,19 @@ formatDate = (timestamp) => {
     const hour = date.getHours()
 
     const formattedDate = year.toString() + month.toString().padStart(2, '0') + day.toString().padStart(2, '0')
+    const formattedTime = hour.toString().padStart(2, '0')
 
-    return formattedDate
+
+    return [formattedDate, formattedTime]
 
 }
 
 
-// const date = new Date(2022, 7,10,9,10,00)
+// const reminder = {
+//     content: 'AAAAAAA',
+//     conversation: 'U027Z4X5ZMM',
+//     start: 1659494880000,
+//     reccurence: ' '
+// }
 
-console.log(formatDate(1659452400 * 1000)) 
-
-// console.log(date.getFullYear())
-// console.log(date.getMonth())
-// console.log(date.getDay())
+// scheduleReminder(reminder)

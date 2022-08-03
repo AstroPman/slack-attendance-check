@@ -1,4 +1,4 @@
-const admin = require("firebase-admin");
+const firebase = require("firebase-admin");
 require('dotenv').config();
 
 const env = process.env
@@ -17,12 +17,11 @@ const serviceAccount = {
 }
 
 // Initialize the app with a service account, granting admin privileges
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+firebase.initializeApp({
+  credential: firebase.credential.cert(serviceAccount),
   databaseURL: "https://slack-attendance-check-default-rtdb.asia-southeast1.firebasedatabase.app"
 });
 
-
-// module.exports = admin.database();
-exports.db = admin.database();
-exports.fireStore = admin.firestore();
+exports.firebase = firebase
+// exports.db = firebase.database();
+// exports.fireStore = firebase.firestore();
