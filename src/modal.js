@@ -18,7 +18,7 @@ Baymax Poll
 */
 
 exports.openModal = async function (triggerId) {
-    const messages = JSON.parse(fs.readFileSync('./src/message_template_create_poll.json', 'utf8'));
+    const messages = JSON.parse(fs.readFileSync('./src/message_templates/view_create_poll', 'utf8'));
     messages.trigger_id = triggerId
         
     // API CALL
@@ -36,7 +36,7 @@ exports.openModal = async function (triggerId) {
 }
 
 exports.updateModal = async function (requestJson) {
-    const messages = JSON.parse(fs.readFileSync('./src/message_template_create_poll.json', 'utf8'));
+    const messages = JSON.parse(fs.readFileSync('./src/message_templates/view_create_poll', 'utf8'));
     delete messages.trigger_id
     messages.view_id = requestJson.view.previous_view_id
     const privateMetadata = JSON.parse(requestJson.view.private_metadata)
@@ -89,7 +89,7 @@ exports.updateModal = async function (requestJson) {
 }
 
 exports.pushModal = async function (requestJson) {
-    const messages = JSON.parse(fs.readFileSync('./src/message_template_add_options.json', 'utf8'));
+    const messages = JSON.parse(fs.readFileSync('./src/message_templates/view_add_options.json', 'utf8'));
     const rootViewBlocks = requestJson.view.blocks
     const elements = requestJson.view.blocks[3].elements
     const cnt = elements.length
@@ -148,7 +148,7 @@ exports.pushModal = async function (requestJson) {
 }
 
 exports.addInputForm = async function (requestJson) {
-    const messages = JSON.parse(fs.readFileSync('./src/message_template_add_options.json', 'utf8'));
+    const messages = JSON.parse(fs.readFileSync('./src/message_templates/view_add_options.json', 'utf8'));
     messages.view.blocks = requestJson.view.blocks
     messages.view.private_metadata = requestJson.view.private_metadata
     messages.view_id = requestJson.view.id
@@ -182,7 +182,7 @@ exports.addInputForm = async function (requestJson) {
 }
 
 exports.removeInputForm = async function (requestJson) {
-    const messages = JSON.parse(fs.readFileSync('./src/message_template_add_options.json', 'utf8'));
+    const messages = JSON.parse(fs.readFileSync('./src/message_templates/view_add_options.json', 'utf8'));
     messages.view.blocks = requestJson.view.blocks
     messages.view.private_metadata = requestJson.view.private_metadata
     messages.view_id = requestJson.view.id
@@ -212,7 +212,7 @@ exports.removeInputForm = async function (requestJson) {
 
 exports.postPoll = async function (requestJson) {
     // load message template
-    const messages = JSON.parse(fs.readFileSync('./src/message_template_poll.json', 'utf8'));
+    const messages = JSON.parse(fs.readFileSync('./src/message_templates/poll.json', 'utf8'));
     
     // extract data from request
     const userName = requestJson.user.username
@@ -333,7 +333,7 @@ exports.postPoll = async function (requestJson) {
 
 exports.updateButtons = async function(requestJson) {
     // load message template
-    const messages = JSON.parse(fs.readFileSync('./src/message_template_create_poll.json', 'utf8'));
+    const messages = JSON.parse(fs.readFileSync('./src/message_templates/view_create_poll', 'utf8'));
     
     // overwrite template with request data
     messages.view.blocks = requestJson.view.blocks
@@ -473,7 +473,7 @@ Baymax Reminder
 */
 
 exports.openReminder = async function (triggerId) {
-    const messages = JSON.parse(fs.readFileSync('./src/message_template_create_reminder.json', 'utf8'));
+    const messages = JSON.parse(fs.readFileSync('./src/message_templates/view_create_reminder.json', 'utf8'));
     const initial_date = functions.getToday()[7]
     const initial_time = functions.getToday()[8]
     
@@ -495,7 +495,7 @@ exports.updateReminderView = async function (requestJson) {
 
     console.log('requestJson.view.state.values: ',requestJson.view.state.values)
 
-    const messages = JSON.parse(fs.readFileSync('./src/message_template_create_reminder.json', 'utf8'));
+    const messages = JSON.parse(fs.readFileSync('./src/message_templates/view_create_reminder.json', 'utf8'));
     delete messages.trigger_id
     messages.view_id = requestJson.view.previous_view_id
     const privateMetadata = JSON.parse(requestJson.view.private_metadata)
@@ -536,7 +536,7 @@ exports.updateReminderView = async function (requestJson) {
 }
 
 exports.pushReccurenceSetting = async function (requestJson) {
-    const messages = JSON.parse(fs.readFileSync('./src/message_template_reccurence_setting.json', 'utf8'));
+    const messages = JSON.parse(fs.readFileSync('./src/message_templates/view_reccurence_setting.json', 'utf8'));
     const rootViewBlocks = requestJson.view.blocks
     messages.trigger_id = requestJson.trigger_id
     messages.view.private_metadata = JSON.stringify(rootViewBlocks)
@@ -558,7 +558,7 @@ exports.pushReccurenceSetting = async function (requestJson) {
 exports.updateReccurenceSetting = async function (requestJson) {
 
     // Shaping Messages
-    const messages = JSON.parse(fs.readFileSync('./src/message_template_reccurence_setting.json', 'utf8'));
+    const messages = JSON.parse(fs.readFileSync('./src/message_templates/view_reccurence_setting.json', 'utf8'));
     messages.view.blocks = requestJson.view.blocks
     messages.view.private_metadata = requestJson.view.private_metadata
     messages.view_id = requestJson.view.id

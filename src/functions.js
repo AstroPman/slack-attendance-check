@@ -10,14 +10,24 @@ const fireStore = firebase.fireStore
 
 
 
-// Slack Configureation
-const CHANNEL_ID = process.env.CHANNEL_ID_PROD; // kmp_kk_出社状況確認
+
+/*
+
+Initialize
+
+*/
+const CHANNEL_ID = process.env.CHANNEL_ID_PROD // kmp_kk_出社状況確認
 // const CHANNEL_ID = process.env.CHANNEL_ID_TEST; // baymax-sandbox
 const API_KEY = process.env.API_KEY
 const API_ENDPOINT = "https://slack.com/api"
 
+/* 
 
+Functions
 
+*/
+
+// general functions
 exports.getToday = function getToday () {
     // Date
     const date  = new Date();
@@ -46,7 +56,7 @@ async function insertInformation() {
     const finance = await financeData()
     
     // Edit Messages
-    const messages = JSON.parse(fs.readFileSync('./src/message_template.json', 'utf8'));
+    const messages = JSON.parse(fs.readFileSync('./src/message_templates/block_attendance_check.json', 'utf8'));
     messages.channel = CHANNEL_ID
     messages.attachments[0].blocks[0].text.text = exports.getToday()[0] + "の出社状況"
     const information = [
@@ -148,7 +158,7 @@ async function insertInformation() {
     return messages
 }
 
-
+// attendance check functions
 exports.postAttendanceCheckPoll = async function postAttendanceCheckPoll(){
     
     const messages = await insertInformation()
@@ -173,7 +183,7 @@ exports.postAttendanceCheckPoll = async function postAttendanceCheckPoll(){
 
 exports.updateAttendanceCheckPoll = async function updateAttendanceCheckPoll(requestJson, attendants){
     
-    const newMessages = JSON.parse(fs.readFileSync('./src/message_template.json', 'utf8'));
+    const newMessages = JSON.parse(fs.readFileSync('./src/message_templates/block_attendance_check.json', 'utf8'));
     newMessages.channel = requestJson.container.channel_id
     newMessages.ts = requestJson.message.ts
     newMessages.attachments = requestJson.message.attachments
@@ -215,7 +225,7 @@ exports.updateAttendanceCheckPoll = async function updateAttendanceCheckPoll(req
 
 exports.postAttendanceCheckRemind = async function postAttendanceCheckRemind(){
     // Edit messages
-    const messages = JSON.parse(fs.readFileSync('./src/message_template.json', 'utf8'));
+    const messages = JSON.parse(fs.readFileSync('./src/message_templates/block_attendance_check.json', 'utf8'));
     messages.channel = CHANNEL_ID
     messages.attachments[0].blocks[0].text.text = exports.getToday()[0] + "の出社状況（リマインド）"
     messages.attachments[1].blocks[0].text.text = ":bangbang: *未回答の方はご回答お願いいたします。<!channel>* :bangbang:"
@@ -238,7 +248,6 @@ exports.postAttendanceCheckRemind = async function postAttendanceCheckRemind(){
     } 
 }
 
-// Poll削除結果投稿
 exports.postFirebaseDeleteResult = async function postFirebaseDeleteResult(cnt_deleted_poll){
     const today = exports.getToday()[6]
     const title = today + ": Firebase Data Delete Result"
@@ -319,7 +328,6 @@ exports.deleteOldDatafromFirebase = async function () {
 
 }
 
-// 出欠アンケート
 exports.attendanceCheckMain = async function (requestJson) {
     // extranct data from request
     const value = requestJson.actions[0].value
@@ -383,10 +391,10 @@ exports.attendanceCheckMain = async function (requestJson) {
     })
 }
 
-// デジ共朝会リマインダー
+// Meeting Notification Functrions
 exports.postCloudMeeting = async function postCloudMeeting(){
     // Edit messages
-    const messages = JSON.parse(fs.readFileSync('./src/message_template_cloud_meeting.json', 'utf8'));
+    const messages = JSON.parse(fs.readFileSync('./src/message_templates/block_meeting_agenda.json', 'utf8'));
     messages.channel = "C02JLJFPJ5S"  //infra-unyo
     // messages.channel = "C02QMRLRQ75"  //baymax_sandbox
     const today = exports.getToday()
@@ -422,7 +430,7 @@ exports.postCloudMeeting = async function postCloudMeeting(){
 }
 
 
-// baymax poll
+// Baymax Poll Functions
 exports.registerAnswer = async function (requestJson) {
     const value = requestJson.actions[0].value
     const respondent = "<@" + requestJson.user.name + ">"
@@ -488,7 +496,7 @@ exports.registerAnswer = async function (requestJson) {
 }
 
 exports.updatePoll = async function (requestJson, respondents){
-    const newMessages = JSON.parse(fs.readFileSync('./src/message_template_poll.json', 'utf8'));
+    const newMessages = JSON.parse(fs.readFileSync('./src/message_templates/block_poll_template.json', 'utf8'));
     newMessages.channel = requestJson.channel.id
     newMessages.ts = requestJson.message.ts
     newMessages.blocks = requestJson.message.blocks
@@ -549,18 +557,34 @@ exports.isHoliday = async function () {
 }
 
 
-const date = new Date()
-const dateArr = date.toDateString().split(' ')
-console.log(dateArr[2] + " " + dateArr[1] + " | by yuichi.masutani | " )
-
-
-/*
-
-Baymax Reminder
-
-*/
-
+// Baymax Reminder Functions
 exports.registerReminder = async function () {
+
+    const reminder = {
+        content: 'have breakfast',
+        user: 'yuichi.masutani',
+        reccurence: {
+            sun: true,
+            mon: true,
+            tue: true,
+            wed: true,
+            thu: true,
+            fri: true,
+            sat: true
+        }
+    }
+
+    // 1. register reminder info
+    fireStore.collection("reminders").add(reminder)
+    .then((docRef) => {
+        console.log("Document written with ID: ", docRef.id)
+    })
+    .catch((error) => {
+        console.error("Error adding document: ", error);
+    });
+
+
+    // 2. schedule the reminder
     const ref = fireStore.collection("reminders");
     const snapshot = await ref.get();
     
