@@ -109,9 +109,12 @@ app.post('/api/v1/reminder', async (request, response) => {
     // const triggerId = request.body.trigger_id
     // modal.openReminder(triggerId)
     // response.send(''); 
+    console.log('/api/v1/reminder')
     const user_id = request.body.user_id
+    console.log('user_id: ', user_id)
     const reminders = await functions.getReminders(user_id)
-    functions.postReminderList(reminders)
+    console.log('reminders: ', reminders)
+    functions.postReminderList(reminders, user_id)
     response.send(''); 
 })
 
