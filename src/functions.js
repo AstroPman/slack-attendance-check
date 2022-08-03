@@ -558,7 +558,11 @@ exports.isHoliday = async function () {
 
 
 // Baymax Reminder Functions
-exports.registerReminder = async function () {
+exports.registerReminder = async function (requestJson) {
+
+    const values = requestJson.view.state.values
+
+    console.log('values: ', values)
 
     const reminder = {
         content: 'have breakfast',
@@ -575,20 +579,20 @@ exports.registerReminder = async function () {
     }
 
     // 1. register reminder info
-    fireStore.collection("reminders").add(reminder)
-    .then((docRef) => {
-        console.log("Document written with ID: ", docRef.id)
-    })
-    .catch((error) => {
-        console.error("Error adding document: ", error);
-    });
+    // fireStore.collection("reminders").add(reminder)
+    // .then((docRef) => {
+    //     console.log("Document written with ID: ", docRef.id)
+    // })
+    // .catch((error) => {
+    //     console.error("Error adding document: ", error);
+    // });
 
 
     // 2. schedule the reminder
-    const ref = fireStore.collection("reminders");
-    const snapshot = await ref.get();
+    // const ref = fireStore.collection("reminders");
+    // const snapshot = await ref.get();
     
-    snapshot.docs.map(s => console.log(s.data()))
+    // snapshot.docs.map(s => console.log(s.data()))
 }
 
 exports.getReminders = async function () {
