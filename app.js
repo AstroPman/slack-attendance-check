@@ -112,6 +112,7 @@ app.post('/api/v1/reminder', async (request, response) => {
     const user_id = request.body.user_id
     const reminders = await functions.getReminders(user_id)
     functions.postReminderList(reminders)
+    response.send(''); 
 })
 
 
