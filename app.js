@@ -84,6 +84,7 @@ app.post('/api/v1/endpoint', (request, response) => {
 });
 
 app.post('/api/v1/openModal', (request, response) => {
+    console.log('slacks command: ', request.body)
     const triggerId = request.body.trigger_id
     modal.openModal(triggerId)
     response.send(''); 

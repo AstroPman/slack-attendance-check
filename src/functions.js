@@ -668,13 +668,3 @@ formatDatetime = (timestamp) => {
     return [formattedDate, formattedTime]
 
 }
-
-
-// const reminder = {
-//     content: 'AAAAAAA',
-//     conversation: 'U027Z4X5ZMM',
-//     start: 1659494880000,
-//     reccurence: ' '
-// }
-
-// scheduleReminder(reminder)
