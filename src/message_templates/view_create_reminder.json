@@ -52,37 +52,42 @@
 				}
 			},
 			{
-				"type": "section",
-				"text": {
-					"type": "mrkdwn",
-					"text": "*Date/Time*"
+				"type": "input",
+				"block_id": "reminder_date",
+				"element": {
+					"type": "datepicker",
+					"initial_date": "1990-04-28",
+					"placeholder": {
+						"type": "plain_text",
+						"text": "Select a date",
+						"emoji": true
+					},
+					"action_id": "datepicker-action"
+				},
+				"label": {
+					"type": "plain_text",
+					"text": "Date",
+					"emoji": true
 				}
 			},
 			{
-				"type": "actions",
-				"block_id": "reminder_datetime",
-				"elements": [
-					{
-						"type": "datepicker",
-						"initial_date": "1990-04-28",
-						"placeholder": {
-							"type": "plain_text",
-							"text": "Select a date",
-							"emoji": true
-						},
-						"action_id": "remind_datepicker"
+				"type": "input",
+				"block_id": "reminder_time",
+				"element": {
+					"type": "timepicker",
+					"initial_time": "13:37",
+					"placeholder": {
+						"type": "plain_text",
+						"text": "Select time",
+						"emoji": true
 					},
-					{
-						"type": "timepicker",
-						"initial_time": "13:37",
-						"placeholder": {
-							"type": "plain_text",
-							"text": "Select time",
-							"emoji": true
-						},
-						"action_id": "remind_timepicker"
-					}
-				]
+					"action_id": "timepicker-action"
+				},
+				"label": {
+					"type": "plain_text",
+					"text": "Time",
+					"emoji": true
+				}
 			},
 			{
 				"type": "section",
