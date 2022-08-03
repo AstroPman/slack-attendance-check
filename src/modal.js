@@ -478,8 +478,8 @@ exports.openReminder = async function (triggerId) {
     const initial_time = functions.getToday()[8]
     
     messages.trigger_id = triggerId
-    messages.view.blocks[3].elements[0].initial_date = initial_date
-    messages.view.blocks[3].elements[1].initial_time = initial_time
+    messages.view.blocks[2].element.initial_date = initial_date
+    messages.view.blocks[3].element.initial_time = initial_time
         
     try {     
         const response = await axios.post(MODAL_API_ENDPOINT + "/views.open", messages, { headers: headers })
