@@ -560,27 +560,18 @@ exports.isHoliday = async function () {
 exports.registerReminder = async function (requestJson) {
 
     const values = requestJson.view.state.values
+    const reccurenceSetting = requestJson.view.blocks[requestJson.view.blocks.length - 1].text.text
 
-    for(const key in values){
-        console.log(values[key])
+    const reminder = {
+        content: values.reminder_content['plain_text_input-action'].value,
+        conversation: values.reminder_conversation['conversations_select-action'].selected_conversation,
+        start: values.reminder_datetime.remind_timepicker.selected_date,
+        reccurence: reccurenceSetting
     }
 
     
-
-    const reminder = {
-        content: 'have breakfast',
-        user: 'yuichi.masutani',
-        reccurence: {
-            sun: true,
-            mon: true,
-            tue: true,
-            wed: true,
-            thu: true,
-            fri: true,
-            sat: true
-        }
-    }
-
+    console.log(reminder)
+    
     // 1. register reminder info
     // fireStore.collection("reminders").add(reminder)
     // .then((docRef) => {

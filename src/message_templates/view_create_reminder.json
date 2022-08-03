@@ -21,6 +21,7 @@
         "blocks": [
 			{
 				"type": "input",
+				"block_id": "reminder_content",
 				"element": {
 					"type": "plain_text_input",
 					"multiline": true,
@@ -34,18 +35,19 @@
 			},
 			{
 				"type": "section",
+				"block_id": "reminder_target",
 				"text": {
 					"type": "mrkdwn",
 					"text": "*Notify to*"
 				},
 				"accessory": {
-					"type": "multi_conversations_select",
+					"type": "conversations_select",
 					"placeholder": {
 						"type": "plain_text",
 						"text": "Select conversations",
 						"emoji": true
 					},
-					"action_id": "multi_conversations_select-action"
+					"action_id": "conversations_select-action"
 				}
 			},
 			{
@@ -57,6 +59,7 @@
 			},
 			{
 				"type": "actions",
+				"block_id": "reminder_datetime",
 				"elements": [
 					{
 						"type": "datepicker",
@@ -82,6 +85,7 @@
 			},
 			{
 				"type": "section",
+				"block_id": "reminder_reccurence_setting",
 				"text": {
 					"type": "mrkdwn",
 					"text": " "
