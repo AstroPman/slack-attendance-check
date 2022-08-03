@@ -429,7 +429,6 @@ exports.postCloudMeeting = async function postCloudMeeting(){
     } 
 }
 
-
 // Baymax Poll Functions
 exports.registerAnswer = async function (requestJson) {
     const value = requestJson.actions[0].value
@@ -562,7 +561,11 @@ exports.registerReminder = async function (requestJson) {
 
     const values = requestJson.view.state.values
 
-    console.log('values: ', values)
+    for(const key in values){
+        console.log(values[key])
+    }
+
+    
 
     const reminder = {
         content: 'have breakfast',
